@@ -1,4 +1,4 @@
 # Presentations
 
-- [AllOfUs](allofus/index.qmd)
+- [AllOfUs](allofus.qmd)
 - [DrugUtilisation](DrugUtilisation.qmd)
