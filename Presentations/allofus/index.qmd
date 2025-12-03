@@ -27,7 +27,7 @@ execute:
   cache: false
 footer: |
       <div style="position: relative; width: 100%;">
-        <div style="position: fixed; top: 20px; right: 20px;"><a href="index.qmd" style="text-decoration: none;">⬅ Presentations</a></div>
+        <div style="position: fixed; top: 20px; right: 20px;"><a href="/../index.qmd" style="text-decoration: none;">⬅ Presentations</a></div>
       </div>
 include-after: |
   <script type="text/javascript">
