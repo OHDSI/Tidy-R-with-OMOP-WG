@@ -1,7 +1,7 @@
 ---
 title: "allofus: an R package to facilitate use of the *All of Us* Researcher Workbench <br><br>"
 title-slide-attributes:
-  data-background-image: "roux-title-image.jpg"
+  data-background-image: "images/roux-title-image.jpg"
   data-background-size: cover
   data-background-opacity: "0.5"
   logo: none
@@ -14,9 +14,9 @@ format:
   revealjs:
     embed-resources: false
     slide-number: "c"
-    logo: "roux-rb.png"  # This will appear on all slides except title
+    logo: "images/roux-rb.png"  # This will appear on all slides except title
     theme: [simple]
-    css: style.css
+    css: styleAllOfUs.css
     controls: true
 execute:
   echo: true
@@ -27,7 +27,7 @@ execute:
   cache: false
 footer: |
       <div style="position: relative; width: 100%;">
-        <div style="position: fixed; top: 20px; right: 20px;"><a href="/../index.qmd" style="text-decoration: none;">⬅ Presentations</a></div>
+        <div style="position: fixed; top: 20px; right: 20px;"><a href="index.qmd" style="text-decoration: none;">⬅ Presentations</a></div>
       </div>
 include-after: |
   <script type="text/javascript">
