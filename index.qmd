@@ -4,3 +4,9 @@
 ```{r}
 1 + 1
 ```
+
+Description and goals
+
+## OKRs
+
+- regular meetings
