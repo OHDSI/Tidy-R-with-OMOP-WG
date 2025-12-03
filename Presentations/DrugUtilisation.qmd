@@ -32,7 +32,7 @@ library(visOmopResults)
 library(gt)
 library(ggplot2)
 library(plotly)
-library(flaxtable)
+library(flextable)
 ```
 
 Drug Utilisation Studies (DUS) were defined by the World Health Organization as studying the marketing, distribution, prescription, and use of medicinal products in a society, with special emphasis on the resulting medical and socioeconomic consequences (WHO, 2003).
