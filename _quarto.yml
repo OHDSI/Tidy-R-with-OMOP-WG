@@ -8,10 +8,10 @@ website:
     left:
       - text: Presentations
         menu:
-          - text: "index"
+          - text: "Index"
             href: Presentations/index.qmd
           - text: "All of Us"
-            href: Presentations/allofus/index.html
+            href: Presentations/allofus.qmd
           - text: "DrugUtilisation"
             href: Presentations/DrugUtilisation.qmd
   page-footer:
