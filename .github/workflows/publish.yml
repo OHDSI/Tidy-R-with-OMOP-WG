@@ -26,6 +26,21 @@ jobs:
       - name: Install R libraries in renv
         uses: r-lib/actions/setup-r-dependencies@v2
 
+      - name: Download synthetic datasets
+        run: |
+          # create folder
+          mkdir -p omock
+
+          # export OMOP_DATA_FOLDER for subsequent steps
+          echo "OMOP_DATA_FOLDER=$(pwd)/omock" >> $GITHUB_ENV
+
+          # download GiBleed with omock from R
+          Rscript -e "
+            omock::downloadMockDataset('GiBleed')
+            #omock::downloadMockDataset('synthea-covid19-200k')
+            #omock::downloadMockDataset('synthea-covid19-10k')
+          "
+
       - name: Render quarto website
         run: quarto render
 
