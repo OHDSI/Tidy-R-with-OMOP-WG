@@ -1,12 +1,12 @@
 
 ## Tidy R working group
 
-```{r}
-1 + 1
-```
+## Description and goals
 
-Description and goals
+### OKRs 2026
 
-## OKRs
+### OKRs 2025
 
-- regular meetings
+## Regular meetings
+
+## Join the Journey

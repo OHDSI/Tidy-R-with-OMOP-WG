@@ -8,8 +8,12 @@ website:
     left:
       - text: Presentations
         menu:
-          - Presentations/index.qmd
-          - Presentations/DrugUtilisation.qmd
+          - text: "index"
+            href: Presentations/index.qmd
+          - text: "All of Us"
+            href: Presentations/allofus/index.html
+          - text: "DrugUtilisation"
+            href: Presentations/DrugUtilisation.qmd
   page-footer:
     left: "© 2025 Tidy R with OMOP Workgroup"
     right:
