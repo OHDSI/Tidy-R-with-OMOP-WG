@@ -3,19 +3,18 @@ project:
   output-dir: _site
 
 website:
-  title: "My Website Title"
-# uncomment the mext block if you want to add more pages
-#  navbar:
-#    left:
-#      - href: topic1.qmd
-#        text: Topic1
+  title: "Tidy R with OMOP workgroup"
+  navbar:
+    left:
+      - text: Presentations
+        menu:
+          - Presentations/index.qmd
+          - Presentations/DrugUtilisation.qmd
   page-footer:
-    left: "© 2025 Your Name"
+    left: "© 2025 Tidy R with OMOP Workgroup"
     right:
       - icon: github
-        href: https://github.com/yourname/yourrepo
-      - icon: twitter
-        href: https://twitter.com/yourhandle
+        href: https://github.com/ohdsi/tidy-r-with-omop-wg
 
 format:
   html:
