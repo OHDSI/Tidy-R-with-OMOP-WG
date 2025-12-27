@@ -1,0 +1,89 @@
+---
+title: "The Tidy R in OMOP CDM ecosystem"
+subtitle: "An ecosystem of R packages to work with the OMOP CDM"
+format:
+  revealjs: 
+    theme: [simple, styleWG.scss]
+    incremental: true   
+    slide-number: true
+    chalkboard: true
+    preview-links: auto
+    margin: 0.07
+    code-link: true
+    code-line-numbers: false
+    height: 900
+    width: 1600
+    footer: |
+      <div style="position: relative; width: 100%;">
+        <div style="text-align: center; font-weight: 500;">Tidy R in OMOP CDM ecosystem</div>
+        <div style="position: fixed; top: 20px; right: 20px;"><a href="index.qmd" style="text-decoration: none;">⬅ Presentations</a></div>
+      </div>
+execute:
+  echo: true
+  eval: true
+editor: visual
+---
+
+## Motivation
+- OMOP CDM
+- complications to install packages, not in cran, java, contribute to the ecosystem
+- tidyverse
+- no Java code, no SQL code, just R code
+
+## Outline
+- classes
+- methods
+- Support more back-ends
+- Build a package on top
+
+## Clases
+### cdm_reference
+### cdm_table
+### cdm_source
+### omop_table
+### achilles_table
+### cohort_table
+### codelist, codelist_with_details, concept_set_expression
+### summarised_result
+
+## Methods
+
+## Existing packages
+
+1- under development (just GitHub/idea)
+2- initial release
+3- early stages (quite stable, but still to be finalised)
+4- stable
+
+### Core packages
+- omopgenerics 4
+- PatientProfiles 4
+- omock 3
+- visOmopResults 4
+- CodelistGenerator 4
+- CohortConstructor 3
+### back-end packages
+- CDMConnector 4
+- OmopOnSpark 2
+- OmopOnDuckDB 1
+- OmopOnPostgres 1
+- OmopOnSqlServer 1
+### Diagnostics packages
+- OmopSketch 4
+- PhenotypeR 3
+- DrugExposureDiagnostics 4
+- MeasurementDiagnostics 3
+### Analytical packages
+- IncidencePrevalence 4
+- DrugUtilisation 4
+- CohortCharacteristics 4
+- CohortSurvival 4
+- CohortSymmetry 3
+### Supporting packages
+- OmopViewer 3
+- OmopStudyBuilder 1
+- OmopConstructor 2
+
+## Support more back-ends
+
+## Build a package on top
