@@ -24,66 +24,504 @@ execute:
 editor: visual
 ---
 
+```{r, echo=FALSE}
+options(width = 120)
+```
+
+```{r, echo=FALSE}
+library(dplyr)
+library(purrr)
+library(jsonlite)
+library(patchwork)
+library(ggplot2)
+library(rlang)
+# prepare data
+packages <- dplyr::tribble(
+  ~package_name, ~classification, ~organisation, ~key_functions,
+  "omopgenerics", "Core", "darwin-eu", "Define methods and classes for the ecosystem",
+  "CDMConnector", "Back-end", "darwin-eu", "Create a cdm_reference for database backends",
+  "omock", "Core", "ohdsi", "Generate mock synthetic data; Create cdm reference to existing mock datasets",
+  "OmopConstructor", "ETL", "ohdsi", "Generate the obsercation_period using cdm data; Run Achilles analyses; Create drug_era table;*Create pregnancy algorithm*",
+  "OmopOnSpark", "Back-end", "ohdsi", "Create a cdm_reference using spark connection",
+  "OmopOnPostgres", "Back-end", "ohdsi", "Create a cdm_reference using postgres connection; *Use postgres indexes*",
+  "OmopOnDuckDB", "Back-end", "ohdsi", "Create a cdm_reference using duckdb connection; *Create a cdm_reference using parquet files*",
+  "OmopOnSqlServer", "Back-end", "ohdsi", "Create a cdm_reference using sql server connection;*Create a cdm_reference using synapse connection*",
+  "visOmopResults", "Core;Visualisation", "darwin-eu", "Manage summarised_result objects; Create tables from summarised_result objects; Create plots from summarised_result objects",
+  "CodelistGenerator", "Core;Diagnostics", "darwin-eu", "Manage codelists and concept sets; Run codelist diagnostics",
+  "PatientProfiles", "Core", "darwin-eu", "Add columns related to patient demographics; Add columns related to intersections",
+  "CohortConstructor", "Analytics", "ohdsi", "Generate base cohorts; Apply inclusion (and exclusion) criteria to cohorts",
+  "IncidencePrevalence", "Analytics", "darwin-eu", "Identify denominators based on demographics; Estimate Incidence, Point-Prevalence and Period-Prevalence",
+  "DrugUtilisation", "Analytics", "darwin-eu", "Estimate drug use, Proportion of Patients Covered, Indication, Discontunation and restart; Calculate daily dose",
+  "CohortCharacteristics", "Analytics", "darwin-eu", "Extract counts and attrition of cohorts; Overlap and Timing between cohorts; Characterise cohorts based in demographics and predefined conditions; Data driven characterisation",
+  "CohortSurvival", "Analytics", "darwin-eu", "",
+  "CohortSymmetry", "Analytics", "ohdsi", "",
+  "OmopSketch", "Diagnostics;Analytics", "ohdsi", "",
+  "MeasurementDiagnostics", "Diagnostics", "ohdsi", "",
+  "PhenotypeR", "Diagnostics", "ohdsi", "",
+  "OmopViewer", "Visualisation", "ohdsi", "",
+  "DrugExposureDiagnostics", "Diagnostics", "darwin-eu", "",
+  "TreatmentPatterns", "Analytics", "darwin-eu", ""
+) |>
+  dplyr::left_join(
+    tools::CRAN_package_db() |>
+      dplyr::as_tibble() |>
+      dplyr::select(
+        package_name = Package, imports = Imports, suggests = Suggests, 
+        last_version = Version, description = Description, title = Title
+      ),
+    by = "package_name"
+  ) |>
+  dplyr::mutate(
+    key_functions = purrr::map(key_functions, \(kf) {
+      paste0("- ", stringr::str_trim(stringr::str_split_1(kf, ";")))
+    }),
+    github = paste0("www.github.com/", organisation, "/", package_name),
+    website = paste0("https://", organisation, ".github.io/", package_name, "/")
+  )
+pkgs <- packages$package_name
+
+for (pkg in pkgs) {
+  if (is.na(packages$imports[packages$package_name == pkg])) {
+    desc <- as.list(read.dcf(url(paste0("https://raw.githubusercontent.com/ohdsi/", pkg, "/refs/heads/main/DESCRIPTION")))[1,])
+    packages$imports[packages$package_name == pkg] <- desc$Imports %||% "omopgenerics"
+    packages$suggests[packages$package_name == pkg] <- desc$Suggests
+    packages$description[packages$package_name == pkg] <- desc$Description
+    packages$title[packages$package_name == pkg] <- desc$Title
+  }
+}
+
+packages <- packages |>
+  dplyr::mutate(
+    last_version = dplyr::coalesce(last_version, "-"),
+    imports = purrr::map(imports, \(x) {
+      x <- stringr::str_split_1(string = x, pattern = ",") |>
+        stringr::str_replace_all("\n", "") |>
+        stringr::str_remove("\\(.*") |>
+        stringr::str_trim()
+      x[x %in% pkgs]
+    }),
+    suggests = purrr::map(suggests, \(x) {
+      x <- stringr::str_split_1(string = x, pattern = ",") |>
+        stringr::str_remove("\\(.*") |>
+        stringr::str_trim()
+      x[x %in% pkgs]
+    }),
+    imports = dplyr::if_else(
+      package_name != "omopgenerics",
+      purrr::map(imports, \(x) unique(c("omopgenerics", x))),
+      imports
+    )
+  )
+
+versions <- pkgs |>
+  purrr::map(\(pkg) {
+    url <- paste0("https://crandb.r-pkg.org/", pkg, "/all")
+    status <- tryCatch(
+      httr::status_code(httr::HEAD(url)),
+      error = function(e) NA
+    )
+    
+    if (identical(status, 200L)) {
+      
+      cli::cli_inform("Getting releases for {pkg}")
+      
+      res <- jsonlite::fromJSON(url) |>
+        purrr::pluck("versions") |>
+        purrr::map_dfr(~ dplyr::tibble(
+          package_name = pkg,
+          version = .$Version,
+          date = as.Date(.$Date)
+        )) |> 
+        dplyr::arrange(date) |> 
+        dplyr::mutate(
+          version = dplyr::if_else(
+            package_name == "CodelistGenerator" & 
+              version == "3.0",
+            "3.0.0",
+            version)) |> 
+        dplyr::mutate(
+          first = as.integer(gsub("^(\\d+)\\..*$", "\\1", version)),
+          second = as.integer(gsub("^\\d+\\.(\\d+)\\..*$", "\\1", version)),
+          third = as.integer(gsub("^.*\\.([0-9]+)$", "\\1", version))
+        ) |> 
+        dplyr::mutate(previous_first = dplyr::lag(first),
+                      previous_second = dplyr::lag(second),
+                      previous_third = dplyr::lag(third)) |> 
+        dplyr::mutate(release_type = dplyr::case_when(
+          is.na(previous_first) ~ "first release",
+          first > previous_first  ~ "major release",
+          second > previous_second  ~ "minor release",
+          third > previous_third  ~ "patch release",
+          .default = NA
+        )) |> 
+        dplyr::select(package_name, version, date, release_type)
+      
+    } else {
+      res <- NULL
+    }
+    
+    res
+  }) |>
+  purrr::compact() |>
+  dplyr::bind_rows() |>
+  mutate(package_name = factor(.data$package_name, levels = rev(packages$package_name)))
+
+packages <- packages |>
+  dplyr::left_join(
+    versions |>
+      group_by(package_name) |>
+      summarise(first_release = min(date), n_releases = dplyr::n()),
+    by = "package_name"
+  ) |>
+  dplyr::mutate(
+    first_release = dplyr::coalesce(as.character(first_release), "-"),
+    n_releases = dplyr::coalesce(n_releases, 0)
+  )
+
+ranges <- packages |>
+  dplyr::select(package_name, organisation) |>
+  purrr::pmap(\(package_name, organisation) {
+    x <- gh::gh("/repos/{owner}/{repo}", owner = organisation, repo  = package_name)
+    dplyr::tibble(
+      package_name = package_name,
+      min_date = min(as.Date(x$created_at), min(versions$date[versions$package_name == package_name])),
+      max_date = Sys.Date()
+    )
+  }) |>
+  dplyr::bind_rows()
+```
+
+## Content
+
+- Motivation and foundations
+- Existing packages overview
+- omopgenerics the core package
+
 ## Motivation
-- OMOP CDM
-- complications to install packages, not in cran, java, contribute to the ecosystem
-- tidyverse
-- no Java code, no SQL code, just R code
+
+-   OMOP CDM
+-   complications to install packages, not in cran, java, contribute to the ecosystem
+-   tidyverse
+-   no Java code, no SQL code, just R code
+
+## Foundation
+
+- dplyr + dbplyr examples
+
+## Create a cdm_reference
+
+## Cronology
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+p1 <- versions |>
+  ggplot() +
+  geom_segment(data = ranges, 
+               aes(x = min_date, xend = max_date,
+                   y = package_name,
+                   yend = package_name),
+               color = "grey90", linewidth = 1.5) +
+  geom_point(aes(date, package_name,
+                 fill = release_type,
+                 size = release_type),
+             shape = 21) +
+  scale_size_manual(
+    values = c("first release" = 3, 
+               "patch release" = 1, 
+               "minor release" = 2, 
+               "major release" = 3)
+  ) +
+  scale_fill_manual(
+    values = c("first release" = "#e41a1c", 
+               "patch release" = "#377eb8", 
+               "minor release" = "#4daf4a", 
+               "major release" = "#984ea3")
+  ) +
+  theme_bw() +
+  ylab("") +
+  xlab("") +
+  # facet_grid(type~., scales = "free_y") +
+  theme(legend.title = element_blank(),
+        legend.position = "top",
+        panel.spacing = unit(0, "lines"))
+p1 <- p1+ theme(
+  axis.text.x = element_blank(), 
+  axis.title.x = element_blank(),
+  axis.ticks.x = element_blank()) 
+
+p2 <- versions |> 
+  mutate(date_floor = lubridate::floor_date(date, unit = "month")) |> 
+  group_by(date_floor) |> 
+  tally() |> 
+  ggplot() +
+  geom_col(aes(date_floor, n), width = 30, colour = "black", fill = "grey70")+
+  theme_bw() +
+  ylab("") +
+  xlab("Releases in month")
+
+rng <- c(min(ranges$min_date), max(ranges$max_date))
+
+p1 <- p1 +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y", limits = rng)
+
+p2 <- p2 +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y", limits = rng)
+
+p1 / p2 +
+  plot_layout(heights = c(4, 1), guides = "collect") &
+  theme(axis.title.x = element_blank(), legend.position = "top")
+```
+
+## Existing packages
+
+```{r, echo=FALSE, results='asis'}
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(htmltools)
+
+# your existing packages tibble must be present in the R session
+card_colors <- c(
+  "Core" = "#e3f2fd",
+  "Back-end" = "#e8f5e9",
+  "Analytics" = "#fff3e0",
+  "Diagnostics" = "#fce4ec",
+  "ETL" = "#ede7f6",
+  "Visualisation" = "#e0f7fa"
+)
+
+# Build a grid of simple cards (no bslib)
+cards_html <- tibble(classification = names(card_colors)) |>
+  left_join(
+    packages %>%
+      separate_rows(classification, sep = ";") %>%
+      mutate(classification = trimws(classification)) %>%
+      group_by(classification) %>%
+      summarise(packages = list(sort(package_name)), .groups = "drop"),
+    by = "classification"
+  ) %>%
+  pmap(function(classification, packages) {
+    # fallback color in case classification not in palette
+    bg <- card_colors[[classification]] %||% "#f5f5f5"
+    tags$div(
+      class = "fragment pkg-card",
+      `data-fragment-index` = NA, # optional: keep DOM order
+      style = paste0(
+        "background:", bg, ";",
+        "border-radius:8px;",
+        "padding:0.8rem;",
+        "box-shadow: 0 2px 6px rgba(0,0,0,0.06);",
+        "min-height: 6rem;"
+      ),
+      tags$div(class = "pkg-card-title", classification),
+      tags$ul(
+        style = "margin:0.4rem 0 0 1rem; padding:0;",
+        lapply(packages, function(p) tags$li(p, style = "font-size:0.88rem; line-height:1.2;"))
+      )
+    )
+  })
+
+# Container with grid styles inserted (scoped CSS)
+out <- tagList(
+  tags$style(HTML("
+    .card-grid { display: grid; gap: 0.8rem; align-items: start; }
+    /* 1 column (small) */
+    .card-grid { grid-template-columns: repeat(1, 1fr); }
+    /* 2 columns on medium screens */
+    @media (min-width: 768px) {
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    /* 3 columns on large screens / projectors */
+    @media (min-width: 992px) {
+      .card-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .pkg-card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem; }
+    .pkg-card { font-size: 0.9rem; }
+    /* optional: make reveal.js fragments a tiny bit smoother */
+    .fragment { transition: transform 240ms ease, opacity 240ms ease; }
+  ")),
+  tags$div(class = "card-grid", cards_html)
+)
+
+# render as HTML for Quarto / revealjs
+out
+```
+
+```{r, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+packages |>
+  dplyr::select(package_name, classification, last_version, title, description, website, github, n_releases, first_release) |>
+  purrr::pmap(\(package_name, classification, last_version, title, description, website, github, n_releases, first_release) {
+    c(
+      paste0("## ", package_name, " (", classification, ")"),
+      "",
+      ". . .",
+      "",
+      paste0("**", title, "**"),
+      "",
+      paste0("Current version: **", last_version, "** First release: *", 
+             first_release, "* Total releases: *", n_releases, "*"),
+      "",
+      paste0("Links: [Website](", website, ") [GitHub Repository](", github, ")"),
+      "",
+      ". . .",
+      "",
+      paste0("*", description, "*"), 
+      ""
+    ) |>
+      paste0(collapse = "\n")
+  }) |>
+  paste0(collapse = "\n\n") |>
+  cat()
+```
+
+## Dependencies
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(igraph)
+library(ggraph)
+library(tidygraph)
+library(tools)
+library(jsonlite)
+library(dplyr)
+library(purrr)
+library(patchwork)
+library(ggplot2)
+library(cranlogs)
+library(bsicons)
+library(ggdag)
+
+dependencies <- packages |>
+  select(package_name, imports) |>
+  tidyr::unnest("imports") |>
+  rename(from = package_name, to = imports) |>
+  mutate(type = "Imports") |>
+  union_all(
+    packages |>
+      select(package_name, suggests) |>
+      tidyr::unnest("suggests") |>
+      rename(from = package_name, to = suggests) |>
+      mutate(type = "Suggests")
+  )
+
+plot_dependencies <- function(dependencies) {
+  g <- as_tbl_graph(graph_from_data_frame(dependencies, directed = TRUE, vertices = pkgs))
+  g <- g %>%
+    mutate(
+      dependencies = centrality_degree(mode = "in")
+    )
+  ggraph(g, layout = "centrality", centrality = dependencies) +
+    geom_edge_arc(aes(linetype = type, color = type),
+                  strength = 0.1, end_cap = circle(4, 'mm'),
+                  arrow = arrow(length = unit(3, 'mm'), type = "closed")) +
+    geom_node_point(aes(fill = dependencies),
+                    shape = 21, colour = "black",
+                    size = 5) +
+    geom_node_text(aes(label = name),
+                   repel = TRUE,
+                   bg.color = "white",
+                   bg.r = 0.15,
+                   size = 4) +
+    scale_edge_linetype_manual(name = "Dependency type",
+                               values = c("Imports" = "solid",
+                                          "Suggests" = "dashed")) +
+    scale_edge_color_manual(name = "Dependency type",
+                            values = c("Imports" = "black",
+                                       "Suggests" = "grey45")) +
+    scale_fill_viridis(name = "Reverse dependencies",
+                       option="mako",
+                       direction = -1) +
+    theme_void() +
+    theme(legend.position = "bottom",
+          legend.box = "veritcal") 
+}
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+dependencies |>
+  filter(type == "Imports") |>
+  plot_dependencies()
+```
+
+## Dependencies
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+dependencies |>
+  plot_dependencies()
+```
+
+## Statistics
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+downloads <- cranlogs::cran_downloads(
+  packages = packages$package_name, 
+  from = as.Date("2022-01-01"), 
+  to = Sys.Date()
+) 
+
+total_per_package <- downloads |> 
+  group_by(package) |> 
+  summarise(total = sum(count)) |> 
+  ungroup()
+
+total <- total_per_package |> 
+  summarise(total = sum(total))
+
+bslib::value_box(
+  title = "Number of R packages",
+  value = nrow(packages),
+  showcase = bsicons::bs_icon("bar-chart")
+)
+
+bslib::value_box(
+  title = "Number of R packages on CRAN",
+  value = total_per_package |> nrow(),
+  showcase = bsicons::bs_icon("bar-chart")
+)
+
+bslib::value_box(
+  title = "Number Releases",
+  value = versions |> nrow(),
+  showcase = bsicons::bs_icon("bar-chart")
+)
+
+bslib::value_box(
+  title = "Total CRAN downloads",
+  value = total |> pull(),
+  showcase = bsicons::bs_icon("bar-chart")
+)
+```
 
 ## Outline
-- classes
-- methods
-- Support more back-ends
-- Build a package on top
+
+-   classes
+-   methods
+-   Support more back-ends
+-   Build a package on top
 
 ## Clases
+
 ### cdm_reference
+
 ### cdm_table
+
 ### cdm_source
+
 ### omop_table
+
 ### achilles_table
+
 ### cohort_table
+
 ### codelist, codelist_with_details, concept_set_expression
+
 ### summarised_result
 
 ## Methods
 
-## Existing packages
-
-1- under development (just GitHub/idea)
-2- initial release
-3- early stages (quite stable, but still to be finalised)
-4- stable
-
-### Core packages
-- omopgenerics 4
-- PatientProfiles 4
-- omock 3
-- visOmopResults 4
-- CodelistGenerator 4
-- CohortConstructor 3
-### back-end packages
-- CDMConnector 4
-- OmopOnSpark 2
-- OmopOnDuckDB 1
-- OmopOnPostgres 1
-- OmopOnSqlServer 1
-### Diagnostics packages
-- OmopSketch 4
-- PhenotypeR 3
-- DrugExposureDiagnostics 4
-- MeasurementDiagnostics 3
-### Analytical packages
-- IncidencePrevalence 4
-- DrugUtilisation 4
-- CohortCharacteristics 4
-- CohortSurvival 4
-- CohortSymmetry 3
-### Supporting packages
-- OmopViewer 3
-- OmopStudyBuilder 1
-- OmopConstructor 2
-
 ## Support more back-ends
 
+- Help wanted
+- Write documentation on how to add more back ends
+
 ## Build a package on top
+
+- Tidy R packages
