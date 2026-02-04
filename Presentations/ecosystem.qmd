@@ -348,6 +348,7 @@ plotCronology <- function(endDate) {
     axis.ticks.x = element_blank()) 
   
   p2 <- versions |> 
+    filter(date <= endDate) |>
     mutate(date_floor = lubridate::floor_date(date, unit = "month")) |> 
     group_by(date_floor) |> 
     tally() |> 

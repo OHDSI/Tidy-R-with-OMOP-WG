@@ -12,6 +12,8 @@ name: Quarto Publish
 
 jobs:
   build-deploy:
+    env:
+      GITHUB_PAT: ${{ secrets.GH_PAT }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
