@@ -55,7 +55,7 @@ packages <- dplyr::tribble(
   "PhenotypeR", "Diagnostics", "ohdsi", "Diagnostics at database level; Diagnostics at codelist level; Diagnostics at cohort level",
   "OmopViewer", "Visualisation", "ohdsi", "Create automatic shiny app from standard results",
   "DrugExposureDiagnostics", "Diagnostics", "darwin-eu", "Diagnostics for drug codelists",
-  "TreatmentPatterns", "Analytics", "darwin-eu", "Analyse treatment sequences and pathways",
+  #"TreatmentPatterns", "Analytics", "darwin-eu", "Analyse treatment sequences and pathways",
   "OmopConstructor", "ETL", "ohdsi", "Generate the observation_period using cdm data; Run Achilles analyses; Create drug_era table;*Create pregnancy algorithm*",
   "OmopOnSpark", "Back-end", "ohdsi", "Create a cdm_reference using spark connection",
   "OmopOnPostgres", "Back-end", "ohdsi", "Create a cdm_reference using postgres connection; *Use postgres indexes*",
@@ -222,9 +222,9 @@ colors <- c(
 ## Motivation
 
 -   OMOP CDM
--   complications to install packages, not in cran, java, contribute to the ecosystem
--   tidyverse
--   no Java code, no SQL code, just R code
+-   Complications to install packages, not in cran, java, contribute to the ecosystem
+-   Tidyverse
+-   No Java code, no SQL code, just R code
 
 ## Foundation
 
