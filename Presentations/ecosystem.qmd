@@ -859,7 +859,7 @@ The class `achilles_table` is a similar protection for the tables coming form th
 ## `cohort_table`
 
 ```{r, echo=FALSE}
-cdm <- mockCdmFromDataset(source = "duckdb")
+cdm <- omock::mockCdmFromDataset(source = "duckdb")
 cdm$my_cohort <- CohortConstructor::conceptCohort(
   cdm = cdm, 
   name = "my_cohort", 
