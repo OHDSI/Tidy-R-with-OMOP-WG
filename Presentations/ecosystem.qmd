@@ -1032,12 +1032,7 @@ The [visOmopResults](https://darwin-eu.github.io/visOmopResults/) provides multi
 - [Create Tables using `summarised_results`](https://darwin-eu.github.io/visOmopResults/articles/a01_tables.html)
 - [Create Plots using `summarised_results`](https://darwin-eu.github.io/visOmopResults/articles/a02_plots.html)
 
-## Support more back-ends
+## Further reading
 
-- Help wanted
-- Write documentation on how to add more back ends
-
-## Build a package on top
-
-- Tidy R packages https://ohdsi.github.io/Tidy-R-programming-with-OMOP/
-- https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/
+- Tidy R packages foundations: <https://ohdsi.github.io/Tidy-R-programming-with-OMOP/>
+- Tidy R packages develioment: <https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/>
