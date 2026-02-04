@@ -353,7 +353,8 @@ plotCronology <- function(endDate) {
     group_by(date_floor) |> 
     tally() |> 
     ggplot() +
-    geom_col(aes(date_floor, n), width = 30, colour = "black", fill = "grey70")+
+    geom_col(aes(date_floor, n), width = 30, colour = "black", fill = "grey70") +
+    ylim(c(0, 20)) +
     theme_bw() +
     ylab("") +
     xlab("Releases in month")
@@ -1033,7 +1034,7 @@ exportConceptSetExpression(codelist, path = here(), type = "json")
 
 . . .
 
-Then later can be also imported:
+Then later can also be imported:
 
 ```{r, eval=FALSE}
 codelist <- importCodelist(path = here(), type = "csv")
@@ -1042,11 +1043,187 @@ codelist <- importConceptSetExpression(path = here(), type = "csv")
 codelist <- importConceptSetExpression(path = here(), type = "json")
 ```
 
+. . .
+
 **JSON file definition is the same than ATLAS and in line with the guidelines of OHDSI TAB.**
 
 ## `summarised_result`
 
-The `summarised_result` is the result model defined by *omopgenerics*
+The `summarised_result` is the result model defined by *omopgenerics*. It contains 13 compulsory columns and it has its own methods.
+
+## `summarised_result`
+
+- `result_id` (1), it is used to identify a group of results with a common settings (see settings below).
+- `cdm_name` (2), it is used to identify the name of the cdm object used to obtain those results.
+- `group_name` (3) - `group_level` (4), these columns work together as a *name-level* pair. A *name-level* pair are two columns that work together to summarise information of multiple other columns. The *name* column contains the column names separated by `&&&` and the *level* column contains the column values separated by `&&&`. Elements in the *name* column must be snake_case. Usually group aggregation is used to show high level aggregations: e.g. cohort name or codelist name.
+- `strata_name` (5) - `strata_level` (6), these columns work together as a *name-level* pair. Usually strata aggregation is used to show stratifications of the results: e.g. age groups or sex.
+- `variable_name` (7), name of the variable of interest.
+- `variable_level` (8), level of the variable of interest, it is usually a subclass of the variable_name.
+- `estimate_name` (9), name of the estimate.
+- `estimate_type` (10), type of the value displayed, the supported types are: `r omopgenerics::estimateTypeChoices()`. 
+- `estimate_value` (11), value of interest.
+- `additional_name` (12) - `additional_level` (13), these columns work together as a *name-level* pair. Usually additional aggregation is used to include the aggregations that did not fit in the group/strata definition.
+
+## `summarised_result`
+
+```{r, echo=FALSE}
+dplyr::tibble(
+  `Column name` = omopgenerics::resultColumns(),
+  `Column type` = c("integer", rep("character", 12)),
+  `is NA allowed?` = c(rep("No", 7), "Yes", rep("No", 5)),
+  `Requirements` = c(NA, NA, "name1", "level1", "name2", "level2", NA, NA, "snake_case", "estimateTypeChoices()", NA, "name3", "level3")
+) |>
+  gt::gt()
+```
+
+## Attributes of `summarised_result`
+
+```{r}
+library(OmopViewer)
+result <- omopViewerResults
+```
+
+. . .
+
+```{r}
+class(result)
+```
+
+. . .
+
+```{r}
+attributes(result)
+```
+
+## `summarised_result`
+
+```{r}
+settings(result)
+```
+
+## Creating a `summarised_result`
+
+## `summarised_result`
+
+
+## Tidy `summarised_result`
+
+You can split the 'group', 'strata' or 'additional' aggregations using:
+
+- `splitGroup()`
+- `splitStrata()`
+- `splitAdditional()`
+
+. . .
+
+You can filter a `summarised_result` object using:
+
+- `filter()`
+- `filterSettings()`
+- `filterGroup()`
+- `filterStrata()`
+- `filterAdditional()`
+
+## `summarised_result`
+
+```{r}
+result |>
+  filterSettings(result_type == "incidence")
+```
+
+## `summarised_result`
+
+```{r}
+result |>
+  filterSettings(result_type == "incidence") |>
+  splitGroup()
+```
+
+## `summarised_result`
+
+```{r}
+result |>
+  filterSettings(result_type == "incidence") |>
+  tidy()
+```
+
+## Creating a `summarised_result`
+
+The inverse of "tidy" can also be done and this is how usually the `summarised_result` object is created.
+
+```{r}
+result <- result |> filterSettings(result_type == "incidence") |> tidy()
+class(result)
+result
+```
+
+## Creating a `summarised_result`
+
+```{r}
+sr_result <- transformToSummarisedResult(
+  x = result,
+  group = c("denominator_cohort_name", "outcome_cohort_name"),
+  additional = c("incidence_start_date", "incidence_end_date", "analysis_interval"),
+  estimates = c("denominator_count", "outcome_count", "person_days", "person_years", "incidence_100000_pys", "incidence_100000_pys_95CI_lower", "incidence_100000_pys_95CI_upper"),
+  settings = c("analysis_censor_cohort_name", "analysis_complete_database_intervals", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_requirements_at_entry", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk")
+)
+sr_result
+```
+
+## Creating a `summarised_result`
+
+```{r}
+class(sr_result)
+```
+
+. . .
+
+```{r}
+settings(sr_result)
+```
+
+## Summarise data
+
+You can also use [PatientProfiles](https://darwin-eu.github.io/PatientProfiles/) to summarise data from a dataset into summarised result:
+
+. . .
+
+```{r}
+library(PatientProfiles)
+result <- summariseResult(
+  table = penguins,
+  group = "species",
+  strata = "island",
+  variables = list(
+    c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"),
+    "sex",
+    "year"
+  ),
+  estimates = list(
+    c("mean", "sd", "percentage_missing"),
+    c("count", "percentage", "percentage_missing"),
+    c("median", "q25", "q75", "percentage_missing")
+  )
+)
+```
+
+## Summarise data
+
+```{r}
+class(result)
+```
+
+. . .
+
+```{r}
+settings(result)
+```
+
+. . .
+
+```{r}
+tidy(result)
+```
 
 ## Visualisations with `summarised_result`
 
@@ -1054,6 +1231,16 @@ The [visOmopResults](https://darwin-eu.github.io/visOmopResults/) provides multi
 
 - [Create Tables using `summarised_results`](https://darwin-eu.github.io/visOmopResults/articles/a01_tables.html)
 - [Create Plots using `summarised_results`](https://darwin-eu.github.io/visOmopResults/articles/a02_plots.html)
+
+## Reexporting omopgenerics
+
+https://darwin-eu.github.io/omopgenerics/
+
+https://darwin-eu.github.io/omopgenerics/articles/reexport.html
+
+## Expanding omopgenerics
+
+https://darwin-eu.github.io/omopgenerics/articles/expanding_omopgenerics.html
 
 ## Further reading
 
