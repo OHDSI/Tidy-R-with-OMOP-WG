@@ -217,10 +217,10 @@
 <section id="motivation" class="slide level2">
 <h2>Motivation</h2>
 <ul>
-<li class="fragment">OMOP CDM</li>
+<li class="fragment">OMOP CDM the OMOP CDM is a fix structure that is known and all data is structured in the same way.</li>
 <li class="fragment">Complications to install packages, not in cran, java, contribute to the ecosystem</li>
-<li class="fragment">Tidyverse</li>
-<li class="fragment">No Java code, no SQL code, just R code</li>
+<li class="fragment">Tidyverse. Complete set of package for data manipulation: <a href="https://tidyverse.org/" class="uri">https://tidyverse.org/</a></li>
+<li class="fragment">No Java code, no SQL code, just <strong>R</strong> code</li>
 </ul>
 </section>
 <section id="foundation" class="slide level2">
@@ -883,7 +883,7 @@ FROM (
 <section id="classes" class="slide level2">
 <h2>Classes</h2>
 <ul>
-<li class="fragment">The CDM refernce object: <code>cdm_reference</code>, <code>cdm_source</code>, <code>local_source</code></li>
+<li class="fragment">The CDM reference object: <code>cdm_reference</code>, <code>cdm_source</code>, <code>local_source</code></li>
 <li class="fragment">CDM tables: <code>cdm_table</code>, <code>omop_table</code>, <code>achilles_table</code>, <code>cohort_table</code></li>
 <li class="fragment">Code lists: <code>codelist</code>, <code>codelist_with_details</code>, <code>concept_set_expression</code></li>
 <li class="fragment">Result model: <code>summaried_result</code></li>
@@ -892,6 +892,7 @@ FROM (
 <section id="cdm_reference" class="slide level2">
 <h2><code>cdm_reference</code></h2>
 <p>The <code>cdm_reference</code> is the center of the ecosystem, it is a list with a reference to the different OMOP CDM tables. In general we will create a <code>cdm_reference</code> with the <em>CDMConnector</em> package:</p>
+<div class="fragment">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CDMConnector)</span>
 <span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(</span>
@@ -900,10 +901,12 @@ FROM (
 <span id="cb9-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">writeSchema =</span> <span class="st">"results"</span>,</span>
 <span id="cb9-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">writePrefix =</span> <span class="st">"mc_"</span>,</span>
 <span id="cb9-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmName =</span> <span class="st">"my OMOP"</span></span>
-<span id="cb9-8"><a aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-9"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-8"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
+<div class="fragment">
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -927,33 +930,42 @@ visit_occurrence, vocabulary</code></pre>
 <pre><code>• other tables: -</code></pre>
 </div>
 </div>
+</div>
 </section>
 <section id="cdm_reference-1" class="slide level2">
 <h2><code>cdm_reference</code></h2>
 <p>The <code>cdm_reference</code> object contains several attributes:</p>
+<div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics)</span>
-<span id="cb16-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics)</span>
+<span id="cb17-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "my OMOP"</code></pre>
 </div>
 </div>
+</div>
+<div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "5.3"</code></pre>
 </div>
 </div>
+</div>
+<div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmSource</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmSource</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>This is a duckdb cdm source</code></pre>
 </div>
 </div>
+</div>
+<div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sourceType</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sourceType</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "duckdb"</code></pre>
+</div>
 </div>
 </div>
 </section>
@@ -962,11 +974,11 @@ visit_occurrence, vocabulary</code></pre>
 <p>You can use the <code>cdm_reference</code> object to insert, list, drop or read tables in using the same source of the <code>cdm_reference</code>.</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">insertTable</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"my_table"</span>, <span class="at">table =</span> cars)</span>
-<span id="cb24-2"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">insertTable</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"my_table"</span>, <span class="at">table =</span> cars)</span>
+<span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_my_table&gt; [?? x 2]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpehMAIj/file1ea91e8efdc0.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpd7bc2i/file1dc75067437d.duckdb]
    speed  dist
    &lt;dbl&gt; &lt;dbl&gt;
  1     4     2
@@ -983,18 +995,19 @@ visit_occurrence, vocabulary</code></pre>
 </div>
 </div>
 </div>
-<div class="fragment">
+</section>
+<section id="cdm_reference-3" class="slide level2">
+<h2><code>cdm_reference</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">listSourceTables</span>(<span class="at">cdm =</span> cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">listSourceTables</span>(<span class="at">cdm =</span> cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "my_table"</code></pre>
 </div>
 </div>
-</div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_table <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb28-2"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_table <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb29-2"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -1019,10 +1032,12 @@ visit_occurrence, vocabulary</code></pre>
 </div>
 </div>
 </div>
-<div class="fragment">
+</section>
+<section id="cdm_reference-4" class="slide level2">
+<h2><code>cdm_reference</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">readSourceTable</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"my_table"</span>)</span>
-<span id="cb35-2"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">readSourceTable</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"my_table"</span>)</span>
+<span id="cb36-2"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -1046,11 +1061,12 @@ visit_occurrence, vocabulary</code></pre>
 <pre><code>• other tables: my_table</code></pre>
 </div>
 </div>
-</div>
-<div class="fragment">
+</section>
+<section id="cdm_reference-5" class="slide level2">
+<h2><code>cdm_reference</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">dropSourceTable</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"my_table"</span>)</span>
-<span id="cb42-2"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">dropSourceTable</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"my_table"</span>)</span>
+<span id="cb43-2"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -1073,10 +1089,9 @@ visit_occurrence, vocabulary</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>• other tables: -</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">listSourceTables</span>(<span class="at">cdm =</span> cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">listSourceTables</span>(<span class="at">cdm =</span> cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>character(0)</code></pre>
-</div>
 </div>
 </div>
 </section>
@@ -1095,16 +1110,18 @@ visit_occurrence, vocabulary</code></pre>
 <div class="fragment">
 <p>To create a new <code>cdm_source</code> object you can use <code>newCdmSource()</code>.</p>
 </div>
-<div class="fragment">
+</section>
+<section id="cdm_source-1" class="slide level2">
+<h2><code>cdm_source</code></h2>
 <p>For example for CDMConnector ths source contains the connection and the writeSchema:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omock)</span>
-<span id="cb51-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics)</span>
-<span id="cb51-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-4"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">mockCdmFromDataset</span>(<span class="at">source =</span> <span class="st">"duckdb"</span>)</span>
-<span id="cb51-5"><a aria-hidden="true" tabindex="-1"></a>src <span class="ot">&lt;-</span> <span class="fu">cdmSource</span>(cdm)</span>
-<span id="cb51-6"><a aria-hidden="true" tabindex="-1"></a>src</span>
-<span id="cb51-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">unclass</span>(src)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omock)</span>
+<span id="cb52-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics)</span>
+<span id="cb52-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">mockCdmFromDataset</span>(<span class="at">source =</span> <span class="st">"duckdb"</span>)</span>
+<span id="cb52-5"><a aria-hidden="true" tabindex="-1"></a>src <span class="ot">&lt;-</span> <span class="fu">cdmSource</span>(cdm)</span>
+<span id="cb52-6"><a aria-hidden="true" tabindex="-1"></a>src</span>
+<span id="cb52-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">unclass</span>(src)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>list()
 attr(,"dbcon")</code></pre>
@@ -1117,14 +1134,13 @@ attr(,"source_type")
 [1] "duckdb"</code></pre>
 </div>
 </div>
-</div>
 </section>
-<section id="cdm_source-1" class="slide level2">
+<section id="cdm_source-2" class="slide level2">
 <h2><code>cdm_source</code></h2>
 <p>You can summarise the properties of a <code>cdm_source</code> object using <code>summary()</code></p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(src)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(src)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>This is a [1m[36mduckdb[0m source created by [3m[36mCDMConnector[0m package:
  ∙ [34mwrite_schema[0m: `results`
@@ -1142,7 +1158,7 @@ attr(,"source_type")
 <p>A <code>cdm_table</code> object is a table that comes from a <code>cdm_reference</code>:</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "omop_table"            "cdm_table"             "tbl_duckdb_connection" "tbl_dbi"              
 [5] "tbl_sql"               "tbl_lazy"              "tbl"                  </code></pre>
@@ -1152,7 +1168,7 @@ attr(,"source_type")
 <div class="fragment">
 <p>The <code>cdm_table</code> will always include the reference where they come from, so we will be able to access other tables of the same <code>cdm_reference</code> object:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmReference</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmReference</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -1182,43 +1198,53 @@ visit_occurrence, vocabulary</code></pre>
 <h2><code>cdm_table</code></h2>
 <p>The fact that contains the <code>cdm_refernce</code> object allow us to also access the same properties that we had before:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "GiBleed"</code></pre>
 </div>
 </div>
+<div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "5.3"</code></pre>
 </div>
 </div>
+</div>
+<div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmSource</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmSource</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>This is a duckdb cdm source</code></pre>
 </div>
 </div>
+</div>
+<div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sourceType</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sourceType</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "duckdb"</code></pre>
+</div>
 </div>
 </div>
 </section>
 <section id="cdm_table-2" class="slide level2">
 <h2><code>cdm_table</code></h2>
 <p>On top of that extra attributes can be obtained:</p>
+<div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tableName</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tableName</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "person"</code></pre>
 </div>
 </div>
+</div>
+<div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tableSource</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tableSource</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>This is a duckdb cdm source</code></pre>
+</div>
 </div>
 </div>
 </section>
@@ -1227,7 +1253,7 @@ visit_occurrence, vocabulary</code></pre>
 <p>The <code>omop_table</code> is a subclass of <code>cdm_table</code> that protects the OMOP CDM integrity and validates the OMOP CDM standard tables.</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "omop_table"            "cdm_table"             "tbl_duckdb_connection" "tbl_dbi"              
 [5] "tbl_sql"               "tbl_lazy"              "tbl"                  </code></pre>
@@ -1237,8 +1263,8 @@ visit_occurrence, vocabulary</code></pre>
 <div class="fragment">
 <p>For example we can not remove required columns from <code>omop_tables</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
-<span id="cb79-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="st">"person_id"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
+<span id="cb80-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="st">"person_id"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `newOmopTable()`:
 ! person_id is not present in table person</code></pre>
@@ -1248,7 +1274,7 @@ visit_occurrence, vocabulary</code></pre>
 <div class="fragment">
 <p>Or assign tables that are not named the same way:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>drug_exposure</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>drug_exposure</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `[[&lt;-`:
 ✖ You can't assign a table named drug_exposure to person.
@@ -1259,18 +1285,20 @@ cdm[['person']] &lt;- yourObject |&gt;
 </div>
 </div>
 </div>
-<div class="fragment">
+</section>
+<section id="omop_table-1" class="slide level2">
+<h2><code>omop_table</code></h2>
 <p>But this does not mean that we can not modify them, we can add columns and/or change its content:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
-<span id="cb83-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(person_id <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">|&gt;</span></span>
-<span id="cb83-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">extra_col =</span> <span class="st">"my_content"</span>)</span>
-<span id="cb83-4"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
-<span id="cb83-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
+<span id="cb84-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(person_id <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">|&gt;</span></span>
+<span id="cb84-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">extra_col =</span> <span class="st">"my_content"</span>)</span>
+<span id="cb84-4"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
+<span id="cb84-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 19
-Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpehMAIj/file1ea93f8f2e0d.duckdb]
+Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpd7bc2i/file1dc754c0f8b8.duckdb]
 $ person_id                   &lt;int&gt; 6
 $ gender_concept_id           &lt;int&gt; 8532
 $ year_of_birth               &lt;int&gt; 1963
@@ -1292,17 +1320,16 @@ $ ethnicity_source_concept_id &lt;int&gt; 0
 $ extra_col                   &lt;chr&gt; "my_content"</code></pre>
 </div>
 </div>
-</div>
 </section>
 <section id="achilles_table" class="slide level2">
 <h2><code>achilles_table</code></h2>
-<p>The class <code>achilles_table</code> is a similar protection for the tables coming form the achilles analyses.</p>
+<p>The class <code>achilles_table</code> is a similar protection for the tables coming form the <a href="">Achilles</a> analyses.</p>
 </section>
 <section id="cohort_table" class="slide level2">
 <h2><code>cohort_table</code></h2>
 <p>The <code>cohort_table</code> class is a class built on top of <code>cdm_table</code> (it has all the functionalities seen for <code>cdm_table</code>) with some extra attributes.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -1328,29 +1355,29 @@ visit_occurrence, vocabulary</code></pre>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_my_cohort&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpehMAIj/file1ea97b100ae3.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpd7bc2i/file1dc726549f72.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1        431 1951-11-16        1951-11-23     
- 2                    1        842 1952-02-13        1952-02-20     
- 3                    1       1146 1994-09-08        1994-09-15     
- 4                    1       1314 1980-07-20        1980-08-10     
- 5                    1       1381 1984-06-10        1984-06-24     
- 6                    1       2073 2006-01-10        2006-01-31     
- 7                    1       2591 2009-06-16        2009-06-30     
- 8                    1       2677 1995-05-08        1995-05-29     
- 9                    1       2782 1939-08-24        1939-08-31     
-10                    1       3040 1980-01-26        1980-02-09     
+ 1                    1        399 2000-10-18        2000-11-08     
+ 2                    1        782 1961-01-25        1961-02-15     
+ 3                    1       1232 1980-05-14        1980-05-21     
+ 4                    1       1280 1956-11-11        1956-12-02     
+ 5                    1       1280 2009-05-16        2009-05-30     
+ 6                    1       1338 2003-10-06        2003-10-20     
+ 7                    1       1973 1983-03-01        1983-03-08     
+ 8                    1       2704 1979-11-06        1979-11-20     
+ 9                    1       2957 1954-03-02        1954-03-16     
+10                    1       2959 2001-04-19        2001-05-10     
 # ℹ more rows</code></pre>
 </div>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "cohort_table"          "cdm_table"             "GeneratedCohortSet"    "tbl_duckdb_connection"
 [5] "tbl_dbi"               "tbl_sql"               "tbl_lazy"              "tbl"                  </code></pre>
@@ -1361,7 +1388,7 @@ visit_occurrence, vocabulary</code></pre>
 <section id="cohort_table-1" class="slide level2">
 <h2><code>cohort_table</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$names
 [1] "src"        "lazy_query"
@@ -1379,7 +1406,7 @@ $tbl_name
 
 $cohort_set
 # Source:   table&lt;results.test_my_cohort_set&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpehMAIj/file1ea97b100ae3.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpd7bc2i/file1dc726549f72.duckdb]
   cohort_definition_id cohort_name cdm_version vocabulary_version
                  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             
 1                    1 cohort1     5.3         v5.0 18-JAN-19    
@@ -1387,7 +1414,7 @@ $cohort_set
 
 $cohort_attrition
 # Source:   table&lt;results.test_my_cohort_attrition&gt; [?? x 7]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpehMAIj/file1ea97b100ae3.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpd7bc2i/file1dc726549f72.duckdb]
   cohort_definition_id number_records number_subjects reason_id reason                excluded_records excluded_subjects
                  &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;                            &lt;int&gt;             &lt;int&gt;
 1                    1          17268            2686         1 Initial qualifying e…                0                 0
@@ -1401,7 +1428,7 @@ $cohort_attrition
 
 $cohort_codelist
 # Source:   table&lt;results.test_my_cohort_codelist&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpehMAIj/file1ea97b100ae3.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpd7bc2i/file1dc726549f72.duckdb]
   cohort_definition_id codelist_name concept_id codelist_type
                  &lt;int&gt; &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;        
 1                    1 cohort1         40481087 index event  
@@ -1416,7 +1443,7 @@ $cdm_reference</code></pre>
 <p>We can access those attributes:</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   cohort_definition_id cohort_name cdm_version vocabulary_version
@@ -1428,7 +1455,7 @@ $cdm_reference</code></pre>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   cohort_definition_id number_records number_subjects
@@ -1442,7 +1469,7 @@ $cdm_reference</code></pre>
 <section id="cohort_table-3" class="slide level2">
 <h2><code>cohort_table</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 7
   cohort_definition_id number_records number_subjects reason_id reason                excluded_records excluded_subjects
@@ -1462,14 +1489,14 @@ $cdm_reference</code></pre>
 <h2><code>cohort_table</code></h2>
 <p>We can easily update the attrition as:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort <span class="ot">&lt;-</span> cdm<span class="sc">$</span>my_cohort <span class="sc">|&gt;</span></span>
-<span id="cb105-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subject_id <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb105-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"my_cohort"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb105-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">recordCohortAttrition</span>(<span class="st">"Onlye even subjects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort <span class="ot">&lt;-</span> cdm<span class="sc">$</span>my_cohort <span class="sc">|&gt;</span></span>
+<span id="cb106-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subject_id <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb106-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"my_cohort"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb106-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">recordCohortAttrition</span>(<span class="st">"Onlye even subjects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   cohort_definition_id number_records number_subjects
@@ -1477,7 +1504,7 @@ $cdm_reference</code></pre>
 1                    1           8574            1339
 2                    2           5072            1299</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 7
    cohort_definition_id number_records number_subjects reason_id reason               excluded_records excluded_subjects
@@ -1508,8 +1535,8 @@ $cdm_reference</code></pre>
 <section id="codelist" class="slide level2">
 <h2><code>codelist</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">my_codes =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">condition2 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)))</span>
-<span id="cb110-2"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">my_codes =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">condition2 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)))</span>
+<span id="cb111-2"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -1523,7 +1550,7 @@ $cdm_reference</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2 3</code></pre>
 </div>
@@ -1532,18 +1559,18 @@ $cdm_reference</code></pre>
 <section id="codelist_with_details" class="slide level2">
 <h2><code>codelist_with_details</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb116-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">my_codes =</span> <span class="fu">tibble</span>(</span>
-<span id="cb116-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">1</span>L, <span class="dv">2</span>L, <span class="dv">3</span>L),</span>
-<span id="cb116-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">extra_properties =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>)</span>
-<span id="cb116-5"><a aria-hidden="true" tabindex="-1"></a>  ), </span>
-<span id="cb116-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">condition2 =</span> <span class="fu">tibble</span>(</span>
-<span id="cb116-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">3</span>L, <span class="dv">4</span>L),</span>
-<span id="cb116-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_name =</span> <span class="fu">c</span>(<span class="st">"code 3"</span>, <span class="st">"code 4"</span>)</span>
-<span id="cb116-9"><a aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb116-10"><a aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb116-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">newCodelistWithDetails</span>()</span>
-<span id="cb116-12"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb117-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">my_codes =</span> <span class="fu">tibble</span>(</span>
+<span id="cb117-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">1</span>L, <span class="dv">2</span>L, <span class="dv">3</span>L),</span>
+<span id="cb117-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">extra_properties =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>)</span>
+<span id="cb117-5"><a aria-hidden="true" tabindex="-1"></a>  ), </span>
+<span id="cb117-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">condition2 =</span> <span class="fu">tibble</span>(</span>
+<span id="cb117-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">3</span>L, <span class="dv">4</span>L),</span>
+<span id="cb117-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_name =</span> <span class="fu">c</span>(<span class="st">"code 3"</span>, <span class="st">"code 4"</span>)</span>
+<span id="cb117-9"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb117-10"><a aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb117-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">newCodelistWithDetails</span>()</span>
+<span id="cb117-12"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -1557,7 +1584,7 @@ $cdm_reference</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   concept_id extra_properties
@@ -1574,8 +1601,8 @@ $cdm_reference</code></pre>
 <section id="codelist-2" class="slide level2">
 <h2><code>codelist</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">my_codes =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">condition2 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)))</span>
-<span id="cb122-2"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">my_codes =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">condition2 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)))</span>
+<span id="cb123-2"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -1589,7 +1616,7 @@ $cdm_reference</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2 3</code></pre>
 </div>
@@ -1598,22 +1625,22 @@ $cdm_reference</code></pre>
 <section id="concept_set_expression" class="slide level2">
 <h2><code>concept_set_expression</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb128-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">my_codes =</span> <span class="fu">tibble</span>(</span>
-<span id="cb128-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">1</span>L, <span class="dv">2</span>L, <span class="dv">3</span>L),</span>
-<span id="cb128-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">descendants =</span> <span class="fu">c</span>(T, F, T),</span>
-<span id="cb128-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">excluded =</span> <span class="fu">c</span>(F, T, F),</span>
-<span id="cb128-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mapped =</span> F</span>
-<span id="cb128-7"><a aria-hidden="true" tabindex="-1"></a>  ), </span>
-<span id="cb128-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">condition2 =</span> <span class="fu">tibble</span>(</span>
-<span id="cb128-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">3</span>L, <span class="dv">4</span>L),</span>
-<span id="cb128-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">descendants =</span> <span class="fu">c</span>(T, F),</span>
-<span id="cb128-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">excluded =</span> <span class="fu">c</span>(F, T),</span>
-<span id="cb128-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mapped =</span> F</span>
-<span id="cb128-13"><a aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb128-14"><a aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb128-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">newConceptSetExpression</span>()</span>
-<span id="cb128-16"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb129-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">my_codes =</span> <span class="fu">tibble</span>(</span>
+<span id="cb129-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">1</span>L, <span class="dv">2</span>L, <span class="dv">3</span>L),</span>
+<span id="cb129-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">descendants =</span> <span class="fu">c</span>(T, F, T),</span>
+<span id="cb129-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">excluded =</span> <span class="fu">c</span>(F, T, F),</span>
+<span id="cb129-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mapped =</span> F</span>
+<span id="cb129-7"><a aria-hidden="true" tabindex="-1"></a>  ), </span>
+<span id="cb129-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">condition2 =</span> <span class="fu">tibble</span>(</span>
+<span id="cb129-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">3</span>L, <span class="dv">4</span>L),</span>
+<span id="cb129-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">descendants =</span> <span class="fu">c</span>(T, F),</span>
+<span id="cb129-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">excluded =</span> <span class="fu">c</span>(F, T),</span>
+<span id="cb129-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mapped =</span> F</span>
+<span id="cb129-13"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb129-14"><a aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb129-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">newConceptSetExpression</span>()</span>
+<span id="cb129-16"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -1627,7 +1654,7 @@ $cdm_reference</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   concept_id excluded descendants mapped
@@ -1643,9 +1670,9 @@ $cdm_reference</code></pre>
 <p><em>omopgenerics</em> contains methods so that combining and subsetting codelists will preserve the class object:</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a aria-hidden="true" tabindex="-1"></a>codelist1 <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">concept_1 =</span> <span class="dv">1</span>L, <span class="at">anxiety =</span> <span class="fu">c</span>(<span class="dv">4</span>L, <span class="dv">5</span>L)))</span>
-<span id="cb134-2"><a aria-hidden="true" tabindex="-1"></a>codelist2 <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">hypertension =</span> <span class="dv">6</span>L))</span>
-<span id="cb134-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(codelist1, codelist2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a aria-hidden="true" tabindex="-1"></a>codelist1 <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">concept_1 =</span> <span class="dv">1</span>L, <span class="at">anxiety =</span> <span class="fu">c</span>(<span class="dv">4</span>L, <span class="dv">5</span>L)))</span>
+<span id="cb135-2"><a aria-hidden="true" tabindex="-1"></a>codelist2 <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">hypertension =</span> <span class="dv">6</span>L))</span>
+<span id="cb135-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(codelist1, codelist2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 - anxiety (2 codes)
@@ -1656,7 +1683,7 @@ $cdm_reference</code></pre>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a aria-hidden="true" tabindex="-1"></a>codelist1[<span class="st">"anxiety"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a aria-hidden="true" tabindex="-1"></a>codelist1[<span class="st">"anxiety"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 - anxiety (2 codes)</code></pre>
@@ -1683,20 +1710,20 @@ $cdm_reference</code></pre>
 <p><code>codelist</code> and <code>concept_set_expressions</code> can be exported in <code>json</code> or <code>csv</code> format:</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb138-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportCodelist</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
-<span id="cb138-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportCodelist</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span>
-<span id="cb138-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportConceptSetExpression</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
-<span id="cb138-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportConceptSetExpression</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb139-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportCodelist</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb139-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportCodelist</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span>
+<span id="cb139-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportConceptSetExpression</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb139-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportConceptSetExpression</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="fragment">
 <p>Then later can be also imported:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importCodelist</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
-<span id="cb139-2"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importCodelist</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span>
-<span id="cb139-3"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importConceptSetExpression</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
-<span id="cb139-4"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importConceptSetExpression</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importCodelist</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb140-2"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importCodelist</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span>
+<span id="cb140-3"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importConceptSetExpression</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb140-4"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importConceptSetExpression</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>JSON file definition is the same than ATLAS and in line with the guidelines of OHDSI TAB.</strong></p>
 </div>
