@@ -221,10 +221,10 @@ colors <- c(
 
 ## Motivation
 
--   OMOP CDM
+-   OMOP CDM the OMOP CDM is a fix structure that is known and all data is structured in the same way.
 -   Complications to install packages, not in cran, java, contribute to the ecosystem
--   Tidyverse
--   No Java code, no SQL code, just R code
+-   Tidyverse. Complete set of package for data manipulation: <https://tidyverse.org/>
+-   No Java code, no SQL code, just **R** code
 
 ## Foundation
 
@@ -586,7 +586,7 @@ Provides definitions of core **classes** and **methods** used by analytic pipeli
 
 ## Classes
 
-- The CDM refernce object: `cdm_reference`, `cdm_source`, `local_source`
+- The CDM reference object: `cdm_reference`, `cdm_source`, `local_source`
 - CDM tables: `cdm_table`, `omop_table`, `achilles_table`, `cohort_table`
 - Code lists: `codelist`, `codelist_with_details`, `concept_set_expression`
 - Result model: `summaried_result`
@@ -594,6 +594,8 @@ Provides definitions of core **classes** and **methods** used by analytic pipeli
 ## `cdm_reference`
 
 The `cdm_reference` is the center of the ecosystem, it is a list with a reference to the different OMOP CDM tables. In general we will create a `cdm_reference` with the *CDMConnector* package:
+
+. . .
 
 ```{r, eval= FALSE}
 library(CDMConnector)
@@ -604,13 +606,15 @@ cdm <- cdmFromCon(
   writePrefix = "mc_",
   cdmName = "my OMOP"
 )
-cdm
 ```
+
+. . .
+
 ```{r, echo=FALSE}
 cdm <- omock::mockCdmFromDataset(source = "duckdb")
 attr(cdm, "cdm_name") <- "my OMOP"
 ```
-```{r, echo=FALSE,message=TRUE}
+```{r, message=TRUE}
 cdm
 ```
 
@@ -618,18 +622,26 @@ cdm
 
 The `cdm_reference` object contains several attributes:
 
+. . .
+
 ```{r}
 library(omopgenerics)
 cdmName(cdm)
 ```
 
+. . .
+
 ```{r}
 cdmVersion(cdm)
 ```
 
+. . .
+
 ```{r, message=TRUE}
 cdmSource(cdm)
 ```
+
+. . .
 
 ```{r}
 sourceType(cdm)
@@ -646,7 +658,7 @@ cdm <- insertTable(cdm = cdm, name = "my_table", table = cars)
 cdm$my_table
 ```
 
-. . .
+## `cdm_reference`
 
 ```{r}
 listSourceTables(cdm = cdm)
@@ -659,14 +671,14 @@ cdm$my_table <- NULL
 cdm
 ```
 
-. . .
+## `cdm_reference`
 
 ```{r, message=TRUE}
 cdm <- readSourceTable(cdm = cdm, name = "my_table")
 cdm
 ```
 
-. . .
+## `cdm_reference`
 
 ```{r, message=TRUE}
 cdm <- dropSourceTable(cdm = cdm, name = "my_table")
@@ -691,7 +703,7 @@ At the creation of the `cdm_source` object all these steps will be checked (that
 
 To create a new `cdm_source` object you can use `newCdmSource()`.
 
-. . .
+## `cdm_source`
 
 For example for CDMConnector ths source contains the connection and the writeSchema:
 
@@ -745,13 +757,19 @@ The fact that contains the `cdm_refernce` object allow us to also access the sam
 cdmName(cdm$person)
 ```
 
+. . .
+
 ```{r}
 cdmVersion(cdm$person)
 ```
 
+. . .
+
 ```{r, message=TRUE}
 cdmSource(cdm$person)
 ```
+
+. . .
 
 ```{r}
 sourceType(cdm)
@@ -761,9 +779,13 @@ sourceType(cdm)
 
 On top of that extra attributes can be obtained:
 
+. . .
+
 ```{r}
 tableName(cdm$person)
 ```
+
+. . .
 
 ```{r, message=TRUE}
 tableSource(cdm$person)
@@ -796,7 +818,7 @@ Or assign tables that are not named the same way:
 cdm$person <- cdm$drug_exposure
 ```
 
-. . .
+## `omop_table`
 
 But this does not mean that we can not modify them, we can add columns and/or change its content:
 
@@ -810,7 +832,7 @@ cdm$person |>
 
 ## `achilles_table`
 
-The class `achilles_table` is a similar protection for the tables coming form the achilles analyses.
+The class `achilles_table` is a similar protection for the tables coming form the [Achilles]() analyses.
 
 ## `cohort_table`
 
