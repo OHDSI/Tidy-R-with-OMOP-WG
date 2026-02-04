@@ -1101,10 +1101,75 @@ attributes(result)
 settings(result)
 ```
 
-## Creating a `summarised_result`
+## `summarised_result`
+
+```{r}
+resultPackageVersion(result)
+```
 
 ## `summarised_result`
 
+```{r}
+isResultSuppressed(result)
+```
+
+## `summarised_result`
+
+```{r}
+result <- suppress(result = result, minCellCount = 10)
+isResultSuppressed(result)
+```
+
+## Creating a `summarised_result`
+
+You can create a `summarised_result` object with `newSummarisedResult()`:
+
+```{r}
+sr <- newSummarisedResult(
+  x = tibble(
+    result_id = 1L,
+    cdm_name = "My OMOP Instance",
+    group_name = "cohort_name",
+    group_level = "acetaminophen",
+    strata_name = "sex",
+    strata_level = "Female",
+    variable_name = c("Nuber subjects", rep("Age", 3)),
+    variable_level = NA_character_,
+    estimate_name = c("count", "median", "q25", "q75"),
+    estimate_type = "integer",
+    estimate_value = c("100", "40", "25", "58"),
+    additional_name = "overall",
+    additional_level = "overall"
+  ),
+  settings = tibble(
+    result_id = 1L,
+    result_type = "characterisation",
+    package_name = "MyNewPackage",
+    package_version = "1.0.0",
+    time = "years"
+  )
+)
+```
+
+## `summarised_result`
+
+. . .
+
+```{r}
+class(sr)
+```
+
+. . .
+
+```{r}
+sr
+```
+
+## `summarised_result`
+
+```{r}
+settings(sr)
+```
 
 ## Tidy `summarised_result`
 
@@ -1232,17 +1297,10 @@ The [visOmopResults](https://darwin-eu.github.io/visOmopResults/) provides multi
 - [Create Tables using `summarised_results`](https://darwin-eu.github.io/visOmopResults/articles/a01_tables.html)
 - [Create Plots using `summarised_results`](https://darwin-eu.github.io/visOmopResults/articles/a02_plots.html)
 
-## Reexporting omopgenerics
-
-https://darwin-eu.github.io/omopgenerics/
-
-https://darwin-eu.github.io/omopgenerics/articles/reexport.html
-
-## Expanding omopgenerics
-
-https://darwin-eu.github.io/omopgenerics/articles/expanding_omopgenerics.html
-
 ## Further reading
 
+- The **omopgenerics** website: <https://darwin-eu.github.io/omopgenerics/>
+- Reexporting from *omopgenerics*: <https://darwin-eu.github.io/omopgenerics/articles/reexport.html>
+- Expanding *omopgenerics*: <https://darwin-eu.github.io/omopgenerics/articles/expanding_omopgenerics.html>
 - Tidy R packages foundations: <https://ohdsi.github.io/Tidy-R-programming-with-OMOP/>
-- Tidy R packages develioment: <https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/>
+- Tidy R packages development: <https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/>
