@@ -978,7 +978,7 @@ visit_occurrence, vocabulary</code></pre>
 <span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_my_table&gt; [?? x 2]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpRcjD6V/file24993f4feafe.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpvYBpv6/file1de8a2e9a51.duckdb]
    speed  dist
    &lt;dbl&gt; &lt;dbl&gt;
  1     4     2
@@ -1298,7 +1298,7 @@ cdm[['person']] &lt;- yourObject |&gt;
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 19
-Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpRcjD6V/file24995201cf8d.duckdb]
+Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpvYBpv6/file1de868479495.duckdb]
 $ person_id                   &lt;int&gt; 6
 $ gender_concept_id           &lt;int&gt; 8532
 $ year_of_birth               &lt;int&gt; 1963
@@ -1358,19 +1358,19 @@ visit_occurrence, vocabulary</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_my_cohort&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpRcjD6V/file24991d31dcaf.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpvYBpv6/file1de86128bebd.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1        119 1968-04-07        1968-04-21     
- 2                    1        335 2006-11-03        2006-11-17     
- 3                    1        580 1974-09-08        1974-09-29     
- 4                    1        752 1953-06-10        1953-06-24     
- 5                    1       1128 1996-07-08        1996-07-29     
- 6                    1       1149 1983-09-12        1983-10-03     
- 7                    1       1516 1992-10-05        1992-10-19     
- 8                    1       1911 2002-08-06        2002-08-20     
- 9                    1       2091 2016-05-28        2016-06-18     
-10                    1       2622 1992-10-01        1992-10-15     
+ 1                    1        820 2017-09-21        2017-09-28     
+ 2                    1        948 1991-07-18        1991-08-08     
+ 3                    1       1292 2014-12-12        2014-12-19     
+ 4                    1       1314 1978-06-01        1978-06-22     
+ 5                    1       2175 2004-06-09        2004-06-23     
+ 6                    1       2541 1990-01-31        1990-02-07     
+ 7                    1       2649 1984-02-10        1984-02-24     
+ 8                    1       3719 1964-02-09        1964-02-23     
+ 9                    1       4282 2012-05-25        2012-06-01     
+10                    1       5078 1925-05-17        1925-05-24     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -1406,7 +1406,7 @@ $tbl_name
 
 $cohort_set
 # Source:   table&lt;results.test_my_cohort_set&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpRcjD6V/file24991d31dcaf.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpvYBpv6/file1de86128bebd.duckdb]
   cohort_definition_id cohort_name cdm_version vocabulary_version
                  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             
 1                    1 cohort1     5.3         v5.0 18-JAN-19    
@@ -1414,7 +1414,7 @@ $cohort_set
 
 $cohort_attrition
 # Source:   table&lt;results.test_my_cohort_attrition&gt; [?? x 7]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpRcjD6V/file24991d31dcaf.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpvYBpv6/file1de86128bebd.duckdb]
   cohort_definition_id number_records number_subjects reason_id reason                excluded_records excluded_subjects
                  &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;                            &lt;int&gt;             &lt;int&gt;
 1                    1          17268            2686         1 Initial qualifying e…                0                 0
@@ -1428,7 +1428,7 @@ $cohort_attrition
 
 $cohort_codelist
 # Source:   table&lt;results.test_my_cohort_codelist&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpRcjD6V/file24991d31dcaf.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpvYBpv6/file1de86128bebd.duckdb]
   cohort_definition_id codelist_name concept_id codelist_type
                  &lt;int&gt; &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;        
 1                    1 cohort1         40481087 index event  
@@ -1753,23 +1753,23 @@ $cdm_reference</code></pre>
 <h2><code>summarised_result</code></h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="bgiyvxqydy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bgiyvxqydy table {
+<div id="eyuxcvpcjv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#eyuxcvpcjv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bgiyvxqydy thead, #bgiyvxqydy tbody, #bgiyvxqydy tfoot, #bgiyvxqydy tr, #bgiyvxqydy td, #bgiyvxqydy th {
+#eyuxcvpcjv thead, #eyuxcvpcjv tbody, #eyuxcvpcjv tfoot, #eyuxcvpcjv tr, #eyuxcvpcjv td, #eyuxcvpcjv th {
   border-style: none;
 }
 
-#bgiyvxqydy p {
+#eyuxcvpcjv p {
   margin: 0;
   padding: 0;
 }
 
-#bgiyvxqydy .gt_table {
+#eyuxcvpcjv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1795,12 +1795,12 @@ $cdm_reference</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#bgiyvxqydy .gt_caption {
+#eyuxcvpcjv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bgiyvxqydy .gt_title {
+#eyuxcvpcjv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1812,7 +1812,7 @@ $cdm_reference</code></pre>
   border-bottom-width: 0;
 }
 
-#bgiyvxqydy .gt_subtitle {
+#eyuxcvpcjv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1824,7 +1824,7 @@ $cdm_reference</code></pre>
   border-top-width: 0;
 }
 
-#bgiyvxqydy .gt_heading {
+#eyuxcvpcjv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1836,13 +1836,13 @@ $cdm_reference</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bgiyvxqydy .gt_bottom_border {
+#eyuxcvpcjv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bgiyvxqydy .gt_col_headings {
+#eyuxcvpcjv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1857,7 +1857,7 @@ $cdm_reference</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bgiyvxqydy .gt_col_heading {
+#eyuxcvpcjv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1877,7 +1877,7 @@ $cdm_reference</code></pre>
   overflow-x: hidden;
 }
 
-#bgiyvxqydy .gt_column_spanner_outer {
+#eyuxcvpcjv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1889,15 +1889,15 @@ $cdm_reference</code></pre>
   padding-right: 4px;
 }
 
-#bgiyvxqydy .gt_column_spanner_outer:first-child {
+#eyuxcvpcjv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bgiyvxqydy .gt_column_spanner_outer:last-child {
+#eyuxcvpcjv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bgiyvxqydy .gt_column_spanner {
+#eyuxcvpcjv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1909,11 +1909,11 @@ $cdm_reference</code></pre>
   width: 100%;
 }
 
-#bgiyvxqydy .gt_spanner_row {
+#eyuxcvpcjv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bgiyvxqydy .gt_group_heading {
+#eyuxcvpcjv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1939,7 +1939,7 @@ $cdm_reference</code></pre>
   text-align: left;
 }
 
-#bgiyvxqydy .gt_empty_group_heading {
+#eyuxcvpcjv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1954,15 +1954,15 @@ $cdm_reference</code></pre>
   vertical-align: middle;
 }
 
-#bgiyvxqydy .gt_from_md > :first-child {
+#eyuxcvpcjv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bgiyvxqydy .gt_from_md > :last-child {
+#eyuxcvpcjv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bgiyvxqydy .gt_row {
+#eyuxcvpcjv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1981,7 +1981,7 @@ $cdm_reference</code></pre>
   overflow-x: hidden;
 }
 
-#bgiyvxqydy .gt_stub {
+#eyuxcvpcjv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1994,7 +1994,7 @@ $cdm_reference</code></pre>
   padding-right: 5px;
 }
 
-#bgiyvxqydy .gt_stub_row_group {
+#eyuxcvpcjv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2008,15 +2008,15 @@ $cdm_reference</code></pre>
   vertical-align: top;
 }
 
-#bgiyvxqydy .gt_row_group_first td {
+#eyuxcvpcjv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bgiyvxqydy .gt_row_group_first th {
+#eyuxcvpcjv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bgiyvxqydy .gt_summary_row {
+#eyuxcvpcjv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2026,16 +2026,16 @@ $cdm_reference</code></pre>
   padding-right: 5px;
 }
 
-#bgiyvxqydy .gt_first_summary_row {
+#eyuxcvpcjv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bgiyvxqydy .gt_first_summary_row.thick {
+#eyuxcvpcjv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bgiyvxqydy .gt_last_summary_row {
+#eyuxcvpcjv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2045,7 +2045,7 @@ $cdm_reference</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#bgiyvxqydy .gt_grand_summary_row {
+#eyuxcvpcjv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2055,7 +2055,7 @@ $cdm_reference</code></pre>
   padding-right: 5px;
 }
 
-#bgiyvxqydy .gt_first_grand_summary_row {
+#eyuxcvpcjv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2065,7 +2065,7 @@ $cdm_reference</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#bgiyvxqydy .gt_last_grand_summary_row_top {
+#eyuxcvpcjv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2075,11 +2075,11 @@ $cdm_reference</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#bgiyvxqydy .gt_striped {
+#eyuxcvpcjv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bgiyvxqydy .gt_table_body {
+#eyuxcvpcjv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2088,7 +2088,7 @@ $cdm_reference</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#bgiyvxqydy .gt_footnotes {
+#eyuxcvpcjv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2102,7 +2102,7 @@ $cdm_reference</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bgiyvxqydy .gt_footnote {
+#eyuxcvpcjv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2111,7 +2111,7 @@ $cdm_reference</code></pre>
   padding-right: 5px;
 }
 
-#bgiyvxqydy .gt_sourcenotes {
+#eyuxcvpcjv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2125,7 +2125,7 @@ $cdm_reference</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bgiyvxqydy .gt_sourcenote {
+#eyuxcvpcjv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2133,72 +2133,72 @@ $cdm_reference</code></pre>
   padding-right: 5px;
 }
 
-#bgiyvxqydy .gt_left {
+#eyuxcvpcjv .gt_left {
   text-align: left;
 }
 
-#bgiyvxqydy .gt_center {
+#eyuxcvpcjv .gt_center {
   text-align: center;
 }
 
-#bgiyvxqydy .gt_right {
+#eyuxcvpcjv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bgiyvxqydy .gt_font_normal {
+#eyuxcvpcjv .gt_font_normal {
   font-weight: normal;
 }
 
-#bgiyvxqydy .gt_font_bold {
+#eyuxcvpcjv .gt_font_bold {
   font-weight: bold;
 }
 
-#bgiyvxqydy .gt_font_italic {
+#eyuxcvpcjv .gt_font_italic {
   font-style: italic;
 }
 
-#bgiyvxqydy .gt_super {
+#eyuxcvpcjv .gt_super {
   font-size: 65%;
 }
 
-#bgiyvxqydy .gt_footnote_marks {
+#eyuxcvpcjv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bgiyvxqydy .gt_asterisk {
+#eyuxcvpcjv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bgiyvxqydy .gt_indent_1 {
+#eyuxcvpcjv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bgiyvxqydy .gt_indent_2 {
+#eyuxcvpcjv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bgiyvxqydy .gt_indent_3 {
+#eyuxcvpcjv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bgiyvxqydy .gt_indent_4 {
+#eyuxcvpcjv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bgiyvxqydy .gt_indent_5 {
+#eyuxcvpcjv .gt_indent_5 {
   text-indent: 25px;
 }
 
-#bgiyvxqydy .katex-display {
+#eyuxcvpcjv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#bgiyvxqydy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#eyuxcvpcjv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -5326,11 +5326,98 @@ $settings
 </div>
 </div>
 </section>
-<section id="creating-a-summarised_result" class="slide level2">
-<h2>Creating a <code>summarised_result</code></h2>
-</section>
 <section id="summarised_result-4" class="slide level2">
 <h2><code>summarised_result</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">resultPackageVersion</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="summarised_result-5" class="slide level2">
+<h2><code>summarised_result</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">isResultSuppressed</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</section>
+<section id="summarised_result-6" class="slide level2">
+<h2><code>summarised_result</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">suppress</span>(<span class="at">result =</span> result, <span class="at">minCellCount =</span> <span class="dv">10</span>)</span>
+<span id="cb151-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">isResultSuppressed</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+</section>
+<section id="creating-a-summarised_result" class="slide level2">
+<h2>Creating a <code>summarised_result</code></h2>
+<p>You can create a <code>summarised_result</code> object with <code>newSummarisedResult()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a aria-hidden="true" tabindex="-1"></a>sr <span class="ot">&lt;-</span> <span class="fu">newSummarisedResult</span>(</span>
+<span id="cb153-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">tibble</span>(</span>
+<span id="cb153-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">result_id =</span> <span class="dv">1</span>L,</span>
+<span id="cb153-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cdm_name =</span> <span class="st">"My OMOP Instance"</span>,</span>
+<span id="cb153-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">group_name =</span> <span class="st">"cohort_name"</span>,</span>
+<span id="cb153-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">group_level =</span> <span class="st">"acetaminophen"</span>,</span>
+<span id="cb153-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">strata_name =</span> <span class="st">"sex"</span>,</span>
+<span id="cb153-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">strata_level =</span> <span class="st">"Female"</span>,</span>
+<span id="cb153-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">variable_name =</span> <span class="fu">c</span>(<span class="st">"Nuber subjects"</span>, <span class="fu">rep</span>(<span class="st">"Age"</span>, <span class="dv">3</span>)),</span>
+<span id="cb153-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">variable_level =</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb153-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate_name =</span> <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"median"</span>, <span class="st">"q25"</span>, <span class="st">"q75"</span>),</span>
+<span id="cb153-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate_type =</span> <span class="st">"integer"</span>,</span>
+<span id="cb153-13"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate_value =</span> <span class="fu">c</span>(<span class="st">"100"</span>, <span class="st">"40"</span>, <span class="st">"25"</span>, <span class="st">"58"</span>),</span>
+<span id="cb153-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">additional_name =</span> <span class="st">"overall"</span>,</span>
+<span id="cb153-15"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">additional_level =</span> <span class="st">"overall"</span></span>
+<span id="cb153-16"><a aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb153-17"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">settings =</span> <span class="fu">tibble</span>(</span>
+<span id="cb153-18"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">result_id =</span> <span class="dv">1</span>L,</span>
+<span id="cb153-19"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">result_type =</span> <span class="st">"characterisation"</span>,</span>
+<span id="cb153-20"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">package_name =</span> <span class="st">"MyNewPackage"</span>,</span>
+<span id="cb153-21"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">package_version =</span> <span class="st">"1.0.0"</span>,</span>
+<span id="cb153-22"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="st">"years"</span></span>
+<span id="cb153-23"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb153-24"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="summarised_result-7" class="slide level2">
+<h2><code>summarised_result</code></h2>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "summarised_result" "omop_result"       "tbl_df"            "tbl"               "data.frame"       </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a aria-hidden="true" tabindex="-1"></a>sr</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 13
+  result_id cdm_name         group_name  group_level strata_name strata_level variable_name variable_level estimate_name
+      &lt;int&gt; &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;        
+1         1 My OMOP Instance cohort_name acetaminop… sex         Female       Nuber subjec… &lt;NA&gt;           count        
+2         1 My OMOP Instance cohort_name acetaminop… sex         Female       Age           &lt;NA&gt;           median       
+3         1 My OMOP Instance cohort_name acetaminop… sex         Female       Age           &lt;NA&gt;           q25          
+4         1 My OMOP Instance cohort_name acetaminop… sex         Female       Age           &lt;NA&gt;           q75          
+# ℹ 4 more variables: estimate_type &lt;chr&gt;, estimate_value &lt;chr&gt;, additional_name &lt;chr&gt;, additional_level &lt;chr&gt;</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="summarised_result-8" class="slide level2">
+<h2><code>summarised_result</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(sr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 9
+  result_id result_type      package_name package_version group       strata additional min_cell_count time 
+      &lt;int&gt; &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;           &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;          &lt;chr&gt;
+1         1 characterisation MyNewPackage 1.0.0           cohort_name sex    ""         0              years</code></pre>
+</div>
+</div>
 </section>
 <section id="tidy-summarised_result" class="slide level2">
 <h2>Tidy <code>summarised_result</code></h2>
@@ -5351,11 +5438,11 @@ $settings
 </ul>
 </div>
 </section>
-<section id="summarised_result-5" class="slide level2">
+<section id="summarised_result-9" class="slide level2">
 <h2><code>summarised_result</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a aria-hidden="true" tabindex="-1"></a>result <span class="sc">|&gt;</span></span>
-<span id="cb148-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filterSettings</span>(result_type <span class="sc">==</span> <span class="st">"incidence"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb160"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a aria-hidden="true" tabindex="-1"></a>result <span class="sc">|&gt;</span></span>
+<span id="cb160-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filterSettings</span>(result_type <span class="sc">==</span> <span class="st">"incidence"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,176 × 13
    result_id cdm_name         group_name group_level strata_name strata_level variable_name variable_level estimate_name
@@ -5375,12 +5462,12 @@ $settings
 </div>
 </div>
 </section>
-<section id="summarised_result-6" class="slide level2">
+<section id="summarised_result-10" class="slide level2">
 <h2><code>summarised_result</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a aria-hidden="true" tabindex="-1"></a>result <span class="sc">|&gt;</span></span>
-<span id="cb150-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filterSettings</span>(result_type <span class="sc">==</span> <span class="st">"incidence"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb150-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">splitGroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a aria-hidden="true" tabindex="-1"></a>result <span class="sc">|&gt;</span></span>
+<span id="cb162-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filterSettings</span>(result_type <span class="sc">==</span> <span class="st">"incidence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb162-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">splitGroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,176 × 13
    result_id cdm_name   denominator_cohort_n…¹ outcome_cohort_name strata_name strata_level variable_name variable_level
@@ -5402,12 +5489,12 @@ $settings
 </div>
 </div>
 </section>
-<section id="summarised_result-7" class="slide level2">
+<section id="summarised_result-11" class="slide level2">
 <h2><code>summarised_result</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a aria-hidden="true" tabindex="-1"></a>result <span class="sc">|&gt;</span></span>
-<span id="cb152-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filterSettings</span>(result_type <span class="sc">==</span> <span class="st">"incidence"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb152-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a aria-hidden="true" tabindex="-1"></a>result <span class="sc">|&gt;</span></span>
+<span id="cb164-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filterSettings</span>(result_type <span class="sc">==</span> <span class="st">"incidence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb164-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336 × 27
    cdm_name             denominator_cohort_name outcome_cohort_name variable_name variable_level incidence_start_date
@@ -5436,12 +5523,12 @@ $settings
 <h2>Creating a <code>summarised_result</code></h2>
 <p>The inverse of “tidy” can also be done and this is how usually the <code>summarised_result</code> object is created.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result <span class="sc">|&gt;</span> <span class="fu">filterSettings</span>(result_type <span class="sc">==</span> <span class="st">"incidence"</span>) <span class="sc">|&gt;</span> <span class="fu">tidy</span>()</span>
-<span id="cb154-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb166"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result <span class="sc">|&gt;</span> <span class="fu">filterSettings</span>(result_type <span class="sc">==</span> <span class="st">"incidence"</span>) <span class="sc">|&gt;</span> <span class="fu">tidy</span>()</span>
+<span id="cb166-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a aria-hidden="true" tabindex="-1"></a>result</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb168"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a aria-hidden="true" tabindex="-1"></a>result</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336 × 27
    cdm_name             denominator_cohort_name outcome_cohort_name variable_name variable_level incidence_start_date
@@ -5469,16 +5556,16 @@ $settings
 <section id="creating-a-summarised_result-2" class="slide level2">
 <h2>Creating a <code>summarised_result</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a aria-hidden="true" tabindex="-1"></a>sr_result <span class="ot">&lt;-</span> <span class="fu">transformToSummarisedResult</span>(</span>
-<span id="cb158-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> result,</span>
-<span id="cb158-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"denominator_cohort_name"</span>, <span class="st">"outcome_cohort_name"</span>),</span>
-<span id="cb158-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">additional =</span> <span class="fu">c</span>(<span class="st">"incidence_start_date"</span>, <span class="st">"incidence_end_date"</span>, <span class="st">"analysis_interval"</span>),</span>
-<span id="cb158-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">estimates =</span> <span class="fu">c</span>(<span class="st">"denominator_count"</span>, <span class="st">"outcome_count"</span>, <span class="st">"person_days"</span>, <span class="st">"person_years"</span>, <span class="st">"incidence_100000_pys"</span>, <span class="st">"incidence_100000_pys_95CI_lower"</span>, <span class="st">"incidence_100000_pys_95CI_upper"</span>),</span>
-<span id="cb158-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">settings =</span> <span class="fu">c</span>(<span class="st">"analysis_censor_cohort_name"</span>, <span class="st">"analysis_complete_database_intervals"</span>, <span class="st">"analysis_outcome_washout"</span>, <span class="st">"analysis_repeated_events"</span>, <span class="st">"denominator_age_group"</span>, <span class="st">"denominator_days_prior_observation"</span>, <span class="st">"denominator_end_date"</span>, <span class="st">"denominator_requirements_at_entry"</span>, <span class="st">"denominator_sex"</span>, <span class="st">"denominator_start_date"</span>, <span class="st">"denominator_target_cohort_name"</span>, <span class="st">"denominator_time_at_risk"</span>)</span>
-<span id="cb158-7"><a aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb158-8"><a aria-hidden="true" tabindex="-1"></a>sr_result</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb170"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a aria-hidden="true" tabindex="-1"></a>sr_result <span class="ot">&lt;-</span> <span class="fu">transformToSummarisedResult</span>(</span>
+<span id="cb170-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> result,</span>
+<span id="cb170-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">c</span>(<span class="st">"denominator_cohort_name"</span>, <span class="st">"outcome_cohort_name"</span>),</span>
+<span id="cb170-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">additional =</span> <span class="fu">c</span>(<span class="st">"incidence_start_date"</span>, <span class="st">"incidence_end_date"</span>, <span class="st">"analysis_interval"</span>),</span>
+<span id="cb170-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">estimates =</span> <span class="fu">c</span>(<span class="st">"denominator_count"</span>, <span class="st">"outcome_count"</span>, <span class="st">"person_days"</span>, <span class="st">"person_years"</span>, <span class="st">"incidence_100000_pys"</span>, <span class="st">"incidence_100000_pys_95CI_lower"</span>, <span class="st">"incidence_100000_pys_95CI_upper"</span>),</span>
+<span id="cb170-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">settings =</span> <span class="fu">c</span>(<span class="st">"analysis_censor_cohort_name"</span>, <span class="st">"analysis_complete_database_intervals"</span>, <span class="st">"analysis_outcome_washout"</span>, <span class="st">"analysis_repeated_events"</span>, <span class="st">"denominator_age_group"</span>, <span class="st">"denominator_days_prior_observation"</span>, <span class="st">"denominator_end_date"</span>, <span class="st">"denominator_requirements_at_entry"</span>, <span class="st">"denominator_sex"</span>, <span class="st">"denominator_start_date"</span>, <span class="st">"denominator_target_cohort_name"</span>, <span class="st">"denominator_time_at_risk"</span>)</span>
+<span id="cb170-7"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb170-8"><a aria-hidden="true" tabindex="-1"></a>sr_result</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,060 × 13
+<pre><code># A tibble: 956 × 13
    result_id cdm_name         group_name group_level strata_name strata_level variable_name variable_level estimate_name
        &lt;int&gt; &lt;chr&gt;            &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;        
  1         1 synthea-covid19… denominat… denominato… overall     overall      Denominator   &lt;NA&gt;           denominator_…
@@ -5491,7 +5578,7 @@ $settings
  8         1 synthea-covid19… denominat… denominato… overall     overall      Denominator   &lt;NA&gt;           denominator_…
  9         1 synthea-covid19… denominat… denominato… overall     overall      Denominator   &lt;NA&gt;           person_days  
 10         1 synthea-covid19… denominat… denominato… overall     overall      Denominator   &lt;NA&gt;           person_years 
-# ℹ 1,050 more rows
+# ℹ 946 more rows
 # ℹ 4 more variables: estimate_type &lt;chr&gt;, estimate_value &lt;chr&gt;, additional_name &lt;chr&gt;, additional_level &lt;chr&gt;</code></pre>
 </div>
 </div>
@@ -5499,14 +5586,14 @@ $settings
 <section id="creating-a-summarised_result-3" class="slide level2">
 <h2>Creating a <code>summarised_result</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb160"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sr_result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb172"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sr_result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "summarised_result" "omop_result"       "tbl_df"            "tbl"               "data.frame"       </code></pre>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(sr_result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb174"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(sr_result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 18 × 20
    result_id result_type package_name package_version group      strata additional min_cell_count analysis_censor_coho…¹
@@ -5543,36 +5630,36 @@ $settings
 <p>You can also use <a href="https://darwin-eu.github.io/PatientProfiles/">PatientProfiles</a> to summarise data from a dataset into summarised result:</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
-<span id="cb164-2"><a aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseResult</span>(</span>
-<span id="cb164-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">table =</span> penguins,</span>
-<span id="cb164-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">"species"</span>,</span>
-<span id="cb164-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"island"</span>,</span>
-<span id="cb164-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> <span class="fu">list</span>(</span>
-<span id="cb164-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>),</span>
-<span id="cb164-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="st">"sex"</span>,</span>
-<span id="cb164-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span></span>
-<span id="cb164-10"><a aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb164-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">estimates =</span> <span class="fu">list</span>(</span>
-<span id="cb164-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"percentage_missing"</span>),</span>
-<span id="cb164-13"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"percentage"</span>, <span class="st">"percentage_missing"</span>),</span>
-<span id="cb164-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"median"</span>, <span class="st">"q25"</span>, <span class="st">"q75"</span>, <span class="st">"percentage_missing"</span>)</span>
-<span id="cb164-15"><a aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb164-16"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
+<span id="cb176-2"><a aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseResult</span>(</span>
+<span id="cb176-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">table =</span> penguins,</span>
+<span id="cb176-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">"species"</span>,</span>
+<span id="cb176-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"island"</span>,</span>
+<span id="cb176-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> <span class="fu">list</span>(</span>
+<span id="cb176-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>),</span>
+<span id="cb176-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="st">"sex"</span>,</span>
+<span id="cb176-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span></span>
+<span id="cb176-10"><a aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb176-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">estimates =</span> <span class="fu">list</span>(</span>
+<span id="cb176-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"percentage_missing"</span>),</span>
+<span id="cb176-13"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"count"</span>, <span class="st">"percentage"</span>, <span class="st">"percentage_missing"</span>),</span>
+<span id="cb176-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"median"</span>, <span class="st">"q25"</span>, <span class="st">"q75"</span>, <span class="st">"percentage_missing"</span>)</span>
+<span id="cb176-15"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb176-16"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
 <section id="summarise-data-1" class="slide level2">
 <h2>Summarise data</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "summarised_result" "omop_result"       "tbl_df"            "tbl"               "data.frame"       </code></pre>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 8
   result_id result_type     package_name    package_version group   strata additional min_cell_count
@@ -5583,7 +5670,7 @@ $settings
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 64 × 13
    cdm_name species   island  variable_name variable_level count  mean     sd percentage_missing percentage median   q25
@@ -5612,20 +5699,14 @@ $settings
 <li class="fragment"><a href="https://darwin-eu.github.io/visOmopResults/articles/a02_plots.html">Create Plots using <code>summarised_results</code></a></li>
 </ul>
 </section>
-<section id="reexporting-omopgenerics" class="slide level2">
-<h2>Reexporting omopgenerics</h2>
-<p>https://darwin-eu.github.io/omopgenerics/</p>
-<p>https://darwin-eu.github.io/omopgenerics/articles/reexport.html</p>
-</section>
-<section id="expanding-omopgenerics" class="slide level2">
-<h2>Expanding omopgenerics</h2>
-<p>https://darwin-eu.github.io/omopgenerics/articles/expanding_omopgenerics.html</p>
-</section>
 <section id="further-reading" class="slide level2">
 <h2>Further reading</h2>
 <ul>
+<li class="fragment">The <strong>omopgenerics</strong> website: <a href="https://darwin-eu.github.io/omopgenerics/" class="uri">https://darwin-eu.github.io/omopgenerics/</a></li>
+<li class="fragment">Reexporting from <em>omopgenerics</em>: <a href="https://darwin-eu.github.io/omopgenerics/articles/reexport.html" class="uri">https://darwin-eu.github.io/omopgenerics/articles/reexport.html</a></li>
+<li class="fragment">Expanding <em>omopgenerics</em>: <a href="https://darwin-eu.github.io/omopgenerics/articles/expanding_omopgenerics.html" class="uri">https://darwin-eu.github.io/omopgenerics/articles/expanding_omopgenerics.html</a></li>
 <li class="fragment">Tidy R packages foundations: <a href="https://ohdsi.github.io/Tidy-R-programming-with-OMOP/" class="uri">https://ohdsi.github.io/Tidy-R-programming-with-OMOP/</a></li>
-<li class="fragment">Tidy R packages develioment: <a href="https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/" class="uri">https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/</a></li>
+<li class="fragment">Tidy R packages development: <a href="https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/" class="uri">https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/</a></li>
 </ul>
 
 
