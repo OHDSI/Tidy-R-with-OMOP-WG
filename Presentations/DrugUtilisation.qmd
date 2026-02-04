@@ -675,7 +675,7 @@ plotTreatment(comedications, style = "darwin")
 
 ## DrugUtilisation
 
-::: {style="display: flex; align-items: center; justify-content: space-between;"}
+::::: {style="display: flex; align-items: center; justify-content: space-between;"}
 ::: {style="flex: 1;"}
 👉 [**Packages website**](https://darwin-eu.github.io/DrugUtilisation/)\
 👉 [**CRAN link**](https://cran.r-project.org/package=DrugUtilisation)\
@@ -687,4 +687,4 @@ plotTreatment(comedications, style = "darwin")
 ::: {style="flex: 1; text-align: center;"}
 <img src="https://github.com/darwin-eu/DrugUtilisation/blob/main/man/figures/logo.png?raw=true" width="600"/>
 :::
-:::
+:::::

@@ -1,0 +1,1038 @@
+---
+title: "The Tidy R in OMOP CDM ecosystem"
+subtitle: "An ecosystem of R packages to work with the OMOP CDM"
+format:
+  revealjs: 
+    theme: [simple, styleWG.scss]
+    incremental: true   
+    slide-number: true
+    chalkboard: true
+    preview-links: auto
+    margin: 0.07
+    code-link: true
+    code-line-numbers: false
+    height: 900
+    width: 1600
+    footer: |
+      <div style="position: relative; width: 100%;">
+        <div style="text-align: center; font-weight: 500;">Tidy R in OMOP CDM ecosystem</div>
+        <div style="position: fixed; top: 20px; right: 20px;"><a href="index.qmd" style="text-decoration: none;">⬅ Presentations</a></div>
+      </div>
+execute:
+  echo: true
+  eval: true
+editor: visual
+---
+
+```{r, echo=FALSE}
+options(width = 120)
+```
+
+```{r, echo=FALSE}
+library(dplyr)
+library(purrr)
+library(jsonlite)
+library(patchwork)
+library(ggplot2)
+library(rlang)
+# prepare data
+packages <- dplyr::tribble(
+  ~package_name, ~classification, ~organisation, ~key_functions,
+  "omopgenerics", "Core", "darwin-eu", "Define methods and classes for the ecosystem",
+  "CDMConnector", "Back-end", "darwin-eu", "Create a cdm_reference for database backends",
+  "omock", "Core", "ohdsi", "Generate mock synthetic data; Create cdm reference to existing mock datasets",
+  "visOmopResults", "Core; Visualisation", "darwin-eu", "Manage summarised_result objects; Create tables from summarised_result objects; Create plots from summarised_result objects",
+  "CodelistGenerator", "Core; Diagnostics", "darwin-eu", "Manage codelists and concept sets; Run codelist diagnostics",
+  "PatientProfiles", "Core", "darwin-eu", "Add columns related to patient demographics; Add columns related to intersections",
+  "CohortConstructor", "Analytics", "ohdsi", "Generate base cohorts; Apply inclusion (and exclusion) criteria to cohorts",
+  "IncidencePrevalence", "Analytics", "darwin-eu", "Identify denominators based on demographics; Estimate Incidence; Estimate Point-Prevalence; Estimate Period-Prevalence",
+  "DrugUtilisation", "Analytics", "darwin-eu", "Estimate drug use; Estimate Proportion of Patients Covered; Summarise Indication; Analyse Discontunation and restart; Calculate daily dose",
+  "CohortCharacteristics", "Analytics", "darwin-eu", "Extract counts and attrition of cohorts; Overlap and Timing between cohorts; Characterise cohorts based in demographics and predefined conditions; Data driven characterisation",
+  "CohortSurvival", "Analytics", "darwin-eu", "Estimate survival probabilities; Estimate competing risks probabilities",
+  "CohortSymmetry", "Analytics", "ohdsi", "Summarise temporal symmetry; Summarise sequence ratios",
+  "OmopSketch", "Diagnostics; Analytics", "ohdsi", "Summarise data standards of omop tables; Summarise record trends; Summarise missing data; Summarise concept counts",
+  "MeasurementDiagnostics", "Diagnostics", "ohdsi", "Diagnotics for measurement codelists",
+  "PhenotypeR", "Diagnostics", "ohdsi", "Diagnostics at database level; Diagnostics at codelist level; Diagnostics at cohort level",
+  "OmopViewer", "Visualisation", "ohdsi", "Create automatic shiny app from standard results",
+  "DrugExposureDiagnostics", "Diagnostics", "darwin-eu", "Diagnostics for drug codelists",
+  "TreatmentPatterns", "Analytics", "darwin-eu", "Analyse treatment sequences and pathways",
+  "OmopConstructor", "ETL", "ohdsi", "Generate the observation_period using cdm data; Run Achilles analyses; Create drug_era table;*Create pregnancy algorithm*",
+  "OmopOnSpark", "Back-end", "ohdsi", "Create a cdm_reference using spark connection",
+  "OmopOnPostgres", "Back-end", "ohdsi", "Create a cdm_reference using postgres connection; *Use postgres indexes*",
+  "OmopOnDuckDB", "Back-end", "ohdsi", "Create a cdm_reference using duckdb connection; *Create a cdm_reference using parquet files*",
+  "OmopOnSqlServer", "Back-end", "ohdsi", "Create a cdm_reference using sql server connection;*Create a cdm_reference using synapse connection*"
+) |>
+  dplyr::left_join(
+    tools::CRAN_package_db() |>
+      dplyr::as_tibble() |>
+      dplyr::select(
+        package_name = Package, imports = Imports, suggests = Suggests, 
+        last_version = Version, description = Description, title = Title
+      ),
+    by = "package_name"
+  ) |>
+  dplyr::mutate(
+    key_functions = purrr::map(key_functions, \(kf) {
+      paste0("- ", stringr::str_trim(stringr::str_split_1(kf, ";")))
+    }),
+    github = paste0("www.github.com/", organisation, "/", package_name),
+    website = paste0("https://", organisation, ".github.io/", package_name, "/")
+  )
+pkgs <- packages$package_name
+
+for (pkg in pkgs) {
+  if (is.na(packages$imports[packages$package_name == pkg])) {
+    desc <- as.list(read.dcf(url(paste0("https://raw.githubusercontent.com/ohdsi/", pkg, "/refs/heads/main/DESCRIPTION")))[1,])
+    packages$imports[packages$package_name == pkg] <- desc$Imports %||% "omopgenerics"
+    packages$suggests[packages$package_name == pkg] <- desc$Suggests
+    packages$description[packages$package_name == pkg] <- desc$Description
+    packages$title[packages$package_name == pkg] <- desc$Title
+  }
+}
+
+packages <- packages |>
+  dplyr::mutate(
+    last_version = dplyr::coalesce(last_version, "-"),
+    imports = purrr::map(imports, \(x) {
+      x <- stringr::str_split_1(string = x, pattern = ",") |>
+        stringr::str_replace_all("\n", "") |>
+        stringr::str_remove("\\(.*") |>
+        stringr::str_trim()
+      x[x %in% pkgs]
+    }),
+    suggests = purrr::map(suggests, \(x) {
+      x <- stringr::str_split_1(string = x, pattern = ",") |>
+        stringr::str_remove("\\(.*") |>
+        stringr::str_trim()
+      x[x %in% pkgs]
+    }),
+    imports = dplyr::if_else(
+      package_name != "omopgenerics",
+      purrr::map(imports, \(x) unique(c("omopgenerics", x))),
+      imports
+    ),
+    logo = map_chr(paste0(organisation, "/", package_name), \(x) {
+      url <- paste0("https://github.com/", x, "/blob/main/man/figures/logo.png?raw=true")
+      status <- tryCatch(
+        httr::status_code(httr::HEAD(url)),
+        error = function(e) NA
+      )
+      if (identical(status, 200L)) {
+        url
+      } else {
+        NA_character_
+      }
+    })
+  )
+
+versions <- pkgs |>
+  purrr::map(\(pkg) {
+    url <- paste0("https://crandb.r-pkg.org/", pkg, "/all")
+    status <- tryCatch(
+      httr::status_code(httr::HEAD(url)),
+      error = function(e) NA
+    )
+    
+    if (identical(status, 200L)) {
+      
+      cli::cli_inform("Getting releases for {pkg}")
+      
+      res <- jsonlite::fromJSON(url) |>
+        purrr::pluck("versions") |>
+        purrr::map_dfr(~ dplyr::tibble(
+          package_name = pkg,
+          version = .$Version,
+          date = as.Date(.$Date)
+        )) |> 
+        dplyr::arrange(date) |> 
+        dplyr::mutate(
+          version = dplyr::if_else(
+            package_name == "CodelistGenerator" & 
+              version == "3.0",
+            "3.0.0",
+            version)) |> 
+        dplyr::mutate(
+          first = as.integer(gsub("^(\\d+)\\..*$", "\\1", version)),
+          second = as.integer(gsub("^\\d+\\.(\\d+)\\..*$", "\\1", version)),
+          third = as.integer(gsub("^.*\\.([0-9]+)$", "\\1", version))
+        ) |> 
+        dplyr::mutate(previous_first = dplyr::lag(first),
+                      previous_second = dplyr::lag(second),
+                      previous_third = dplyr::lag(third)) |> 
+        dplyr::mutate(release_type = dplyr::case_when(
+          is.na(previous_first) ~ "first release",
+          first > previous_first  ~ "major release",
+          second > previous_second  ~ "minor release",
+          third > previous_third  ~ "patch release",
+          .default = NA
+        )) |> 
+        dplyr::select(package_name, version, date, release_type)
+      
+    } else {
+      res <- NULL
+    }
+    
+    res
+  }) |>
+  purrr::compact() |>
+  dplyr::bind_rows() |>
+  mutate(package_name = factor(.data$package_name, levels = rev(packages$package_name)))
+
+packages <- packages |>
+  dplyr::left_join(
+    versions |>
+      group_by(package_name) |>
+      summarise(first_release = min(date), n_releases = dplyr::n()),
+    by = "package_name"
+  ) |>
+  dplyr::mutate(
+    first_release = dplyr::coalesce(as.character(first_release), "-"),
+    n_releases = dplyr::coalesce(n_releases, 0)
+  )
+
+ranges <- packages |>
+  dplyr::select(package_name, organisation) |>
+  purrr::pmap(\(package_name, organisation) {
+    x <- gh::gh("/repos/{owner}/{repo}", owner = organisation, repo  = package_name)
+    dplyr::tibble(
+      package_name = package_name,
+      min_date = min(as.Date(x$created_at), min(versions$date[versions$package_name == package_name])),
+      max_date = Sys.Date()
+    )
+  }) |>
+  dplyr::bind_rows() |>
+  mutate(package_name = factor(.data$package_name, levels = rev(packages$package_name)))
+
+colors <- c(
+  "Core" = "#e3f2fd",
+  "Back-end" = "#e8f5e9",
+  "Analytics" = "#fff3e0",
+  "Diagnostics" = "#fce4ec",
+  "ETL" = "#ede7f6",
+  "Visualisation" = "#e0f7fa"
+)
+```
+
+## Content
+
+- Motivation and foundations
+- Existing packages overview
+- `omopgenerics` the core package
+
+## Motivation
+
+-   OMOP CDM
+-   complications to install packages, not in cran, java, contribute to the ecosystem
+-   tidyverse
+-   no Java code, no SQL code, just R code
+
+## Foundation
+
+```{r}
+library(palmerpenguins)
+library(dplyr)
+
+penguins |>
+  group_by(species) |>
+  summarise(
+    n = n(),
+    min_bill_length_mm = min(bill_length_mm, na.rm = TRUE),
+    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+    max_bill_length_mm = max(bill_length_mm, na.rm = TRUE)
+  ) |>
+  mutate(min_max_bill_length_mm = paste0(
+    min_bill_length_mm, " to ", max_bill_length_mm
+  )) |>
+  select("species", "mean_bill_length_mm", "min_max_bill_length_mm")
+```
+
+## Foundartion
+
+```{r}
+library(duckdb)
+
+con <- dbConnect(drv = duckdb())
+dbWriteTable(conn = con, name = "penguins", value = penguins)
+penguins_db <- tbl(con, "penguins")
+penguins_db
+```
+
+## Foundartion
+
+```{r}
+penguins_db |>
+  group_by(species) |>
+  summarise(
+    n = n(),
+    min_bill_length_mm = min(bill_length_mm, na.rm = TRUE),
+    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+    max_bill_length_mm = max(bill_length_mm, na.rm = TRUE)
+  ) |>
+  mutate(min_max_bill_length_mm = paste0(
+    min_bill_length_mm, " to ", max_bill_length_mm
+  )) |>
+  select("species", "mean_bill_length_mm", "min_max_bill_length_mm")
+```
+
+
+## Foundation
+
+```{r}
+penguins_db |>
+  group_by(species) |>
+  summarise(
+    n = n(),
+    min_bill_length_mm = min(bill_length_mm, na.rm = TRUE),
+    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+    max_bill_length_mm = max(bill_length_mm, na.rm = TRUE)
+  ) |>
+  mutate(min_max_bill_length_mm = paste0(
+    min_bill_length_mm, " to ", max_bill_length_mm
+  )) |>
+  select("species", "mean_bill_length_mm", "min_max_bill_length_mm") |>
+  show_query()
+```
+
+## Foundation
+
+[dbplyr](https://dbplyr.tidyverse.org/) support the database translation of [dplyr](https://dplyr.tidyverse.org/) functions against several database management systems.
+
+. . .
+
+The presented ecosystem sits on top of these functions combined with the known structure of the [OMOP CDM](https://ohdsi.github.io/CommonDataModel/) tables to build packages to perform Epidemiological studies extracting data from an OMOP CDM source that can be in several different forms.
+
+## Cronology (Early stages)
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plotCronology <- function(endDate) {
+  endDate <- as.Date(endDate)
+  p1 <- versions |>
+    filter(date <= endDate) |>
+    ggplot() +
+    geom_segment(
+      data = ranges |>
+        mutate(
+          min_date = if_else(min_date < endDate, min_date, endDate),
+          max_date = if_else(max_date < endDate, max_date, endDate)
+        ),
+      aes(x = min_date, xend = max_date, y = package_name, yend = package_name),
+      color = "grey90", 
+      linewidth = 1.5
+    ) +
+    geom_point(aes(date, package_name,
+                   fill = release_type,
+                   size = release_type),
+               shape = 21) +
+    scale_size_manual(
+      values = c("first release" = 3, 
+                 "patch release" = 1, 
+                 "minor release" = 2, 
+                 "major release" = 3)
+    ) +
+    scale_fill_manual(
+      values = c("first release" = "#e41a1c", 
+                 "patch release" = "#377eb8", 
+                 "minor release" = "#4daf4a", 
+                 "major release" = "#984ea3")
+    ) +
+    theme_bw() +
+    ylab("") +
+    xlab("") +
+    # facet_grid(type~., scales = "free_y") +
+    theme(legend.title = element_blank(),
+          legend.position = "top",
+          panel.spacing = unit(0, "lines"))
+  p1 <- p1+ theme(
+    axis.text.x = element_blank(), 
+    axis.title.x = element_blank(),
+    axis.ticks.x = element_blank()) 
+  
+  p2 <- versions |> 
+    mutate(date_floor = lubridate::floor_date(date, unit = "month")) |> 
+    group_by(date_floor) |> 
+    tally() |> 
+    ggplot() +
+    geom_col(aes(date_floor, n), width = 30, colour = "black", fill = "grey70")+
+    theme_bw() +
+    ylab("") +
+    xlab("Releases in month")
+  
+  rng <- c(min(ranges$min_date), max(ranges$max_date))
+  
+  p1 <- p1 +
+    scale_x_date(date_breaks = "1 year", date_labels = "%Y", limits = rng)
+  
+  p2 <- p2 +
+    scale_x_date(date_breaks = "1 year", date_labels = "%Y", limits = rng)
+  
+  p1 / p2 +
+    plot_layout(heights = c(4, 1), guides = "collect") &
+    theme(axis.title.x = element_blank(), legend.position = "top")
+}
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plotCronology("2023-01-01")
+```
+
+## Cronology (First packages)
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plotCronology("2024-01-01")
+```
+
+## Cronology (Standardarisation and expansion)
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plotCronology("2025-01-01")
+```
+
+## Cronology (1.0.0 releases and stability)
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plotCronology("2026-01-01")
+```
+
+## Existing packages
+
+:::: {.card-grid}
+```{r, echo=FALSE, results='asis'}
+xx <- packages |>
+  mutate(
+    classification = map(classification, \(x) {
+      stringr::str_split_1(x, ";") |>
+        stringr::str_trim()
+    })
+  ) |>
+  tidyr::unnest("classification") |>
+  group_by(package_name) |>
+  mutate(italic = if_else(n() > 1, 1, 0)) |>
+  ungroup() |>
+  group_by(classification) |>
+  group_split() |>
+  as.list()
+names(xx) <- map_chr(xx, \(x) unique(x$classification))
+xx <- xx[names(colors)]
+xx |>
+  map(\(x) {
+    nm <- unique(x$classification)
+    c(
+      paste0('::: {.pkg-card style="background:', colors[nm], '"}'),
+      paste0("**", nm, "**"),
+      paste0("- ", if_else(x$italic == 1, "*", ""), x$package_name, if_else(x$italic == 1, "*", "")),
+      ":::"
+    ) |>
+      paste0(collapse = "\n\n")
+  }) |>
+  paste0(collapse = "\n\n") |>
+  cat()
+```
+::::
+
+```{r, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+packages |>
+  dplyr::select(package_name, classification, last_version, title, description, website, github, n_releases, first_release, key_functions, logo) |>
+  purrr::pmap(\(package_name, classification, last_version, title, description, website, github, n_releases, first_release, key_functions, logo) {
+    c(
+      paste0("## ", package_name, " (", classification, ")"),
+      if_else(is.na(logo), "", paste0(
+        '\n<div style="position:absolute; top:50px; right:20px;"><img src="', logo, '" width="80"></div>\n'
+      )),
+      ". . .",
+      "",
+      paste0("**", title, "**"),
+      "",
+      paste0("Current version: **", last_version, "** First release: *", 
+             first_release, "* Total releases: *", n_releases, "*"),
+      "",
+      paste0("Links: [Website](", website, ");  [GitHub](", github, ")"),
+      "",
+      ". . .",
+      "",
+      paste0("*", description, "*"),
+      "",
+      key_functions,
+      ""
+    ) |>
+      paste0(collapse = "\n")
+  }) |>
+  paste0(collapse = "\n\n") |>
+  cat()
+```
+
+## How packages interact?
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(igraph)
+library(ggraph)
+library(tidygraph)
+library(tools)
+library(jsonlite)
+library(dplyr)
+library(purrr)
+library(patchwork)
+library(ggplot2)
+library(cranlogs)
+library(bsicons)
+library(ggdag)
+
+dependencies <- packages |>
+  select(package_name, imports) |>
+  tidyr::unnest("imports") |>
+  rename(from = package_name, to = imports) |>
+  mutate(type = "Imports") |>
+  union_all(
+    packages |>
+      select(package_name, suggests) |>
+      tidyr::unnest("suggests") |>
+      rename(from = package_name, to = suggests) |>
+      mutate(type = "Suggests")
+  )
+
+plot_dependencies <- function(dependencies) {
+  g <- as_tbl_graph(graph_from_data_frame(dependencies, directed = TRUE, vertices = pkgs))
+  g <- g %>%
+    mutate(
+      dependencies = centrality_degree(mode = "in")
+    )
+  ggraph(g, layout = "centrality", centrality = dependencies) +
+    geom_edge_arc(aes(linetype = type, color = type),
+                  strength = 0.1, end_cap = circle(4, 'mm'),
+                  arrow = arrow(length = unit(3, 'mm'), type = "closed")) +
+    geom_node_point(aes(fill = dependencies),
+                    shape = 21, colour = "black",
+                    size = 5) +
+    geom_node_text(aes(label = name),
+                   repel = TRUE,
+                   bg.color = "white",
+                   bg.r = 0.15,
+                   size = 4) +
+    scale_edge_linetype_manual(name = "Dependency type",
+                               values = c("Imports" = "solid",
+                                          "Suggests" = "dashed")) +
+    scale_edge_color_manual(name = "Dependency type",
+                            values = c("Imports" = "black",
+                                       "Suggests" = "grey45")) +
+    scale_fill_viridis(name = "Reverse dependencies",
+                       option="mako",
+                       direction = -1) +
+    theme_void() +
+    theme(legend.position = "bottom",
+          legend.box = "veritcal") 
+}
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+dependencies |>
+  filter(type == "Imports") |>
+  plot_dependencies()
+```
+
+## How packages interact?
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+dependencies |>
+  plot_dependencies()
+```
+
+## Some statistics
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+downloads <- cranlogs::cran_downloads(
+  packages = packages$package_name, 
+  from = as.Date("2022-01-01"), 
+  to = Sys.Date()
+) 
+
+total_per_package <- downloads |> 
+  group_by(package) |> 
+  summarise(total = sum(count)) |> 
+  ungroup()
+
+total <- total_per_package |> 
+  summarise(total = sum(total))
+
+bslib::value_box(
+  title = "Number of R packages",
+  value = nrow(packages),
+  showcase = bsicons::bs_icon("bar-chart")
+)
+
+bslib::value_box(
+  title = "Number of R packages on CRAN",
+  value = sum(total_per_package$total > 0),
+  showcase = bsicons::bs_icon("bar-chart")
+)
+
+bslib::value_box(
+  title = "Number Releases",
+  value = versions |> nrow(),
+  showcase = bsicons::bs_icon("bar-chart")
+)
+
+bslib::value_box(
+  title = "Total CRAN downloads",
+  value = total |> pull(),
+  showcase = bsicons::bs_icon("bar-chart")
+)
+```
+
+# omopgenerics
+
+## omopgenerics
+
+Provides definitions of core **classes** and **methods** used by analytic pipelines that query the OMOP (Observational Medical Outcomes Partnership) common data model.
+
+## Classes
+
+- The CDM refernce object: `cdm_reference`, `cdm_source`, `local_source`
+- CDM tables: `cdm_table`, `omop_table`, `achilles_table`, `cohort_table`
+- Code lists: `codelist`, `codelist_with_details`, `concept_set_expression`
+- Result model: `summaried_result`
+
+## `cdm_reference`
+
+The `cdm_reference` is the center of the ecosystem, it is a list with a reference to the different OMOP CDM tables. In general we will create a `cdm_reference` with the *CDMConnector* package:
+
+```{r, eval= FALSE}
+library(CDMConnector)
+cdm <- cdmFromCon(
+  con = con,
+  cdmSchema = "public",
+  writeSchema = "results",
+  writePrefix = "mc_",
+  cdmName = "my OMOP"
+)
+cdm
+```
+```{r, echo=FALSE}
+cdm <- omock::mockCdmFromDataset(source = "duckdb")
+attr(cdm, "cdm_name") <- "my OMOP"
+```
+```{r, echo=FALSE,message=TRUE}
+cdm
+```
+
+## `cdm_reference`
+
+The `cdm_reference` object contains several attributes:
+
+```{r}
+library(omopgenerics)
+cdmName(cdm)
+```
+
+```{r}
+cdmVersion(cdm)
+```
+
+```{r, message=TRUE}
+cdmSource(cdm)
+```
+
+```{r}
+sourceType(cdm)
+```
+
+## `cdm_reference`
+
+You can use the `cdm_reference` object to insert, list, drop or read tables in using the same source of the `cdm_reference`.
+
+. . .
+
+```{r}
+cdm <- insertTable(cdm = cdm, name = "my_table", table = cars)
+cdm$my_table
+```
+
+. . .
+
+```{r}
+listSourceTables(cdm = cdm)
+```
+
+. . .
+
+```{r, message=TRUE}
+cdm$my_table <- NULL
+cdm
+```
+
+. . .
+
+```{r, message=TRUE}
+cdm <- readSourceTable(cdm = cdm, name = "my_table")
+cdm
+```
+
+. . .
+
+```{r, message=TRUE}
+cdm <- dropSourceTable(cdm = cdm, name = "my_table")
+cdm
+listSourceTables(cdm = cdm)
+```
+
+## `cdm_source`
+
+The `cdm_source` is an object that defines how to:
+
+- compute a table (`compute.<class>`)
+- eliminate a table (`dropSourceTable.<class>`)
+- insert a table (`insertTable.<class>`)
+- read a table (`readSourceTable.<class>`)
+
+. . .
+
+At the creation of the `cdm_source` object all these steps will be checked (that's why creating a `cdm_reference` can take a few seconds).
+
+. . .
+
+To create a new `cdm_source` object you can use `newCdmSource()`.
+
+. . .
+
+For example for CDMConnector ths source contains the connection and the writeSchema:
+
+```{r}
+library(omock)
+library(omopgenerics)
+
+cdm <- mockCdmFromDataset(source = "duckdb")
+src <- cdmSource(cdm)
+src
+unclass(src)
+```
+
+## `cdm_source`
+
+You can summarise the properties of a `cdm_source` object using `summary()`
+
+. . .
+
+```{r}
+summary(src)
+```
+
+## `db_source`
+
+For example here we can see how the `db_source` is defined by *CDMConnector*: <https://github.com/darwin-eu/CDMConnector/blob/main/R/dbSource.R>
+
+## `cdm_table`
+
+A `cdm_table` object is a table that comes from a `cdm_reference`:
+
+. . .
+
+```{r}
+class(cdm$person)
+```
+
+. . . 
+
+The `cdm_table` will always include the reference where they come from, so we will be able to access other tables of the same `cdm_reference` object:
+
+```{r, message=TRUE}
+cdmReference(cdm$person)
+```
+
+## `cdm_table`
+
+The fact that contains the `cdm_refernce` object allow us to also access the same properties that we had before:
+
+```{r}
+cdmName(cdm$person)
+```
+
+```{r}
+cdmVersion(cdm$person)
+```
+
+```{r, message=TRUE}
+cdmSource(cdm$person)
+```
+
+```{r}
+sourceType(cdm)
+```
+
+## `cdm_table`
+
+On top of that extra attributes can be obtained:
+
+```{r}
+tableName(cdm$person)
+```
+
+```{r, message=TRUE}
+tableSource(cdm$person)
+```
+
+## `omop_table`
+
+The `omop_table` is a subclass of `cdm_table` that protects the OMOP CDM integrity and validates the OMOP CDM standard tables.
+
+. . .
+
+```{r}
+class(cdm$person)
+```
+
+. . .
+
+For example we can not remove required columns from `omop_tables`:
+
+```{r, error=TRUE}
+cdm$person <- cdm$person |>
+  select(!"person_id")
+```
+
+. . .
+
+Or assign tables that are not named the same way:
+
+```{r, error=TRUE}
+cdm$person <- cdm$drug_exposure
+```
+
+. . .
+
+But this does not mean that we can not modify them, we can add columns and/or change its content:
+
+```{r}
+cdm$person <- cdm$person |>
+  filter(person_id == 6) |>
+  mutate(extra_col = "my_content")
+cdm$person |>
+  glimpse()
+```
+
+## `achilles_table`
+
+The class `achilles_table` is a similar protection for the tables coming form the achilles analyses.
+
+## `cohort_table`
+
+```{r, echo=FALSE}
+cdm <- mockCdmFromDataset(source = "duckdb")
+cdm$my_cohort <- CohortConstructor::conceptCohort(
+  cdm = cdm, 
+  name = "my_cohort", 
+  conceptSet = list(cohort1 = 40481087L, cohort2 = 4112343L)
+)
+```
+
+The `cohort_table` class is a class built on top of `cdm_table` (it has all the functionalities seen for `cdm_table`) with some extra attributes.
+
+```{r, message=TRUE}
+cdm
+```
+
+. . .
+
+```{r}
+cdm$my_cohort
+```
+
+. . .
+
+```{r}
+class(cdm$my_cohort)
+```
+
+## `cohort_table`
+
+```{r}
+attributes(cdm$my_cohort)
+```
+
+## `cohort_table`
+
+We can access those attributes:
+
+. . .
+
+```{r}
+settings(cdm$my_cohort)
+```
+
+. . .
+
+```{r}
+cohortCount(cdm$my_cohort)
+```
+
+## `cohort_table`
+
+```{r}
+attrition(cdm$my_cohort)
+```
+
+## `cohort_table`
+
+We can easily update the attrition as:
+
+```{r}
+cdm$my_cohort <- cdm$my_cohort |>
+  filter(subject_id %% 2 == 0) |>
+  compute(name = "my_cohort") |>
+  recordCohortAttrition("Onlye even subjects")
+```
+
+. . .
+
+```{r}
+cohortCount(cdm$my_cohort)
+attrition(cdm$my_cohort)
+```
+
+## Codelists
+
+The package defines 3 different ways to define code lists:
+
+- `codelist`
+- `codelist_with_details`
+- `concept_set_expression`
+
+## `codelist`
+
+```{r, message=TRUE}
+codelist <- newCodelist(list(my_codes = c(1, 2, 3), condition2 = c(3, 4)))
+codelist
+```
+
+```{r}
+codelist$my_codes
+```
+
+## `codelist_with_details`
+
+```{r, message=TRUE}
+codelist <- list(
+  my_codes = tibble(
+    concept_id = c(1L, 2L, 3L),
+    extra_properties = c("a", "b", "c")
+  ), 
+  condition2 = tibble(
+    concept_id = c(3L, 4L),
+    concept_name = c("code 3", "code 4")
+  )
+) |>
+  newCodelistWithDetails()
+codelist
+```
+
+```{r}
+codelist$my_codes
+```
+
+## `codelist`
+## `codelist`
+
+```{r, message=TRUE}
+codelist <- newCodelist(list(my_codes = c(1, 2, 3), condition2 = c(3, 4)))
+codelist
+```
+
+```{r}
+codelist$my_codes
+```
+
+## `concept_set_expression`
+
+```{r, message=TRUE}
+codelist <- list(
+  my_codes = tibble(
+    concept_id = c(1L, 2L, 3L),
+    descendants = c(T, F, T),
+    excluded = c(F, T, F),
+    mapped = F
+  ), 
+  condition2 = tibble(
+    concept_id = c(3L, 4L),
+    descendants = c(T, F),
+    excluded = c(F, T),
+    mapped = F
+  )
+) |>
+  newConceptSetExpression()
+codelist
+```
+
+```{r}
+codelist$my_codes
+```
+
+## Combine and Subset codelists
+
+*omopgenerics* contains methods so that combining and subsetting codelists will preserve the class object:
+
+. . .
+
+```{r}
+codelist1 <- newCodelist(list(concept_1 = 1L, anxiety = c(4L, 5L)))
+codelist2 <- newCodelist(list(hypertension = 6L))
+c(codelist1, codelist2)
+```
+
+. . .
+
+```{r}
+codelist1["anxiety"]
+```
+
+## CodelistGenerator
+
+[CodelistGenerator](https://darwin-eu.github.io/CodelistGenerator/) provides multiple functionality to manage the 3 codelists classes, combine them, compare them:
+
+- `get*Codes()` to create different code lists
+- `subset*()` to subset code lists
+- `stratify*()` to stratify code lists
+- `asCodelist()`, `asCodelistWithDetails()`, `asConceptSetExpression()`
+
+## The conceptSet argument
+
+In general analytical packages will have an argument named `conceptSet` the input of this argument can either be a `codelist`, `codelist_with_details` or `concept_set_expression` or an object that can be converted to any of these objects (e.g. `list(concept = 1)`).
+
+## Export codelist
+
+`codelist` and `concept_set_expressions` can be exported in `json` or `csv` format:
+
+. . .
+
+```{r, eval=FALSE}
+library(here)
+exportCodelist(codelist, path = here(), type = "csv")
+exportCodelist(codelist, path = here(), type = "json")
+exportConceptSetExpression(codelist, path = here(), type = "csv")
+exportConceptSetExpression(codelist, path = here(), type = "json")
+```
+
+. . .
+
+Then later can be also imported:
+
+```{r, eval=FALSE}
+codelist <- importCodelist(path = here(), type = "csv")
+codelist <- importCodelist(path = here(), type = "json")
+codelist <- importConceptSetExpression(path = here(), type = "csv")
+codelist <- importConceptSetExpression(path = here(), type = "json")
+```
+
+**JSON file definition is the same than ATLAS and in line with the guidelines of OHDSI TAB.**
+
+## `summarised_result`
+
+The `summarised_result` is the result model defined by *omopgenerics*
+
+## Visualisations with `summarised_result`
+
+The [visOmopResults](https://darwin-eu.github.io/visOmopResults/) provides multiple functionality to to create tables and plot from the `summarised_result` object:
+
+- [Create Tables using `summarised_results`](https://darwin-eu.github.io/visOmopResults/articles/a01_tables.html)
+- [Create Plots using `summarised_results`](https://darwin-eu.github.io/visOmopResults/articles/a02_plots.html)
+
+## Further reading
+
+- Tidy R packages foundations: <https://ohdsi.github.io/Tidy-R-programming-with-OMOP/>
+- Tidy R packages develioment: <https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/>
