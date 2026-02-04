@@ -43,7 +43,7 @@ packages <- dplyr::tribble(
   "omock", "Core", "ohdsi", "Generate mock synthetic data; Create cdm reference to existing mock datasets",
   "visOmopResults", "Core; Visualisation", "darwin-eu", "Manage summarised_result objects; Create tables from summarised_result objects; Create plots from summarised_result objects",
   "CodelistGenerator", "Core; Diagnostics", "darwin-eu", "Manage codelists and concept sets; Run codelist diagnostics",
-  "PatientProfiles", "Core", "darwin-eu", "Add columns related to patient demographics; Add columns related to intersections",
+  "PatientProfiles", "Core", "darwin-eu", "Add columns related to patient demographics; Add columns related to intersections; Summarise data",
   "CohortConstructor", "Analytics", "ohdsi", "Generate base cohorts; Apply inclusion (and exclusion) criteria to cohorts",
   "IncidencePrevalence", "Analytics", "darwin-eu", "Identify denominators based on demographics; Estimate Incidence; Estimate Point-Prevalence; Estimate Period-Prevalence",
   "DrugUtilisation", "Analytics", "darwin-eu", "Estimate drug use; Estimate Proportion of Patients Covered; Summarise Indication; Analyse Discontunation and restart; Calculate daily dose",
@@ -228,6 +228,8 @@ colors <- c(
 
 ## Foundation
 
+. . .
+
 ```{r}
 library(palmerpenguins)
 library(dplyr)
@@ -248,6 +250,8 @@ penguins |>
 
 ## Foundartion
 
+. . .
+
 ```{r}
 library(duckdb)
 
@@ -258,6 +262,8 @@ penguins_db
 ```
 
 ## Foundartion
+
+. . .
 
 ```{r}
 penguins_db |>
@@ -276,6 +282,8 @@ penguins_db |>
 
 
 ## Foundation
+
+. . .
 
 ```{r}
 penguins_db |>
@@ -299,7 +307,7 @@ penguins_db |>
 
 . . .
 
-The presented ecosystem sits on top of these functions combined with the known structure of the [OMOP CDM](https://ohdsi.github.io/CommonDataModel/) tables to build packages to perform Epidemiological studies extracting data from an OMOP CDM source that can be in several different forms.
+The presented ecosystem sits on top of these functions combined with the known structure of the [OMOP CDM](https://ohdsi.github.io/CommonDataModel/) tables to build packages to perform Epidemiological studies extracting data from an OMOP CDM source that can be in several different back-ends.
 
 ## Cronology (Early stages)
 
@@ -438,7 +446,7 @@ packages |>
     c(
       paste0("## ", package_name, " (", classification, ")"),
       if_else(is.na(logo), "", paste0(
-        '\n<div style="position:absolute; top:50px; right:20px;"><img src="', logo, '" width="80"></div>\n'
+        '\n<div style="position:absolute; top:50px; right:20px;"><img src="', logo, '" width="100"></div>\n'
       )),
       ". . .",
       "",
@@ -661,6 +669,12 @@ cdm$my_table
 
 ## `cdm_reference`
 
+```{r, message=TRUE}
+cdm
+```
+
+## `cdm_reference`
+
 ```{r}
 listSourceTables(cdm = cdm)
 ```
@@ -674,6 +688,12 @@ cdm
 
 ## `cdm_reference`
 
+```{r}
+listSourceTables(cdm = cdm)
+```
+
+. . .
+
 ```{r, message=TRUE}
 cdm <- readSourceTable(cdm = cdm, name = "my_table")
 cdm
@@ -684,6 +704,11 @@ cdm
 ```{r, message=TRUE}
 cdm <- dropSourceTable(cdm = cdm, name = "my_table")
 cdm
+```
+
+. . .
+
+```{r}
 listSourceTables(cdm = cdm)
 ```
 
@@ -706,13 +731,9 @@ To create a new `cdm_source` object you can use `newCdmSource()`.
 
 ## `cdm_source`
 
-For example for CDMConnector ths source contains the connection and the writeSchema:
+For example for CDMConnector, the source contains the `connection` and the `writeSchema`:
 
-```{r}
-library(omock)
-library(omopgenerics)
-
-cdm <- mockCdmFromDataset(source = "duckdb")
+```{r, message=TRUE}
 src <- cdmSource(cdm)
 src
 unclass(src)
@@ -900,7 +921,7 @@ We can easily update the attrition as:
 cdm$my_cohort <- cdm$my_cohort |>
   filter(subject_id %% 2 == 0) |>
   compute(name = "my_cohort") |>
-  recordCohortAttrition("Onlye even subjects")
+  recordCohortAttrition("Only even subjects")
 ```
 
 . . .
@@ -925,6 +946,8 @@ codelist <- newCodelist(list(my_codes = c(1, 2, 3), condition2 = c(3, 4)))
 codelist
 ```
 
+. . .
+
 ```{r}
 codelist$my_codes
 ```
@@ -946,17 +969,7 @@ codelist <- list(
 codelist
 ```
 
-```{r}
-codelist$my_codes
-```
-
-## `codelist`
-## `codelist`
-
-```{r, message=TRUE}
-codelist <- newCodelist(list(my_codes = c(1, 2, 3), condition2 = c(3, 4)))
-codelist
-```
+. . .
 
 ```{r}
 codelist$my_codes
@@ -982,6 +995,8 @@ codelist <- list(
   newConceptSetExpression()
 codelist
 ```
+
+. . .
 
 ```{r}
 codelist$my_codes
@@ -1057,6 +1072,9 @@ The `summarised_result` is the result model defined by *omopgenerics*. It contai
 - `cdm_name` (2), it is used to identify the name of the cdm object used to obtain those results.
 - `group_name` (3) - `group_level` (4), these columns work together as a *name-level* pair. A *name-level* pair are two columns that work together to summarise information of multiple other columns. The *name* column contains the column names separated by `&&&` and the *level* column contains the column values separated by `&&&`. Elements in the *name* column must be snake_case. Usually group aggregation is used to show high level aggregations: e.g. cohort name or codelist name.
 - `strata_name` (5) - `strata_level` (6), these columns work together as a *name-level* pair. Usually strata aggregation is used to show stratifications of the results: e.g. age groups or sex.
+
+## `summarised_result`
+
 - `variable_name` (7), name of the variable of interest.
 - `variable_level` (8), level of the variable of interest, it is usually a subclass of the variable_name.
 - `estimate_name` (9), name of the estimate.
@@ -1103,19 +1121,19 @@ settings(result)
 
 ## `summarised_result`
 
-```{r}
+```{r, message=TRUE}
 resultPackageVersion(result)
 ```
 
 ## `summarised_result`
 
-```{r}
+```{r, message=TRUE}
 isResultSuppressed(result)
 ```
 
 ## `summarised_result`
 
-```{r}
+```{r, message=TRUE}
 result <- suppress(result = result, minCellCount = 10)
 isResultSuppressed(result)
 ```
