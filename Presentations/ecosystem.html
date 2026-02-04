@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.27">
+
+  <title>Tidy R with OMOP workgroup – The Tidy R in OMOP CDM ecosystem</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-3fb42f7c5238bab18b7aae6036ca4803.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link href="../site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+  <script src="../site_libs/bslib-component-js-0.10.0/components.min.js"></script>
+  <script src="../site_libs/bslib-component-js-0.10.0/web-components.min.js" type="module"></script>
+  <link href="../site_libs/bslib-component-css-0.10.0/components.css" rel="stylesheet">
+  <script src="../site_libs/bslib-tag-require-0.10.0/tag-require.js"></script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">The Tidy R in OMOP CDM ecosystem</h1>
+  <p class="subtitle">An ecosystem of R packages to work with the OMOP CDM</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="content" class="slide level2">
+<h2>Content</h2>
+<ul>
+<li class="fragment">Motivation and foundations</li>
+<li class="fragment">Existing packages overview</li>
+<li class="fragment"><code>omopgenerics</code> the core package</li>
+</ul>
+</section>
+<section id="motivation" class="slide level2">
+<h2>Motivation</h2>
+<ul>
+<li class="fragment">OMOP CDM</li>
+<li class="fragment">complications to install packages, not in cran, java, contribute to the ecosystem</li>
+<li class="fragment">tidyverse</li>
+<li class="fragment">no Java code, no SQL code, just R code</li>
+</ul>
+</section>
+<section id="foundation" class="slide level2">
+<h2>Foundation</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb1-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">min_bill_length_mm =</span> <span class="fu">min</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_bill_length_mm =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">max_bill_length_mm =</span> <span class="fu">max</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-11"><a aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">min_max_bill_length_mm =</span> <span class="fu">paste0</span>(</span>
+<span id="cb1-13"><a aria-hidden="true" tabindex="-1"></a>    min_bill_length_mm, <span class="st">" to "</span>, max_bill_length_mm</span>
+<span id="cb1-14"><a aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb1-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"species"</span>, <span class="st">"mean_bill_length_mm"</span>, <span class="st">"min_max_bill_length_mm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  species   mean_bill_length_mm min_max_bill_length_mm
+  &lt;fct&gt;                   &lt;dbl&gt; &lt;chr&gt;                 
+1 Adelie                   38.8 32.1 to 46            
+2 Chinstrap                48.8 40.9 to 58            
+3 Gentoo                   47.5 40.9 to 59.6          </code></pre>
+</div>
+</div>
+</section>
+<section id="foundartion" class="slide level2">
+<h2>Foundartion</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="at">drv =</span> <span class="fu">duckdb</span>())</span>
+<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(<span class="at">conn =</span> con, <span class="at">name =</span> <span class="st">"penguins"</span>, <span class="at">value =</span> penguins)</span>
+<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>penguins_db <span class="ot">&lt;-</span> <span class="fu">tbl</span>(con, <span class="st">"penguins"</span>)</span>
+<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a>penguins_db</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   table&lt;penguins&gt; [?? x 8]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2/:memory:]
+   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g sex     year
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt; &lt;fct&gt;  &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7               181        3750 male    2007
+ 2 Adelie  Torgersen           39.5          17.4               186        3800 female  2007
+ 3 Adelie  Torgersen           40.3          18                 195        3250 female  2007
+ 4 Adelie  Torgersen           NA            NA                  NA          NA &lt;NA&gt;    2007
+ 5 Adelie  Torgersen           36.7          19.3               193        3450 female  2007
+ 6 Adelie  Torgersen           39.3          20.6               190        3650 male    2007
+ 7 Adelie  Torgersen           38.9          17.8               181        3625 female  2007
+ 8 Adelie  Torgersen           39.2          19.6               195        4675 male    2007
+ 9 Adelie  Torgersen           34.1          18.1               193        3475 &lt;NA&gt;    2007
+10 Adelie  Torgersen           42            20.2               190        4250 &lt;NA&gt;    2007
+# ℹ more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="foundartion-1" class="slide level2">
+<h2>Foundartion</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">min_bill_length_mm =</span> <span class="fu">min</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_bill_length_mm =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">max_bill_length_mm =</span> <span class="fu">max</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">min_max_bill_length_mm =</span> <span class="fu">paste0</span>(</span>
+<span id="cb5-10"><a aria-hidden="true" tabindex="-1"></a>    min_bill_length_mm, <span class="st">" to "</span>, max_bill_length_mm</span>
+<span id="cb5-11"><a aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb5-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"species"</span>, <span class="st">"mean_bill_length_mm"</span>, <span class="st">"min_max_bill_length_mm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   SQL [?? x 3]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2/:memory:]
+  species   mean_bill_length_mm min_max_bill_length_mm
+  &lt;fct&gt;                   &lt;dbl&gt; &lt;chr&gt;                 
+1 Adelie                   38.8 32.1 to 46.0          
+2 Chinstrap                48.8 40.9 to 58.0          
+3 Gentoo                   47.5 40.9 to 59.6          </code></pre>
+</div>
+</div>
+</section>
+<section id="foundation-1" class="slide level2">
+<h2>Foundation</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">min_bill_length_mm =</span> <span class="fu">min</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_bill_length_mm =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">max_bill_length_mm =</span> <span class="fu">max</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-8"><a aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb7-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">min_max_bill_length_mm =</span> <span class="fu">paste0</span>(</span>
+<span id="cb7-10"><a aria-hidden="true" tabindex="-1"></a>    min_bill_length_mm, <span class="st">" to "</span>, max_bill_length_mm</span>
+<span id="cb7-11"><a aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb7-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"species"</span>, <span class="st">"mean_bill_length_mm"</span>, <span class="st">"min_max_bill_length_mm"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-13"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;SQL&gt;
+SELECT
+  species,
+  mean_bill_length_mm,
+  CONCAT_WS('', min_bill_length_mm, ' to ', max_bill_length_mm) AS min_max_bill_length_mm
+FROM (
+  SELECT
+    species,
+    COUNT(*) AS n,
+    MIN(bill_length_mm) AS min_bill_length_mm,
+    AVG(bill_length_mm) AS mean_bill_length_mm,
+    MAX(bill_length_mm) AS max_bill_length_mm
+  FROM penguins
+  GROUP BY species
+) q01</code></pre>
+</div>
+</div>
+</section>
+<section id="foundation-2" class="slide level2">
+<h2>Foundation</h2>
+<p><a href="https://dbplyr.tidyverse.org/">dbplyr</a> support the database translation of <a href="https://dplyr.tidyverse.org/">dplyr</a> functions against several database management systems.</p>
+<div class="fragment">
+<p>The presented ecosystem sits on top of these functions combined with the known structure of the <a href="https://ohdsi.github.io/CommonDataModel/">OMOP CDM</a> tables to build packages to perform Epidemiological studies extracting data from an OMOP CDM source that can be in several different forms.</p>
+</div>
+</section>
+<section id="cronology-early-stages" class="slide level2">
+<h2>Cronology (Early stages)</h2>
+
+<img data-src="ecosystem_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
+<section id="cronology-first-packages" class="slide level2">
+<h2>Cronology (First packages)</h2>
+
+<img data-src="ecosystem_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<section id="cronology-standardarisation-and-expansion" class="slide level2">
+<h2>Cronology (Standardarisation and expansion)</h2>
+
+<img data-src="ecosystem_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<section id="cronology-1.0.0-releases-and-stability" class="slide level2">
+<h2>Cronology (1.0.0 releases and stability)</h2>
+
+<img data-src="ecosystem_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<section id="existing-packages" class="slide level2">
+<h2>Existing packages</h2>
+<div class="card-grid">
+<div class="pkg-card" style="background:#e3f2fd">
+<p><strong>Core</strong></p>
+<ul>
+<li class="fragment"><p>omopgenerics</p></li>
+<li class="fragment"><p>omock</p></li>
+<li class="fragment"><p><em>visOmopResults</em></p></li>
+<li class="fragment"><p><em>CodelistGenerator</em></p></li>
+<li class="fragment"><p>PatientProfiles</p></li>
+</ul>
+</div>
+<div class="pkg-card" style="background:#e8f5e9">
+<p><strong>Back-end</strong></p>
+<ul>
+<li class="fragment"><p>CDMConnector</p></li>
+<li class="fragment"><p>OmopOnSpark</p></li>
+<li class="fragment"><p>OmopOnPostgres</p></li>
+<li class="fragment"><p>OmopOnDuckDB</p></li>
+<li class="fragment"><p>OmopOnSqlServer</p></li>
+</ul>
+</div>
+<div class="pkg-card" style="background:#fff3e0">
+<p><strong>Analytics</strong></p>
+<ul>
+<li class="fragment"><p>CohortConstructor</p></li>
+<li class="fragment"><p>IncidencePrevalence</p></li>
+<li class="fragment"><p>DrugUtilisation</p></li>
+<li class="fragment"><p>CohortCharacteristics</p></li>
+<li class="fragment"><p>CohortSurvival</p></li>
+<li class="fragment"><p>CohortSymmetry</p></li>
+<li class="fragment"><p><em>OmopSketch</em></p></li>
+<li class="fragment"><p>TreatmentPatterns</p></li>
+</ul>
+</div>
+<div class="pkg-card" style="background:#fce4ec">
+<p><strong>Diagnostics</strong></p>
+<ul>
+<li class="fragment"><p><em>CodelistGenerator</em></p></li>
+<li class="fragment"><p><em>OmopSketch</em></p></li>
+<li class="fragment"><p>MeasurementDiagnostics</p></li>
+<li class="fragment"><p>PhenotypeR</p></li>
+<li class="fragment"><p>DrugExposureDiagnostics</p></li>
+</ul>
+</div>
+<div class="pkg-card" style="background:#ede7f6">
+<p><strong>ETL</strong></p>
+<ul>
+<li class="fragment">OmopConstructor</li>
+</ul>
+</div>
+<div class="pkg-card" style="background:#e0f7fa">
+<p><strong>Visualisation</strong></p>
+<ul>
+<li class="fragment"><p><em>visOmopResults</em></p></li>
+<li class="fragment"><p>OmopViewer</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="omopgenerics-core" class="slide level2">
+<h2>omopgenerics (Core)</h2>
+<div class="fragment">
+<p><strong>Methods and Classes for the OMOP Common Data Model</strong></p>
+<p>Current version: <strong>1.3.6</strong> First release: <em>2024-01-17</em> Total releases: <em>23</em></p>
+<p>Links: <a href="https://darwin-eu.github.io/omopgenerics/">Website</a>; <a href="www.github.com/darwin-eu/omopgenerics">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Provides definitions of core classes and methods used by analytic pipelines that query the OMOP (Observational Medical Outcomes Partnership) common data model.</em></p>
+<ul>
+<li class="fragment">Define methods and classes for the ecosystem</li>
+</ul>
+</div>
+</section>
+<section id="cdmconnector-back-end" class="slide level2">
+<h2>CDMConnector (Back-end)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/darwin-eu/CDMConnector/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Connect to an OMOP Common Data Model</strong></p>
+<p>Current version: <strong>2.3.0</strong> First release: <em>2022-09-29</em> Total releases: <em>29</em></p>
+<p>Links: <a href="https://darwin-eu.github.io/CDMConnector/">Website</a>; <a href="www.github.com/darwin-eu/CDMConnector">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Provides tools for working with observational health data in the Observational Medical Outcomes Partnership (OMOP) Common Data Model format with a pipe friendly syntax. Common data model database table references are stored in a single compound object along with metadata.</em></p>
+<ul>
+<li class="fragment">Create a cdm_reference for database backends</li>
+</ul>
+</div>
+</section>
+<section id="omock-core" class="slide level2">
+<h2>omock (Core)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/ohdsi/omock/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Creation of Mock Observational Medical Outcomes Partnership Common Data Model</strong></p>
+<p>Current version: <strong>0.6.1</strong> First release: <em>2024-03-08</em> Total releases: <em>9</em></p>
+<p>Links: <a href="https://ohdsi.github.io/omock/">Website</a>; <a href="www.github.com/ohdsi/omock">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Creates mock data for testing and package development for the Observational Medical Outcomes Partnership common data model. The package offers functions crafted with pipeline-friendly implementation, enabling users to effortlessly include only the necessary tables for their testing needs.</em></p>
+<ul>
+<li class="fragment">Generate mock synthetic data</li>
+<li class="fragment">Create cdm reference to existing mock datasets</li>
+</ul>
+</div>
+</section>
+<section id="visomopresults-core-visualisation" class="slide level2">
+<h2>visOmopResults (Core; Visualisation)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/darwin-eu/visOmopResults/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Graphs and Tables for OMOP Results</strong></p>
+<p>Current version: <strong>1.4.1</strong> First release: <em>2024-02-06</em> Total releases: <em>18</em></p>
+<p>Links: <a href="https://darwin-eu.github.io/visOmopResults/">Website</a>; <a href="www.github.com/darwin-eu/visOmopResults">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Provides methods to transform omop_result objects into formatted tables and figures, facilitating the visualisation of study results working with the Observational Medical Outcomes Partnership (OMOP) Common Data Model.</em></p>
+<ul>
+<li class="fragment">Manage summarised_result objects</li>
+<li class="fragment">Create tables from summarised_result objects</li>
+<li class="fragment">Create plots from summarised_result objects</li>
+</ul>
+</div>
+</section>
+<section id="codelistgenerator-core-diagnostics" class="slide level2">
+<h2>CodelistGenerator (Core; Diagnostics)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/darwin-eu/CodelistGenerator/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Identify Relevant Clinical Codes and Evaluate Their Use</strong></p>
+<p>Current version: <strong>4.0.2</strong> First release: <em>2023-02-07</em> Total releases: <em>28</em></p>
+<p>Links: <a href="https://darwin-eu.github.io/CodelistGenerator/">Website</a>; <a href="www.github.com/darwin-eu/CodelistGenerator">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Generate a candidate code list for the Observational Medical Outcomes Partnership (OMOP) common data model based on string matching. For a given search strategy, a candidate code list will be returned.</em></p>
+<ul>
+<li class="fragment">Manage codelists and concept sets</li>
+<li class="fragment">Run codelist diagnostics</li>
+</ul>
+</div>
+</section>
+<section id="patientprofiles-core" class="slide level2">
+<h2>PatientProfiles (Core)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/darwin-eu/PatientProfiles/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Identify Characteristics of Patients in the OMOP Common Data Model</strong></p>
+<p>Current version: <strong>1.4.5</strong> First release: <em>2023-05-02</em> Total releases: <em>27</em></p>
+<p>Links: <a href="https://darwin-eu.github.io/PatientProfiles/">Website</a>; <a href="www.github.com/darwin-eu/PatientProfiles">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Identify the characteristics of patients in data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model.</em></p>
+<ul>
+<li class="fragment">Add columns related to patient demographics</li>
+<li class="fragment">Add columns related to intersections</li>
+</ul>
+</div>
+</section>
+<section id="cohortconstructor-analytics" class="slide level2">
+<h2>CohortConstructor (Analytics)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/ohdsi/CohortConstructor/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Build and Manipulate Study Cohorts Using a Common Data Model</strong></p>
+<p>Current version: <strong>0.6.1</strong> First release: <em>2024-06-01</em> Total releases: <em>14</em></p>
+<p>Links: <a href="https://ohdsi.github.io/CohortConstructor/">Website</a>; <a href="www.github.com/ohdsi/CohortConstructor">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Create and manipulate study cohorts in data mapped to the Observational Medical Outcomes Partnership Common Data Model.</em></p>
+<ul>
+<li class="fragment">Generate base cohorts</li>
+<li class="fragment">Apply inclusion (and exclusion) criteria to cohorts</li>
+</ul>
+</div>
+</section>
+<section id="incidenceprevalence-analytics" class="slide level2">
+<h2>IncidencePrevalence (Analytics)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/darwin-eu/IncidencePrevalence/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Estimate Incidence and Prevalence using the OMOP Common Data Model</strong></p>
+<p>Current version: <strong>1.2.1</strong> First release: <em>2023-03-27</em> Total releases: <em>24</em></p>
+<p>Links: <a href="https://darwin-eu.github.io/IncidencePrevalence/">Website</a>; <a href="www.github.com/darwin-eu/IncidencePrevalence">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Calculate incidence and prevalence using data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model. Incidence and prevalence can be estimated for the total population in a database or for a stratification cohort.</em></p>
+<ul>
+<li class="fragment">Identify denominators based on demographics</li>
+<li class="fragment">Estimate Incidence</li>
+<li class="fragment">Estimate Point-Prevalence</li>
+<li class="fragment">Estimate Period-Prevalence</li>
+</ul>
+</div>
+</section>
+<section id="drugutilisation-analytics" class="slide level2">
+<h2>DrugUtilisation (Analytics)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/darwin-eu/DrugUtilisation/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Summarise Patient-Level Drug Utilisation in Data Mapped to the OMOP Common Data Model</strong></p>
+<p>Current version: <strong>1.1.0</strong> First release: <em>2023-06-19</em> Total releases: <em>25</em></p>
+<p>Links: <a href="https://darwin-eu.github.io/DrugUtilisation/">Website</a>; <a href="www.github.com/darwin-eu/DrugUtilisation">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Summarise patient-level drug utilisation cohorts using data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model. New users and prevalent users cohorts can be generated and their characteristics, indication and drug use summarised.</em></p>
+<ul>
+<li class="fragment">Estimate drug use</li>
+<li class="fragment">Estimate Proportion of Patients Covered</li>
+<li class="fragment">Summarise Indication</li>
+<li class="fragment">Analyse Discontunation and restart</li>
+<li class="fragment">Calculate daily dose</li>
+</ul>
+</div>
+</section>
+<section id="cohortcharacteristics-analytics" class="slide level2">
+<h2>CohortCharacteristics (Analytics)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/darwin-eu/CohortCharacteristics/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Summarise and Visualise Characteristics of Patients in the OMOP CDM</strong></p>
+<p>Current version: <strong>1.1.1</strong> First release: <em>2024-04-16</em> Total releases: <em>13</em></p>
+<p>Links: <a href="https://darwin-eu.github.io/CohortCharacteristics/">Website</a>; <a href="www.github.com/darwin-eu/CohortCharacteristics">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Summarise and visualise the characteristics of patients in data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model (CDM).</em></p>
+<ul>
+<li class="fragment">Extract counts and attrition of cohorts</li>
+<li class="fragment">Overlap and Timing between cohorts</li>
+<li class="fragment">Characterise cohorts based in demographics and predefined conditions</li>
+<li class="fragment">Data driven characterisation</li>
+</ul>
+</div>
+</section>
+<section id="cohortsurvival-analytics" class="slide level2">
+<h2>CohortSurvival (Analytics)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/darwin-eu/CohortSurvival/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Estimate Survival from Common Data Model Cohorts</strong></p>
+<p>Current version: <strong>1.1.0</strong> First release: <em>2023-12-07</em> Total releases: <em>14</em></p>
+<p>Links: <a href="https://darwin-eu.github.io/CohortSurvival/">Website</a>; <a href="www.github.com/darwin-eu/CohortSurvival">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Estimate survival using data mapped to the Observational Medical Outcomes Partnership common data model. Survival can be estimated based on user-defined study cohorts.</em></p>
+<ul>
+<li class="fragment">Estimate survival probabilities</li>
+<li class="fragment">Estimate competing risks probabilities</li>
+</ul>
+</div>
+</section>
+<section id="cohortsymmetry-analytics" class="slide level2">
+<h2>CohortSymmetry (Analytics)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/ohdsi/CohortSymmetry/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Sequence Symmetry Analysis Using the Observational Medical Outcomes Partnership Common Data Model</strong></p>
+<p>Current version: <strong>0.2.4</strong> First release: <em>2024-06-04</em> Total releases: <em>10</em></p>
+<p>Links: <a href="https://ohdsi.github.io/CohortSymmetry/">Website</a>; <a href="www.github.com/ohdsi/CohortSymmetry">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Calculating crude sequence ratio, adjusted sequence ratio and confidence intervals using data mapped to the Observational Medical Outcomes Partnership Common Data Model.</em></p>
+<ul>
+<li class="fragment">Summarise temporal symmetry</li>
+<li class="fragment">Summarise sequence ratios</li>
+</ul>
+</div>
+</section>
+<section id="omopsketch-diagnostics-analytics" class="slide level2">
+<h2>OmopSketch (Diagnostics; Analytics)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/ohdsi/OmopSketch/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Characterise Tables of an OMOP Common Data Model Instance</strong></p>
+<p>Current version: <strong>1.0.0</strong> First release: <em>2024-09-26</em> Total releases: <em>13</em></p>
+<p>Links: <a href="https://ohdsi.github.io/OmopSketch/">Website</a>; <a href="www.github.com/ohdsi/OmopSketch">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Summarises key information in data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model. Assess suitability to perform specific epidemiological studies and explore the different domains to obtain feasibility counts and trends.</em></p>
+<ul>
+<li class="fragment">Summarise data standards of omop tables</li>
+<li class="fragment">Summarise record trends</li>
+<li class="fragment">Summarise missing data</li>
+<li class="fragment">Summarise concept counts</li>
+</ul>
+</div>
+</section>
+<section id="measurementdiagnostics-diagnostics" class="slide level2">
+<h2>MeasurementDiagnostics (Diagnostics)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/ohdsi/MeasurementDiagnostics/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Diagnostics for Lists of Codes Based on Measurements</strong></p>
+<p>Current version: <strong>0.2.0</strong> First release: <em>2025-07-11</em> Total releases: <em>3</em></p>
+<p>Links: <a href="https://ohdsi.github.io/MeasurementDiagnostics/">Website</a>; <a href="www.github.com/ohdsi/MeasurementDiagnostics">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Diagnostics of list of codes based on concepts from the domains measurement and observation. This package works for data mapped to the Observational Medical Outcomes Partnership Common Data Model.</em></p>
+<ul>
+<li class="fragment">Diagnotics for measurement codelists</li>
+</ul>
+</div>
+</section>
+<section id="phenotyper-diagnostics" class="slide level2">
+<h2>PhenotypeR (Diagnostics)</h2>
+<div style="position:absolute; top:50px; right:20px;">
+<img src="https://github.com/ohdsi/PhenotypeR/blob/main/man/figures/logo.png?raw=true" width="80">
+</div>
+<div class="fragment">
+<p><strong>Assess Study Cohorts Using a Common Data Model</strong></p>
+<p>Current version: <strong>0.3.1</strong> First release: <em>2024-12-06</em> Total releases: <em>10</em></p>
+<p>Links: <a href="https://ohdsi.github.io/PhenotypeR/">Website</a>; <a href="www.github.com/ohdsi/PhenotypeR">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Phenotype study cohorts in data mapped to the Observational Medical Outcomes Partnership Common Data Model. Diagnostics are run at the database, code list, cohort, and population level to assess whether study cohorts are ready for research.</em></p>
+<ul>
+<li class="fragment">Diagnostics at database level</li>
+<li class="fragment">Diagnostics at codelist level</li>
+<li class="fragment">Diagnostics at cohort level</li>
+</ul>
+</div>
+</section>
+<section id="omopviewer-visualisation" class="slide level2">
+<h2>OmopViewer (Visualisation)</h2>
+<div class="fragment">
+<p><strong>Visualise OMOP Results using ‘shiny’ Applications</strong></p>
+<p>Current version: <strong>0.6.0</strong> First release: <em>2024-10-21</em> Total releases: <em>6</em></p>
+<p>Links: <a href="https://ohdsi.github.io/OmopViewer/">Website</a>; <a href="www.github.com/ohdsi/OmopViewer">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Visualise results obtained from analysing data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model using ‘shiny’ applications.</em></p>
+<ul>
+<li class="fragment">Create automatic shiny app from standard results</li>
+</ul>
+</div>
+</section>
+<section id="drugexposurediagnostics-diagnostics" class="slide level2">
+<h2>DrugExposureDiagnostics (Diagnostics)</h2>
+<div class="fragment">
+<p><strong>Diagnostics for OMOP Common Data Model Drug Records</strong></p>
+<p>Current version: <strong>1.1.5</strong> First release: <em>2023-03-08</em> Total releases: <em>23</em></p>
+<p>Links: <a href="https://darwin-eu.github.io/DrugExposureDiagnostics/">Website</a>; <a href="www.github.com/darwin-eu/DrugExposureDiagnostics">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Ingredient specific diagnostics for drug exposure records in the Observational Medical Outcomes Partnership (OMOP) common data model.</em></p>
+<ul>
+<li class="fragment">Diagnostics for drug codelists</li>
+</ul>
+</div>
+</section>
+<section id="treatmentpatterns-analytics" class="slide level2">
+<h2>TreatmentPatterns (Analytics)</h2>
+<div class="fragment">
+<p><strong>Analyzes Real-World Treatment Patterns of a Study Population of Interest</strong></p>
+<p>Current version: <strong>3.1.1</strong> First release: <em>2023-08-16</em> Total releases: <em>20</em></p>
+<p>Links: <a href="https://darwin-eu.github.io/TreatmentPatterns/">Website</a>; <a href="www.github.com/darwin-eu/TreatmentPatterns">GitHub</a></p>
+</div>
+<div class="fragment">
+<ul>
+<li class="fragment"><p>Computes treatment patterns within a given cohort using the Observational Medical Outcomes Partnership (OMOP) common data model (CDM). As described in Markus, Verhamme, Kors, and Rijnbeek (2022) <a href="doi:10.1016/j.cmpb.2022.107081" class="uri">doi:10.1016/j.cmpb.2022.107081</a>.*</p></li>
+<li class="fragment"><p>Analyse treatment sequences and pathways</p></li>
+</ul>
+</div>
+</section>
+<section id="omopconstructor-etl" class="slide level2">
+<h2>OmopConstructor (ETL)</h2>
+<div class="fragment">
+<p><strong>Build Tables in the OMOP Common Data Model</strong></p>
+<p>Current version: <strong>0.1.0</strong> First release: <em>2025-09-30</em> Total releases: <em>1</em></p>
+<p>Links: <a href="https://ohdsi.github.io/OmopConstructor/">Website</a>; <a href="www.github.com/ohdsi/OmopConstructor">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Provides functionality to construct standardised tables from health care data formatted according to the Observational Medical Outcomes Partnership (OMOP) Common Data Model. The package includes tools to build key tables such as observation period and drug era, among others.</em></p>
+<ul>
+<li class="fragment">Generate the observation_period using cdm data</li>
+<li class="fragment">Run Achilles analyses</li>
+<li class="fragment">Create drug_era table</li>
+<li class="fragment"><em>Create pregnancy algorithm</em></li>
+</ul>
+</div>
+</section>
+<section id="omoponspark-back-end" class="slide level2">
+<h2>OmopOnSpark (Back-end)</h2>
+<div class="fragment">
+<p><strong>Using a Common Data Model on ‘Spark’</strong></p>
+<p>Current version: <strong>0.1.0</strong> First release: <em>2025-10-22</em> Total releases: <em>1</em></p>
+<p>Links: <a href="https://ohdsi.github.io/OmopOnSpark/">Website</a>; <a href="www.github.com/ohdsi/OmopOnSpark">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>Use health data in the Observational Medical Outcomes Partnership Common Data Model format in ‘Spark’. Functionality includes creating all required tables and fields and creation of a single reference to the data. Native ‘Spark’ functionality is supported.</em></p>
+<ul>
+<li class="fragment">Create a cdm_reference using spark connection</li>
+</ul>
+</div>
+</section>
+<section id="omoponpostgres-back-end" class="slide level2">
+<h2>OmopOnPostgres (Back-end)</h2>
+<div class="fragment">
+<p><strong>What the Package Does (One Line, Title Case)</strong></p>
+<p>Current version: <strong>-</strong> First release: <em>-</em> Total releases: <em>0</em></p>
+<p>Links: <a href="https://ohdsi.github.io/OmopOnPostgres/">Website</a>; <a href="www.github.com/ohdsi/OmopOnPostgres">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>What the package does (one paragraph).</em></p>
+<ul>
+<li class="fragment">Create a cdm_reference using postgres connection</li>
+<li class="fragment"><em>Use postgres indexes</em></li>
+</ul>
+</div>
+</section>
+<section id="omoponduckdb-back-end" class="slide level2">
+<h2>OmopOnDuckDB (Back-end)</h2>
+<div class="fragment">
+<p><strong>What the Package Does (Title Case)</strong></p>
+<p>Current version: <strong>-</strong> First release: <em>-</em> Total releases: <em>0</em></p>
+<p>Links: <a href="https://ohdsi.github.io/OmopOnDuckDB/">Website</a>; <a href="www.github.com/ohdsi/OmopOnDuckDB">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.</em></p>
+<ul>
+<li class="fragment">Create a cdm_reference using duckdb connection</li>
+<li class="fragment"><em>Create a cdm_reference using parquet files</em></li>
+</ul>
+</div>
+</section>
+<section id="omoponsqlserver-back-end" class="slide level2">
+<h2>OmopOnSqlServer (Back-end)</h2>
+<div class="fragment">
+<p><strong>What the Package Does (Title Case)</strong></p>
+<p>Current version: <strong>-</strong> First release: <em>-</em> Total releases: <em>0</em></p>
+<p>Links: <a href="https://ohdsi.github.io/OmopOnSqlServer/">Website</a>; <a href="www.github.com/ohdsi/OmopOnSqlServer">GitHub</a></p>
+</div>
+<div class="fragment">
+<p><em>More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.</em></p>
+<ul>
+<li class="fragment">Create a cdm_reference using sql server connection</li>
+<li class="fragment"><em>Create a cdm_reference using synapse connection</em></li>
+</ul>
+</div>
+</section>
+<section id="how-packages-interact" class="slide level2">
+<h2>How packages interact?</h2>
+
+<img data-src="ecosystem_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"></section>
+<section id="how-packages-interact-1" class="slide level2">
+<h2>How packages interact?</h2>
+
+<img data-src="ecosystem_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section>
+<section id="some-statistics" class="slide level2">
+<h2>Some statistics</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box default showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card() value_box()" data-require-bs-version="5 5">
+<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
+<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
+<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-bar-chart " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"></path></svg></div>
+<div class="value-box-area html-fill-item html-fill-container">
+<p class="value-box-title">Number of R packages</p>
+<p class="value-box-value">23</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box default showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card() value_box()" data-require-bs-version="5 5">
+<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
+<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
+<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-bar-chart " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"></path></svg></div>
+<div class="value-box-area html-fill-item html-fill-container">
+<p class="value-box-title">Number of R packages on CRAN</p>
+<p class="value-box-value">20</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box default showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card() value_box()" data-require-bs-version="5 5">
+<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
+<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
+<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-bar-chart " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"></path></svg></div>
+<div class="value-box-area html-fill-item html-fill-container">
+<p class="value-box-title">Number Releases</p>
+<p class="value-box-value">311</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box default showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card() value_box()" data-require-bs-version="5 5">
+<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
+<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
+<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-bar-chart " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"></path></svg></div>
+<div class="value-box-area html-fill-item html-fill-container">
+<p class="value-box-title">Total CRAN downloads</p>
+<p class="value-box-value">409096</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
+</div>
+</div>
+</div>
+</section>
+<section>
+<section id="omopgenerics" class="title-slide slide level1 center">
+<h1>omopgenerics</h1>
+
+</section>
+<section id="omopgenerics-1" class="slide level2">
+<h2>omopgenerics</h2>
+<p>Provides definitions of core <strong>classes</strong> and <strong>methods</strong> used by analytic pipelines that query the OMOP (Observational Medical Outcomes Partnership) common data model.</p>
+</section>
+<section id="classes" class="slide level2">
+<h2>Classes</h2>
+<ul>
+<li class="fragment">The CDM refernce object: <code>cdm_reference</code>, <code>cdm_source</code>, <code>local_source</code></li>
+<li class="fragment">CDM tables: <code>cdm_table</code>, <code>omop_table</code>, <code>achilles_table</code>, <code>cohort_table</code></li>
+<li class="fragment">Code lists: <code>codelist</code>, <code>codelist_with_details</code>, <code>concept_set_expression</code></li>
+<li class="fragment">Result model: <code>summaried_result</code></li>
+</ul>
+</section>
+<section id="cdm_reference" class="slide level2">
+<h2><code>cdm_reference</code></h2>
+<p>The <code>cdm_reference</code> is the center of the ecosystem, it is a list with a reference to the different OMOP CDM tables. In general we will create a <code>cdm_reference</code> with the <em>CDMConnector</em> package:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CDMConnector)</span>
+<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(</span>
+<span id="cb9-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">con =</span> con,</span>
+<span id="cb9-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmSchema =</span> <span class="st">"public"</span>,</span>
+<span id="cb9-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">writeSchema =</span> <span class="st">"results"</span>,</span>
+<span id="cb9-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">writePrefix =</span> <span class="st">"mc_"</span>,</span>
+<span id="cb9-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmName =</span> <span class="st">"my OMOP"</span></span>
+<span id="cb9-8"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-9"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── # OMOP CDM reference (duckdb) of my OMOP ────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,
+condition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,
+drug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,
+payer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,
+visit_occurrence, vocabulary</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• cohort tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• achilles tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• other tables: -</code></pre>
+</div>
+</div>
+</section>
+<section id="cdm_reference-1" class="slide level2">
+<h2><code>cdm_reference</code></h2>
+<p>The <code>cdm_reference</code> object contains several attributes:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics)</span>
+<span id="cb16-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "my OMOP"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "5.3"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmSource</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>This is a duckdb cdm source</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sourceType</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "duckdb"</code></pre>
+</div>
+</div>
+</section>
+<section id="cdm_reference-2" class="slide level2">
+<h2><code>cdm_reference</code></h2>
+<p>You can use the <code>cdm_reference</code> object to insert, list, drop or read tables in using the same source of the <code>cdm_reference</code>.</p>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">insertTable</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"my_table"</span>, <span class="at">table =</span> cars)</span>
+<span id="cb24-2"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   table&lt;results.test_my_table&gt; [?? x 2]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff26515451.duckdb]
+   speed  dist
+   &lt;dbl&gt; &lt;dbl&gt;
+ 1     4     2
+ 2     4    10
+ 3     7     4
+ 4     7    22
+ 5     8    16
+ 6     9    10
+ 7    10    18
+ 8    10    26
+ 9    10    34
+10    11    17
+# ℹ more rows</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">listSourceTables</span>(<span class="at">cdm =</span> cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "my_table"</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_table <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb28-2"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── # OMOP CDM reference (duckdb) of my OMOP ────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,
+condition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,
+drug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,
+payer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,
+visit_occurrence, vocabulary</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• cohort tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• achilles tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• other tables: -</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">readSourceTable</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"my_table"</span>)</span>
+<span id="cb35-2"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── # OMOP CDM reference (duckdb) of my OMOP ────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,
+condition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,
+drug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,
+payer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,
+visit_occurrence, vocabulary</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• cohort tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• achilles tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• other tables: my_table</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">dropSourceTable</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"my_table"</span>)</span>
+<span id="cb42-2"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── # OMOP CDM reference (duckdb) of my OMOP ────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,
+condition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,
+drug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,
+payer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,
+visit_occurrence, vocabulary</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• cohort tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• achilles tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• other tables: -</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">listSourceTables</span>(<span class="at">cdm =</span> cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>character(0)</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="cdm_source" class="slide level2">
+<h2><code>cdm_source</code></h2>
+<p>The <code>cdm_source</code> is an object that defines how to:</p>
+<ul>
+<li class="fragment">compute a table (<code>compute.&lt;class&gt;</code>)</li>
+<li class="fragment">eliminate a table (<code>dropSourceTable.&lt;class&gt;</code>)</li>
+<li class="fragment">insert a table (<code>insertTable.&lt;class&gt;</code>)</li>
+<li class="fragment">read a table (<code>readSourceTable.&lt;class&gt;</code>)</li>
+</ul>
+<div class="fragment">
+<p>At the creation of the <code>cdm_source</code> object all these steps will be checked (that’s why creating a <code>cdm_reference</code> can take a few seconds).</p>
+</div>
+<div class="fragment">
+<p>To create a new <code>cdm_source</code> object you can use <code>newCdmSource()</code>.</p>
+</div>
+<div class="fragment">
+<p>For example for CDMConnector ths source contains the connection and the writeSchema:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omock)</span>
+<span id="cb51-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics)</span>
+<span id="cb51-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">mockCdmFromDataset</span>(<span class="at">source =</span> <span class="st">"duckdb"</span>)</span>
+<span id="cb51-5"><a aria-hidden="true" tabindex="-1"></a>src <span class="ot">&lt;-</span> <span class="fu">cdmSource</span>(cdm)</span>
+<span id="cb51-6"><a aria-hidden="true" tabindex="-1"></a>src</span>
+<span id="cb51-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">unclass</span>(src)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>list()
+attr(,"dbcon")</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>attr(,"write_schema")
+   schema    prefix 
+"results"   "test_" 
+attr(,"source_type")
+[1] "duckdb"</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="cdm_source-1" class="slide level2">
+<h2><code>cdm_source</code></h2>
+<p>You can summarise the properties of a <code>cdm_source</code> object using <code>summary()</code></p>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(src)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>This is a [1m[36mduckdb[0m source created by [3m[36mCDMConnector[0m package:
+ ∙ [34mwrite_schema[0m: `results`
+ ∙ [34mwrite_prefix[0m: `test_`</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="db_source" class="slide level2">
+<h2><code>db_source</code></h2>
+<p>For example here we can see how the <code>db_source</code> is defined by <em>CDMConnector</em>: <a href="https://github.com/darwin-eu/CDMConnector/blob/main/R/dbSource.R" class="uri">https://github.com/darwin-eu/CDMConnector/blob/main/R/dbSource.R</a></p>
+</section>
+<section id="cdm_table" class="slide level2">
+<h2><code>cdm_table</code></h2>
+<p>A <code>cdm_table</code> object is a table that comes from a <code>cdm_reference</code>:</p>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "omop_table"            "cdm_table"             "tbl_duckdb_connection" "tbl_dbi"              
+[5] "tbl_sql"               "tbl_lazy"              "tbl"                  </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>The <code>cdm_table</code> will always include the reference where they come from, so we will be able to access other tables of the same <code>cdm_reference</code> object:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmReference</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── # OMOP CDM reference (duckdb) of GiBleed ────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,
+condition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,
+drug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,
+payer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,
+visit_occurrence, vocabulary</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• cohort tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• achilles tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• other tables: -</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="cdm_table-1" class="slide level2">
+<h2><code>cdm_table</code></h2>
+<p>The fact that contains the <code>cdm_refernce</code> object allow us to also access the same properties that we had before:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "GiBleed"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "5.3"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cdmSource</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>This is a duckdb cdm source</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sourceType</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "duckdb"</code></pre>
+</div>
+</div>
+</section>
+<section id="cdm_table-2" class="slide level2">
+<h2><code>cdm_table</code></h2>
+<p>On top of that extra attributes can be obtained:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tableName</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "person"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tableSource</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>This is a duckdb cdm source</code></pre>
+</div>
+</div>
+</section>
+<section id="omop_table" class="slide level2">
+<h2><code>omop_table</code></h2>
+<p>The <code>omop_table</code> is a subclass of <code>cdm_table</code> that protects the OMOP CDM integrity and validates the OMOP CDM standard tables.</p>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "omop_table"            "cdm_table"             "tbl_duckdb_connection" "tbl_dbi"              
+[5] "tbl_sql"               "tbl_lazy"              "tbl"                  </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>For example we can not remove required columns from <code>omop_tables</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
+<span id="cb79-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="st">"person_id"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `newOmopTable()`:
+! person_id is not present in table person</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Or assign tables that are not named the same way:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>drug_exposure</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `[[&lt;-`:
+✖ You can't assign a table named drug_exposure to person.
+ℹ You can change the name using compute:
+cdm[['person']] &lt;- yourObject |&gt;
+  dplyr::compute(name = 'person')
+ℹ You can also change the name using the `name` argument in your function: `name = 'person'`.</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>But this does not mean that we can not modify them, we can add columns and/or change its content:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
+<span id="cb83-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(person_id <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">|&gt;</span></span>
+<span id="cb83-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">extra_col =</span> <span class="st">"my_content"</span>)</span>
+<span id="cb83-4"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
+<span id="cb83-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: ??
+Columns: 19
+Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff41e0c1b5.duckdb]
+$ person_id                   &lt;int&gt; 6
+$ gender_concept_id           &lt;int&gt; 8532
+$ year_of_birth               &lt;int&gt; 1963
+$ month_of_birth              &lt;int&gt; 12
+$ day_of_birth                &lt;int&gt; 31
+$ birth_datetime              &lt;dttm&gt; 1963-12-31
+$ race_concept_id             &lt;int&gt; 8516
+$ ethnicity_concept_id        &lt;int&gt; 0
+$ location_id                 &lt;int&gt; NA
+$ provider_id                 &lt;int&gt; NA
+$ care_site_id                &lt;int&gt; NA
+$ person_source_value         &lt;chr&gt; "001f4a87-70d0-435c-a4b9-1425f6928d33"
+$ gender_source_value         &lt;chr&gt; "F"
+$ gender_source_concept_id    &lt;int&gt; 0
+$ race_source_value           &lt;chr&gt; "black"
+$ race_source_concept_id      &lt;int&gt; 0
+$ ethnicity_source_value      &lt;chr&gt; "west_indian"
+$ ethnicity_source_concept_id &lt;int&gt; 0
+$ extra_col                   &lt;chr&gt; "my_content"</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="achilles_table" class="slide level2">
+<h2><code>achilles_table</code></h2>
+<p>The class <code>achilles_table</code> is a similar protection for the tables coming form the achilles analyses.</p>
+</section>
+<section id="cohort_table" class="slide level2">
+<h2><code>cohort_table</code></h2>
+<p>The <code>cohort_table</code> class is a class built on top of <code>cdm_table</code> (it has all the functionalities seen for <code>cdm_table</code>) with some extra attributes.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── # OMOP CDM reference (duckdb) of GiBleed ────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,
+condition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,
+drug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,
+payer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,
+visit_occurrence, vocabulary</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• cohort tables: my_cohort</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• achilles tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• other tables: -</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   table&lt;results.test_my_cohort&gt; [?? x 4]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]
+   cohort_definition_id subject_id cohort_start_date cohort_end_date
+                  &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
+ 1                    1        752 1967-07-16        1967-07-23     
+ 2                    1       1128 1993-02-05        1993-02-19     
+ 3                    1       1432 1964-05-23        1964-06-13     
+ 4                    1       1558 1977-11-19        1977-12-03     
+ 5                    1       1911 1953-06-19        1953-07-03     
+ 6                    1       3144 2019-04-07        2019-04-07     
+ 7                    1       3495 1977-06-13        1977-06-27     
+ 8                    1       3560 1979-07-21        1979-08-11     
+ 9                    1       3852 1995-09-10        1995-10-01     
+10                    1       4022 1976-09-22        1976-09-29     
+# ℹ more rows</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "cohort_table"          "cdm_table"             "GeneratedCohortSet"    "tbl_duckdb_connection"
+[5] "tbl_dbi"               "tbl_sql"               "tbl_lazy"              "tbl"                  </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="cohort_table-1" class="slide level2">
+<h2><code>cohort_table</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$names
+[1] "src"        "lazy_query"
+
+$class
+[1] "cohort_table"          "cdm_table"             "GeneratedCohortSet"    "tbl_duckdb_connection"
+[5] "tbl_dbi"               "tbl_sql"               "tbl_lazy"              "tbl"                  
+
+$tbl_source</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+$tbl_name
+[1] "my_cohort"
+
+$cohort_set
+# Source:   table&lt;results.test_my_cohort_set&gt; [?? x 4]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]
+  cohort_definition_id cohort_name cdm_version vocabulary_version
+                 &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             
+1                    1 cohort1     5.3         v5.0 18-JAN-19    
+2                    2 cohort2     5.3         v5.0 18-JAN-19    
+
+$cohort_attrition
+# Source:   table&lt;results.test_my_cohort_attrition&gt; [?? x 7]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]
+  cohort_definition_id number_records number_subjects reason_id reason                excluded_records excluded_subjects
+                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;                            &lt;int&gt;             &lt;int&gt;
+1                    1          17268            2686         1 Initial qualifying e…                0                 0
+2                    1          17268            2686         2 Record in observation                0                 0
+3                    1          17268            2686         3 Not missing record d…                0                 0
+4                    2          10217            2606         1 Initial qualifying e…                0                 0
+5                    2          10217            2606         2 Record in observation                0                 0
+6                    2          10217            2606         3 Not missing record d…                0                 0
+7                    1          17268            2686         4 Merge overlapping re…                0                 0
+8                    2          10217            2606         4 Merge overlapping re…                0                 0
+
+$cohort_codelist
+# Source:   table&lt;results.test_my_cohort_codelist&gt; [?? x 4]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]
+  cohort_definition_id codelist_name concept_id codelist_type
+                 &lt;int&gt; &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;        
+1                    1 cohort1         40481087 index event  
+2                    2 cohort2          4112343 index event  
+
+$cdm_reference</code></pre>
+</div>
+</div>
+</section>
+<section id="cohort_table-2" class="slide level2">
+<h2><code>cohort_table</code></h2>
+<p>We can access those attributes:</p>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  cohort_definition_id cohort_name cdm_version vocabulary_version
+                 &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             
+1                    1 cohort1     5.3         v5.0 18-JAN-19    
+2                    2 cohort2     5.3         v5.0 18-JAN-19    </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  cohort_definition_id number_records number_subjects
+                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;
+1                    1          17268            2686
+2                    2          10217            2606</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="cohort_table-3" class="slide level2">
+<h2><code>cohort_table</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 7
+  cohort_definition_id number_records number_subjects reason_id reason                excluded_records excluded_subjects
+                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;                            &lt;int&gt;             &lt;int&gt;
+1                    1          17268            2686         1 Initial qualifying e…                0                 0
+2                    1          17268            2686         2 Record in observation                0                 0
+3                    1          17268            2686         3 Not missing record d…                0                 0
+4                    1          17268            2686         4 Merge overlapping re…                0                 0
+5                    2          10217            2606         1 Initial qualifying e…                0                 0
+6                    2          10217            2606         2 Record in observation                0                 0
+7                    2          10217            2606         3 Not missing record d…                0                 0
+8                    2          10217            2606         4 Merge overlapping re…                0                 0</code></pre>
+</div>
+</div>
+</section>
+<section id="cohort_table-4" class="slide level2">
+<h2><code>cohort_table</code></h2>
+<p>We can easily update the attrition as:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort <span class="ot">&lt;-</span> cdm<span class="sc">$</span>my_cohort <span class="sc">|&gt;</span></span>
+<span id="cb105-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subject_id <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb105-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"my_cohort"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb105-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">recordCohortAttrition</span>(<span class="st">"Onlye even subjects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  cohort_definition_id number_records number_subjects
+                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;
+1                    1           8574            1339
+2                    2           5072            1299</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>my_cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 7
+   cohort_definition_id number_records number_subjects reason_id reason               excluded_records excluded_subjects
+                  &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;                           &lt;int&gt;             &lt;int&gt;
+ 1                    1          17268            2686         1 Initial qualifying …                0                 0
+ 2                    1          17268            2686         2 Record in observati…                0                 0
+ 3                    1          17268            2686         3 Not missing record …                0                 0
+ 4                    1          17268            2686         4 Merge overlapping r…                0                 0
+ 5                    1           8574            1339         5 Onlye even subjects              8694              1347
+ 6                    2          10217            2606         1 Initial qualifying …                0                 0
+ 7                    2          10217            2606         2 Record in observati…                0                 0
+ 8                    2          10217            2606         3 Not missing record …                0                 0
+ 9                    2          10217            2606         4 Merge overlapping r…                0                 0
+10                    2           5072            1299         5 Onlye even subjects              5145              1307</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="codelists" class="slide level2">
+<h2>Codelists</h2>
+<p>The package defines 3 different ways to define code lists:</p>
+<ul>
+<li class="fragment"><code>codelist</code></li>
+<li class="fragment"><code>codelist_with_details</code></li>
+<li class="fragment"><code>concept_set_expression</code></li>
+</ul>
+</section>
+<section id="codelist" class="slide level2">
+<h2><code>codelist</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">my_codes =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">condition2 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)))</span>
+<span id="cb110-2"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── 2 codelists ─────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+- condition2 (2 codes)
+- my_codes (3 codes)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3</code></pre>
+</div>
+</div>
+</section>
+<section id="codelist_with_details" class="slide level2">
+<h2><code>codelist_with_details</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb116-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">my_codes =</span> <span class="fu">tibble</span>(</span>
+<span id="cb116-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">1</span>L, <span class="dv">2</span>L, <span class="dv">3</span>L),</span>
+<span id="cb116-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">extra_properties =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>)</span>
+<span id="cb116-5"><a aria-hidden="true" tabindex="-1"></a>  ), </span>
+<span id="cb116-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">condition2 =</span> <span class="fu">tibble</span>(</span>
+<span id="cb116-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">3</span>L, <span class="dv">4</span>L),</span>
+<span id="cb116-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_name =</span> <span class="fu">c</span>(<span class="st">"code 3"</span>, <span class="st">"code 4"</span>)</span>
+<span id="cb116-9"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb116-10"><a aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb116-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">newCodelistWithDetails</span>()</span>
+<span id="cb116-12"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── 2 codelists with details ────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+- condition2 (2 codes)
+- my_codes (3 codes)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  concept_id extra_properties
+       &lt;int&gt; &lt;chr&gt;           
+1          1 a               
+2          2 b               
+3          3 c               </code></pre>
+</div>
+</div>
+</section>
+<section id="codelist-1" class="slide level2">
+<h2><code>codelist</code></h2>
+</section>
+<section id="codelist-2" class="slide level2">
+<h2><code>codelist</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">my_codes =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">condition2 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)))</span>
+<span id="cb122-2"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── 2 codelists ─────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+- condition2 (2 codes)
+- my_codes (3 codes)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3</code></pre>
+</div>
+</div>
+</section>
+<section id="concept_set_expression" class="slide level2">
+<h2><code>concept_set_expression</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb128-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">my_codes =</span> <span class="fu">tibble</span>(</span>
+<span id="cb128-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">1</span>L, <span class="dv">2</span>L, <span class="dv">3</span>L),</span>
+<span id="cb128-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">descendants =</span> <span class="fu">c</span>(T, F, T),</span>
+<span id="cb128-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">excluded =</span> <span class="fu">c</span>(F, T, F),</span>
+<span id="cb128-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mapped =</span> F</span>
+<span id="cb128-7"><a aria-hidden="true" tabindex="-1"></a>  ), </span>
+<span id="cb128-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">condition2 =</span> <span class="fu">tibble</span>(</span>
+<span id="cb128-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">concept_id =</span> <span class="fu">c</span>(<span class="dv">3</span>L, <span class="dv">4</span>L),</span>
+<span id="cb128-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">descendants =</span> <span class="fu">c</span>(T, F),</span>
+<span id="cb128-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">excluded =</span> <span class="fu">c</span>(F, T),</span>
+<span id="cb128-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mapped =</span> F</span>
+<span id="cb128-13"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb128-14"><a aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb128-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">newConceptSetExpression</span>()</span>
+<span id="cb128-16"><a aria-hidden="true" tabindex="-1"></a>codelist</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── 2 concept set expressions ───────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+- condition2 (2 concept criteria)
+- my_codes (3 concept criteria)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>my_codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  concept_id excluded descendants mapped
+       &lt;int&gt; &lt;lgl&gt;    &lt;lgl&gt;       &lt;lgl&gt; 
+1          1 FALSE    TRUE        FALSE 
+2          2 TRUE     FALSE       FALSE 
+3          3 FALSE    TRUE        FALSE </code></pre>
+</div>
+</div>
+</section>
+<section id="combine-and-subset-codelists" class="slide level2">
+<h2>Combine and Subset codelists</h2>
+<p><em>omopgenerics</em> contains methods so that combining and subsetting codelists will preserve the class object:</p>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a aria-hidden="true" tabindex="-1"></a>codelist1 <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">concept_1 =</span> <span class="dv">1</span>L, <span class="at">anxiety =</span> <span class="fu">c</span>(<span class="dv">4</span>L, <span class="dv">5</span>L)))</span>
+<span id="cb134-2"><a aria-hidden="true" tabindex="-1"></a>codelist2 <span class="ot">&lt;-</span> <span class="fu">newCodelist</span>(<span class="fu">list</span>(<span class="at">hypertension =</span> <span class="dv">6</span>L))</span>
+<span id="cb134-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(codelist1, codelist2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+- anxiety (2 codes)
+- concept_1 (1 codes)
+- hypertension (1 codes)</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a aria-hidden="true" tabindex="-1"></a>codelist1[<span class="st">"anxiety"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+- anxiety (2 codes)</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="codelistgenerator" class="slide level2">
+<h2>CodelistGenerator</h2>
+<p><a href="https://darwin-eu.github.io/CodelistGenerator/">CodelistGenerator</a> provides multiple functionality to manage the 3 codelists classes, combine them, compare them:</p>
+<ul>
+<li class="fragment"><code>get*Codes()</code> to create different code lists</li>
+<li class="fragment"><code>subset*()</code> to subset code lists</li>
+<li class="fragment"><code>stratify*()</code> to stratify code lists</li>
+<li class="fragment"><code>asCodelist()</code>, <code>asCodelistWithDetails()</code>, <code>asConceptSetExpression()</code></li>
+</ul>
+</section>
+<section id="the-conceptset-argument" class="slide level2">
+<h2>The conceptSet argument</h2>
+<p>In general analytical packages will have an argument named <code>conceptSet</code> the input of this argument can either be a <code>codelist</code>, <code>codelist_with_details</code> or <code>concept_set_expression</code> or an object that can be converted to any of these objects (e.g.&nbsp;<code>list(concept = 1)</code>).</p>
+</section>
+<section id="export-codelist" class="slide level2">
+<h2>Export codelist</h2>
+<p><code>codelist</code> and <code>concept_set_expressions</code> can be exported in <code>json</code> or <code>csv</code> format:</p>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb138-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportCodelist</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb138-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportCodelist</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span>
+<span id="cb138-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportConceptSetExpression</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb138-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">exportConceptSetExpression</span>(codelist, <span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="fragment">
+<p>Then later can be also imported:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importCodelist</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb139-2"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importCodelist</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span>
+<span id="cb139-3"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importConceptSetExpression</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb139-4"><a aria-hidden="true" tabindex="-1"></a>codelist <span class="ot">&lt;-</span> <span class="fu">importConceptSetExpression</span>(<span class="at">path =</span> <span class="fu">here</span>(), <span class="at">type =</span> <span class="st">"json"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>JSON file definition is the same than ATLAS and in line with the guidelines of OHDSI TAB.</strong></p>
+</div>
+</section>
+<section id="summarised_result" class="slide level2">
+<h2><code>summarised_result</code></h2>
+<p>The <code>summarised_result</code> is the result model defined by <em>omopgenerics</em></p>
+</section>
+<section id="visualisations-with-summarised_result" class="slide level2">
+<h2>Visualisations with <code>summarised_result</code></h2>
+<p>The <a href="https://darwin-eu.github.io/visOmopResults/">visOmopResults</a> provides multiple functionality to to create tables and plot from the <code>summarised_result</code> object:</p>
+<ul>
+<li class="fragment"><a href="https://darwin-eu.github.io/visOmopResults/articles/a01_tables.html">Create Tables using <code>summarised_results</code></a></li>
+<li class="fragment"><a href="https://darwin-eu.github.io/visOmopResults/articles/a02_plots.html">Create Plots using <code>summarised_results</code></a></li>
+</ul>
+</section>
+<section id="further-reading" class="slide level2">
+<h2>Further reading</h2>
+<ul>
+<li class="fragment">Tidy R packages foundations: <a href="https://ohdsi.github.io/Tidy-R-programming-with-OMOP/" class="uri">https://ohdsi.github.io/Tidy-R-programming-with-OMOP/</a></li>
+<li class="fragment">Tidy R packages develioment: <a href="https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/" class="uri">https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/</a></li>
+</ul>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<div style="position: relative; width: 100%;">
+<div style="text-align: center; font-weight: 500;">
+Tidy R in OMOP CDM ecosystem
+</div>
+<div style="position: fixed; top: 20px; right: 20px;">
+<a href="../Presentations/index.html" style="text-decoration: none;">⬅ Presentations</a>
+</div>
+</div>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1600,
+
+        height: 900,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 7.0e-2,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

@@ -21,11 +21,487 @@
     "text": "Join the Journey"
   },
   {
-    "objectID": "Presentations/index.html",
-    "href": "Presentations/index.html",
-    "title": "Presentations",
-    "section": "",
-    "text": "Presentations\n\nAllOfUs\nDrugUtilisation"
+    "objectID": "Presentations/ecosystem.html#content",
+    "href": "Presentations/ecosystem.html#content",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Content",
+    "text": "Content\n\nMotivation and foundations\nExisting packages overview\nomopgenerics the core package"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#motivation",
+    "href": "Presentations/ecosystem.html#motivation",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Motivation",
+    "text": "Motivation\n\nOMOP CDM\ncomplications to install packages, not in cran, java, contribute to the ecosystem\ntidyverse\nno Java code, no SQL code, just R code"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#foundation",
+    "href": "Presentations/ecosystem.html#foundation",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Foundation",
+    "text": "Foundation\n\nlibrary(palmerpenguins)\nlibrary(dplyr)\n\npenguins |&gt;\n  group_by(species) |&gt;\n  summarise(\n    n = n(),\n    min_bill_length_mm = min(bill_length_mm, na.rm = TRUE),\n    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),\n    max_bill_length_mm = max(bill_length_mm, na.rm = TRUE)\n  ) |&gt;\n  mutate(min_max_bill_length_mm = paste0(\n    min_bill_length_mm, \" to \", max_bill_length_mm\n  )) |&gt;\n  select(\"species\", \"mean_bill_length_mm\", \"min_max_bill_length_mm\")\n\n# A tibble: 3 × 3\n  species   mean_bill_length_mm min_max_bill_length_mm\n  &lt;fct&gt;                   &lt;dbl&gt; &lt;chr&gt;                 \n1 Adelie                   38.8 32.1 to 46            \n2 Chinstrap                48.8 40.9 to 58            \n3 Gentoo                   47.5 40.9 to 59.6"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#foundartion",
+    "href": "Presentations/ecosystem.html#foundartion",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Foundartion",
+    "text": "Foundartion\n\nlibrary(duckdb)\n\ncon &lt;- dbConnect(drv = duckdb())\ndbWriteTable(conn = con, name = \"penguins\", value = penguins)\npenguins_db &lt;- tbl(con, \"penguins\")\npenguins_db\n\n# Source:   table&lt;penguins&gt; [?? x 8]\n# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2/:memory:]\n   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g sex     year\n   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt; &lt;fct&gt;  &lt;int&gt;\n 1 Adelie  Torgersen           39.1          18.7               181        3750 male    2007\n 2 Adelie  Torgersen           39.5          17.4               186        3800 female  2007\n 3 Adelie  Torgersen           40.3          18                 195        3250 female  2007\n 4 Adelie  Torgersen           NA            NA                  NA          NA &lt;NA&gt;    2007\n 5 Adelie  Torgersen           36.7          19.3               193        3450 female  2007\n 6 Adelie  Torgersen           39.3          20.6               190        3650 male    2007\n 7 Adelie  Torgersen           38.9          17.8               181        3625 female  2007\n 8 Adelie  Torgersen           39.2          19.6               195        4675 male    2007\n 9 Adelie  Torgersen           34.1          18.1               193        3475 &lt;NA&gt;    2007\n10 Adelie  Torgersen           42            20.2               190        4250 &lt;NA&gt;    2007\n# ℹ more rows"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#foundartion-1",
+    "href": "Presentations/ecosystem.html#foundartion-1",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Foundartion",
+    "text": "Foundartion\n\npenguins_db |&gt;\n  group_by(species) |&gt;\n  summarise(\n    n = n(),\n    min_bill_length_mm = min(bill_length_mm, na.rm = TRUE),\n    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),\n    max_bill_length_mm = max(bill_length_mm, na.rm = TRUE)\n  ) |&gt;\n  mutate(min_max_bill_length_mm = paste0(\n    min_bill_length_mm, \" to \", max_bill_length_mm\n  )) |&gt;\n  select(\"species\", \"mean_bill_length_mm\", \"min_max_bill_length_mm\")\n\n# Source:   SQL [?? x 3]\n# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2/:memory:]\n  species   mean_bill_length_mm min_max_bill_length_mm\n  &lt;fct&gt;                   &lt;dbl&gt; &lt;chr&gt;                 \n1 Adelie                   38.8 32.1 to 46.0          \n2 Chinstrap                48.8 40.9 to 58.0          \n3 Gentoo                   47.5 40.9 to 59.6"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#foundation-1",
+    "href": "Presentations/ecosystem.html#foundation-1",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Foundation",
+    "text": "Foundation\n\npenguins_db |&gt;\n  group_by(species) |&gt;\n  summarise(\n    n = n(),\n    min_bill_length_mm = min(bill_length_mm, na.rm = TRUE),\n    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),\n    max_bill_length_mm = max(bill_length_mm, na.rm = TRUE)\n  ) |&gt;\n  mutate(min_max_bill_length_mm = paste0(\n    min_bill_length_mm, \" to \", max_bill_length_mm\n  )) |&gt;\n  select(\"species\", \"mean_bill_length_mm\", \"min_max_bill_length_mm\") |&gt;\n  show_query()\n\n&lt;SQL&gt;\nSELECT\n  species,\n  mean_bill_length_mm,\n  CONCAT_WS('', min_bill_length_mm, ' to ', max_bill_length_mm) AS min_max_bill_length_mm\nFROM (\n  SELECT\n    species,\n    COUNT(*) AS n,\n    MIN(bill_length_mm) AS min_bill_length_mm,\n    AVG(bill_length_mm) AS mean_bill_length_mm,\n    MAX(bill_length_mm) AS max_bill_length_mm\n  FROM penguins\n  GROUP BY species\n) q01"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#foundation-2",
+    "href": "Presentations/ecosystem.html#foundation-2",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Foundation",
+    "text": "Foundation\ndbplyr support the database translation of dplyr functions against several database management systems.\n\nThe presented ecosystem sits on top of these functions combined with the known structure of the OMOP CDM tables to build packages to perform Epidemiological studies extracting data from an OMOP CDM source that can be in several different forms."
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cronology-early-stages",
+    "href": "Presentations/ecosystem.html#cronology-early-stages",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Cronology (Early stages)",
+    "text": "Cronology (Early stages)"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cronology-first-packages",
+    "href": "Presentations/ecosystem.html#cronology-first-packages",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Cronology (First packages)",
+    "text": "Cronology (First packages)"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cronology-standardarisation-and-expansion",
+    "href": "Presentations/ecosystem.html#cronology-standardarisation-and-expansion",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Cronology (Standardarisation and expansion)",
+    "text": "Cronology (Standardarisation and expansion)"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cronology-1.0.0-releases-and-stability",
+    "href": "Presentations/ecosystem.html#cronology-1.0.0-releases-and-stability",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Cronology (1.0.0 releases and stability)",
+    "text": "Cronology (1.0.0 releases and stability)"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#existing-packages",
+    "href": "Presentations/ecosystem.html#existing-packages",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Existing packages",
+    "text": "Existing packages\n\n\nCore\n\nomopgenerics\nomock\nvisOmopResults\nCodelistGenerator\nPatientProfiles\n\n\n\nBack-end\n\nCDMConnector\nOmopOnSpark\nOmopOnPostgres\nOmopOnDuckDB\nOmopOnSqlServer\n\n\n\nAnalytics\n\nCohortConstructor\nIncidencePrevalence\nDrugUtilisation\nCohortCharacteristics\nCohortSurvival\nCohortSymmetry\nOmopSketch\nTreatmentPatterns\n\n\n\nDiagnostics\n\nCodelistGenerator\nOmopSketch\nMeasurementDiagnostics\nPhenotypeR\nDrugExposureDiagnostics\n\n\n\nETL\n\nOmopConstructor\n\n\n\nVisualisation\n\nvisOmopResults\nOmopViewer"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#omopgenerics-core",
+    "href": "Presentations/ecosystem.html#omopgenerics-core",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "omopgenerics (Core)",
+    "text": "omopgenerics (Core)\n\nMethods and Classes for the OMOP Common Data Model\nCurrent version: 1.3.6 First release: 2024-01-17 Total releases: 23\nLinks: Website; GitHub\n\n\nProvides definitions of core classes and methods used by analytic pipelines that query the OMOP (Observational Medical Outcomes Partnership) common data model.\n\nDefine methods and classes for the ecosystem"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cdmconnector-back-end",
+    "href": "Presentations/ecosystem.html#cdmconnector-back-end",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "CDMConnector (Back-end)",
+    "text": "CDMConnector (Back-end)\n\n\n\n\nConnect to an OMOP Common Data Model\nCurrent version: 2.3.0 First release: 2022-09-29 Total releases: 29\nLinks: Website; GitHub\n\n\nProvides tools for working with observational health data in the Observational Medical Outcomes Partnership (OMOP) Common Data Model format with a pipe friendly syntax. Common data model database table references are stored in a single compound object along with metadata.\n\nCreate a cdm_reference for database backends"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#omock-core",
+    "href": "Presentations/ecosystem.html#omock-core",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "omock (Core)",
+    "text": "omock (Core)\n\n\n\n\nCreation of Mock Observational Medical Outcomes Partnership Common Data Model\nCurrent version: 0.6.1 First release: 2024-03-08 Total releases: 9\nLinks: Website; GitHub\n\n\nCreates mock data for testing and package development for the Observational Medical Outcomes Partnership common data model. The package offers functions crafted with pipeline-friendly implementation, enabling users to effortlessly include only the necessary tables for their testing needs.\n\nGenerate mock synthetic data\nCreate cdm reference to existing mock datasets"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#visomopresults-core-visualisation",
+    "href": "Presentations/ecosystem.html#visomopresults-core-visualisation",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "visOmopResults (Core; Visualisation)",
+    "text": "visOmopResults (Core; Visualisation)\n\n\n\n\nGraphs and Tables for OMOP Results\nCurrent version: 1.4.1 First release: 2024-02-06 Total releases: 18\nLinks: Website; GitHub\n\n\nProvides methods to transform omop_result objects into formatted tables and figures, facilitating the visualisation of study results working with the Observational Medical Outcomes Partnership (OMOP) Common Data Model.\n\nManage summarised_result objects\nCreate tables from summarised_result objects\nCreate plots from summarised_result objects"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#codelistgenerator-core-diagnostics",
+    "href": "Presentations/ecosystem.html#codelistgenerator-core-diagnostics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "CodelistGenerator (Core; Diagnostics)",
+    "text": "CodelistGenerator (Core; Diagnostics)\n\n\n\n\nIdentify Relevant Clinical Codes and Evaluate Their Use\nCurrent version: 4.0.2 First release: 2023-02-07 Total releases: 28\nLinks: Website; GitHub\n\n\nGenerate a candidate code list for the Observational Medical Outcomes Partnership (OMOP) common data model based on string matching. For a given search strategy, a candidate code list will be returned.\n\nManage codelists and concept sets\nRun codelist diagnostics"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#patientprofiles-core",
+    "href": "Presentations/ecosystem.html#patientprofiles-core",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "PatientProfiles (Core)",
+    "text": "PatientProfiles (Core)\n\n\n\n\nIdentify Characteristics of Patients in the OMOP Common Data Model\nCurrent version: 1.4.5 First release: 2023-05-02 Total releases: 27\nLinks: Website; GitHub\n\n\nIdentify the characteristics of patients in data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model.\n\nAdd columns related to patient demographics\nAdd columns related to intersections"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cohortconstructor-analytics",
+    "href": "Presentations/ecosystem.html#cohortconstructor-analytics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "CohortConstructor (Analytics)",
+    "text": "CohortConstructor (Analytics)\n\n\n\n\nBuild and Manipulate Study Cohorts Using a Common Data Model\nCurrent version: 0.6.1 First release: 2024-06-01 Total releases: 14\nLinks: Website; GitHub\n\n\nCreate and manipulate study cohorts in data mapped to the Observational Medical Outcomes Partnership Common Data Model.\n\nGenerate base cohorts\nApply inclusion (and exclusion) criteria to cohorts"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#incidenceprevalence-analytics",
+    "href": "Presentations/ecosystem.html#incidenceprevalence-analytics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "IncidencePrevalence (Analytics)",
+    "text": "IncidencePrevalence (Analytics)\n\n\n\n\nEstimate Incidence and Prevalence using the OMOP Common Data Model\nCurrent version: 1.2.1 First release: 2023-03-27 Total releases: 24\nLinks: Website; GitHub\n\n\nCalculate incidence and prevalence using data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model. Incidence and prevalence can be estimated for the total population in a database or for a stratification cohort.\n\nIdentify denominators based on demographics\nEstimate Incidence\nEstimate Point-Prevalence\nEstimate Period-Prevalence"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#drugutilisation-analytics",
+    "href": "Presentations/ecosystem.html#drugutilisation-analytics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "DrugUtilisation (Analytics)",
+    "text": "DrugUtilisation (Analytics)\n\n\n\n\nSummarise Patient-Level Drug Utilisation in Data Mapped to the OMOP Common Data Model\nCurrent version: 1.1.0 First release: 2023-06-19 Total releases: 25\nLinks: Website; GitHub\n\n\nSummarise patient-level drug utilisation cohorts using data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model. New users and prevalent users cohorts can be generated and their characteristics, indication and drug use summarised.\n\nEstimate drug use\nEstimate Proportion of Patients Covered\nSummarise Indication\nAnalyse Discontunation and restart\nCalculate daily dose"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cohortcharacteristics-analytics",
+    "href": "Presentations/ecosystem.html#cohortcharacteristics-analytics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "CohortCharacteristics (Analytics)",
+    "text": "CohortCharacteristics (Analytics)\n\n\n\n\nSummarise and Visualise Characteristics of Patients in the OMOP CDM\nCurrent version: 1.1.1 First release: 2024-04-16 Total releases: 13\nLinks: Website; GitHub\n\n\nSummarise and visualise the characteristics of patients in data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model (CDM).\n\nExtract counts and attrition of cohorts\nOverlap and Timing between cohorts\nCharacterise cohorts based in demographics and predefined conditions\nData driven characterisation"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cohortsurvival-analytics",
+    "href": "Presentations/ecosystem.html#cohortsurvival-analytics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "CohortSurvival (Analytics)",
+    "text": "CohortSurvival (Analytics)\n\n\n\n\nEstimate Survival from Common Data Model Cohorts\nCurrent version: 1.1.0 First release: 2023-12-07 Total releases: 14\nLinks: Website; GitHub\n\n\nEstimate survival using data mapped to the Observational Medical Outcomes Partnership common data model. Survival can be estimated based on user-defined study cohorts.\n\nEstimate survival probabilities\nEstimate competing risks probabilities"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cohortsymmetry-analytics",
+    "href": "Presentations/ecosystem.html#cohortsymmetry-analytics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "CohortSymmetry (Analytics)",
+    "text": "CohortSymmetry (Analytics)\n\n\n\n\nSequence Symmetry Analysis Using the Observational Medical Outcomes Partnership Common Data Model\nCurrent version: 0.2.4 First release: 2024-06-04 Total releases: 10\nLinks: Website; GitHub\n\n\nCalculating crude sequence ratio, adjusted sequence ratio and confidence intervals using data mapped to the Observational Medical Outcomes Partnership Common Data Model.\n\nSummarise temporal symmetry\nSummarise sequence ratios"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#omopsketch-diagnostics-analytics",
+    "href": "Presentations/ecosystem.html#omopsketch-diagnostics-analytics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "OmopSketch (Diagnostics; Analytics)",
+    "text": "OmopSketch (Diagnostics; Analytics)\n\n\n\n\nCharacterise Tables of an OMOP Common Data Model Instance\nCurrent version: 1.0.0 First release: 2024-09-26 Total releases: 13\nLinks: Website; GitHub\n\n\nSummarises key information in data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model. Assess suitability to perform specific epidemiological studies and explore the different domains to obtain feasibility counts and trends.\n\nSummarise data standards of omop tables\nSummarise record trends\nSummarise missing data\nSummarise concept counts"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#measurementdiagnostics-diagnostics",
+    "href": "Presentations/ecosystem.html#measurementdiagnostics-diagnostics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "MeasurementDiagnostics (Diagnostics)",
+    "text": "MeasurementDiagnostics (Diagnostics)\n\n\n\n\nDiagnostics for Lists of Codes Based on Measurements\nCurrent version: 0.2.0 First release: 2025-07-11 Total releases: 3\nLinks: Website; GitHub\n\n\nDiagnostics of list of codes based on concepts from the domains measurement and observation. This package works for data mapped to the Observational Medical Outcomes Partnership Common Data Model.\n\nDiagnotics for measurement codelists"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#phenotyper-diagnostics",
+    "href": "Presentations/ecosystem.html#phenotyper-diagnostics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "PhenotypeR (Diagnostics)",
+    "text": "PhenotypeR (Diagnostics)\n\n\n\n\nAssess Study Cohorts Using a Common Data Model\nCurrent version: 0.3.1 First release: 2024-12-06 Total releases: 10\nLinks: Website; GitHub\n\n\nPhenotype study cohorts in data mapped to the Observational Medical Outcomes Partnership Common Data Model. Diagnostics are run at the database, code list, cohort, and population level to assess whether study cohorts are ready for research.\n\nDiagnostics at database level\nDiagnostics at codelist level\nDiagnostics at cohort level"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#omopviewer-visualisation",
+    "href": "Presentations/ecosystem.html#omopviewer-visualisation",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "OmopViewer (Visualisation)",
+    "text": "OmopViewer (Visualisation)\n\nVisualise OMOP Results using ‘shiny’ Applications\nCurrent version: 0.6.0 First release: 2024-10-21 Total releases: 6\nLinks: Website; GitHub\n\n\nVisualise results obtained from analysing data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model using ‘shiny’ applications.\n\nCreate automatic shiny app from standard results"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#drugexposurediagnostics-diagnostics",
+    "href": "Presentations/ecosystem.html#drugexposurediagnostics-diagnostics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "DrugExposureDiagnostics (Diagnostics)",
+    "text": "DrugExposureDiagnostics (Diagnostics)\n\nDiagnostics for OMOP Common Data Model Drug Records\nCurrent version: 1.1.5 First release: 2023-03-08 Total releases: 23\nLinks: Website; GitHub\n\n\nIngredient specific diagnostics for drug exposure records in the Observational Medical Outcomes Partnership (OMOP) common data model.\n\nDiagnostics for drug codelists"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#treatmentpatterns-analytics",
+    "href": "Presentations/ecosystem.html#treatmentpatterns-analytics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "TreatmentPatterns (Analytics)",
+    "text": "TreatmentPatterns (Analytics)\n\nAnalyzes Real-World Treatment Patterns of a Study Population of Interest\nCurrent version: 3.1.1 First release: 2023-08-16 Total releases: 20\nLinks: Website; GitHub\n\n\n\nComputes treatment patterns within a given cohort using the Observational Medical Outcomes Partnership (OMOP) common data model (CDM). As described in Markus, Verhamme, Kors, and Rijnbeek (2022) doi:10.1016/j.cmpb.2022.107081.*\nAnalyse treatment sequences and pathways"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#omopconstructor-etl",
+    "href": "Presentations/ecosystem.html#omopconstructor-etl",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "OmopConstructor (ETL)",
+    "text": "OmopConstructor (ETL)\n\nBuild Tables in the OMOP Common Data Model\nCurrent version: 0.1.0 First release: 2025-09-30 Total releases: 1\nLinks: Website; GitHub\n\n\nProvides functionality to construct standardised tables from health care data formatted according to the Observational Medical Outcomes Partnership (OMOP) Common Data Model. The package includes tools to build key tables such as observation period and drug era, among others.\n\nGenerate the observation_period using cdm data\nRun Achilles analyses\nCreate drug_era table\nCreate pregnancy algorithm"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#omoponspark-back-end",
+    "href": "Presentations/ecosystem.html#omoponspark-back-end",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "OmopOnSpark (Back-end)",
+    "text": "OmopOnSpark (Back-end)\n\nUsing a Common Data Model on ‘Spark’\nCurrent version: 0.1.0 First release: 2025-10-22 Total releases: 1\nLinks: Website; GitHub\n\n\nUse health data in the Observational Medical Outcomes Partnership Common Data Model format in ‘Spark’. Functionality includes creating all required tables and fields and creation of a single reference to the data. Native ‘Spark’ functionality is supported.\n\nCreate a cdm_reference using spark connection"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#omoponpostgres-back-end",
+    "href": "Presentations/ecosystem.html#omoponpostgres-back-end",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "OmopOnPostgres (Back-end)",
+    "text": "OmopOnPostgres (Back-end)\n\nWhat the Package Does (One Line, Title Case)\nCurrent version: - First release: - Total releases: 0\nLinks: Website; GitHub\n\n\nWhat the package does (one paragraph).\n\nCreate a cdm_reference using postgres connection\nUse postgres indexes"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#omoponduckdb-back-end",
+    "href": "Presentations/ecosystem.html#omoponduckdb-back-end",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "OmopOnDuckDB (Back-end)",
+    "text": "OmopOnDuckDB (Back-end)\n\nWhat the Package Does (Title Case)\nCurrent version: - First release: - Total releases: 0\nLinks: Website; GitHub\n\n\nMore about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.\n\nCreate a cdm_reference using duckdb connection\nCreate a cdm_reference using parquet files"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#omoponsqlserver-back-end",
+    "href": "Presentations/ecosystem.html#omoponsqlserver-back-end",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "OmopOnSqlServer (Back-end)",
+    "text": "OmopOnSqlServer (Back-end)\n\nWhat the Package Does (Title Case)\nCurrent version: - First release: - Total releases: 0\nLinks: Website; GitHub\n\n\nMore about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.\n\nCreate a cdm_reference using sql server connection\nCreate a cdm_reference using synapse connection"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#how-packages-interact",
+    "href": "Presentations/ecosystem.html#how-packages-interact",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "How packages interact?",
+    "text": "How packages interact?"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#how-packages-interact-1",
+    "href": "Presentations/ecosystem.html#how-packages-interact-1",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "How packages interact?",
+    "text": "How packages interact?"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#some-statistics",
+    "href": "Presentations/ecosystem.html#some-statistics",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Some statistics",
+    "text": "Some statistics\n\n\n\n\n\n\n\nNumber of R packages\n23\n\n\n\n\n\n\n\n\n\n\n\n\nNumber of R packages on CRAN\n20\n\n\n\n\n\n\n\n\n\n\n\n\nNumber Releases\n311\n\n\n\n\n\n\n\n\n\n\n\n\nTotal CRAN downloads\n409096"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#omopgenerics-1",
+    "href": "Presentations/ecosystem.html#omopgenerics-1",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "omopgenerics",
+    "text": "omopgenerics\nProvides definitions of core classes and methods used by analytic pipelines that query the OMOP (Observational Medical Outcomes Partnership) common data model."
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#classes",
+    "href": "Presentations/ecosystem.html#classes",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Classes",
+    "text": "Classes\n\nThe CDM refernce object: cdm_reference, cdm_source, local_source\nCDM tables: cdm_table, omop_table, achilles_table, cohort_table\nCode lists: codelist, codelist_with_details, concept_set_expression\nResult model: summaried_result"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cdm_reference",
+    "href": "Presentations/ecosystem.html#cdm_reference",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cdm_reference",
+    "text": "cdm_reference\nThe cdm_reference is the center of the ecosystem, it is a list with a reference to the different OMOP CDM tables. In general we will create a cdm_reference with the CDMConnector package:\n\nlibrary(CDMConnector)\ncdm &lt;- cdmFromCon(\n  con = con,\n  cdmSchema = \"public\",\n  writeSchema = \"results\",\n  writePrefix = \"mc_\",\n  cdmName = \"my OMOP\"\n)\ncdm\n\n\n\n\n\n\n── # OMOP CDM reference (duckdb) of my OMOP ────────────────────────────────────────────────────────────────────────────\n\n\n• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,\ncondition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,\ndrug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,\npayer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,\nvisit_occurrence, vocabulary\n\n\n• cohort tables: -\n\n\n• achilles tables: -\n\n\n• other tables: -"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cdm_reference-1",
+    "href": "Presentations/ecosystem.html#cdm_reference-1",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cdm_reference",
+    "text": "cdm_reference\nThe cdm_reference object contains several attributes:\n\nlibrary(omopgenerics)\ncdmName(cdm)\n\n[1] \"my OMOP\"\n\n\n\ncdmVersion(cdm)\n\n[1] \"5.3\"\n\n\n\ncdmSource(cdm)\n\nThis is a duckdb cdm source\n\n\n\nsourceType(cdm)\n\n[1] \"duckdb\""
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cdm_reference-2",
+    "href": "Presentations/ecosystem.html#cdm_reference-2",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cdm_reference",
+    "text": "cdm_reference\nYou can use the cdm_reference object to insert, list, drop or read tables in using the same source of the cdm_reference.\n\n\ncdm &lt;- insertTable(cdm = cdm, name = \"my_table\", table = cars)\ncdm$my_table\n\n# Source:   table&lt;results.test_my_table&gt; [?? x 2]\n# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff26515451.duckdb]\n   speed  dist\n   &lt;dbl&gt; &lt;dbl&gt;\n 1     4     2\n 2     4    10\n 3     7     4\n 4     7    22\n 5     8    16\n 6     9    10\n 7    10    18\n 8    10    26\n 9    10    34\n10    11    17\n# ℹ more rows\n\n\n\n\n\nlistSourceTables(cdm = cdm)\n\n[1] \"my_table\"\n\n\n\n\n\ncdm$my_table &lt;- NULL\ncdm\n\n\n\n\n── # OMOP CDM reference (duckdb) of my OMOP ────────────────────────────────────────────────────────────────────────────\n\n\n• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,\ncondition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,\ndrug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,\npayer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,\nvisit_occurrence, vocabulary\n\n\n• cohort tables: -\n\n\n• achilles tables: -\n\n\n• other tables: -\n\n\n\n\n\ncdm &lt;- readSourceTable(cdm = cdm, name = \"my_table\")\ncdm\n\n\n\n\n── # OMOP CDM reference (duckdb) of my OMOP ────────────────────────────────────────────────────────────────────────────\n\n\n• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,\ncondition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,\ndrug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,\npayer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,\nvisit_occurrence, vocabulary\n\n\n• cohort tables: -\n\n\n• achilles tables: -\n\n\n• other tables: my_table\n\n\n\n\n\ncdm &lt;- dropSourceTable(cdm = cdm, name = \"my_table\")\ncdm\n\n\n\n\n── # OMOP CDM reference (duckdb) of my OMOP ────────────────────────────────────────────────────────────────────────────\n\n\n• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,\ncondition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,\ndrug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,\npayer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,\nvisit_occurrence, vocabulary\n\n\n• cohort tables: -\n\n\n• achilles tables: -\n\n\n• other tables: -\n\nlistSourceTables(cdm = cdm)\n\ncharacter(0)"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cdm_source",
+    "href": "Presentations/ecosystem.html#cdm_source",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cdm_source",
+    "text": "cdm_source\nThe cdm_source is an object that defines how to:\n\ncompute a table (compute.&lt;class&gt;)\neliminate a table (dropSourceTable.&lt;class&gt;)\ninsert a table (insertTable.&lt;class&gt;)\nread a table (readSourceTable.&lt;class&gt;)\n\n\nAt the creation of the cdm_source object all these steps will be checked (that’s why creating a cdm_reference can take a few seconds).\n\n\nTo create a new cdm_source object you can use newCdmSource().\n\n\nFor example for CDMConnector ths source contains the connection and the writeSchema:\n\nlibrary(omock)\nlibrary(omopgenerics)\n\ncdm &lt;- mockCdmFromDataset(source = \"duckdb\")\nsrc &lt;- cdmSource(cdm)\nsrc\nunclass(src)\n\nlist()\nattr(,\"dbcon\")\n\n\nattr(,\"write_schema\")\n   schema    prefix \n\"results\"   \"test_\" \nattr(,\"source_type\")\n[1] \"duckdb\""
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cdm_source-1",
+    "href": "Presentations/ecosystem.html#cdm_source-1",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cdm_source",
+    "text": "cdm_source\nYou can summarise the properties of a cdm_source object using summary()\n\n\nsummary(src)\n\nThis is a \u001b[1m\u001b[36mduckdb\u001b[0m source created by \u001b[3m\u001b[36mCDMConnector\u001b[0m package:\n ∙ \u001b[34mwrite_schema\u001b[0m: `results`\n ∙ \u001b[34mwrite_prefix\u001b[0m: `test_`"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#db_source",
+    "href": "Presentations/ecosystem.html#db_source",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "db_source",
+    "text": "db_source\nFor example here we can see how the db_source is defined by CDMConnector: https://github.com/darwin-eu/CDMConnector/blob/main/R/dbSource.R"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cdm_table",
+    "href": "Presentations/ecosystem.html#cdm_table",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cdm_table",
+    "text": "cdm_table\nA cdm_table object is a table that comes from a cdm_reference:\n\n\nclass(cdm$person)\n\n[1] \"omop_table\"            \"cdm_table\"             \"tbl_duckdb_connection\" \"tbl_dbi\"              \n[5] \"tbl_sql\"               \"tbl_lazy\"              \"tbl\"                  \n\n\n\n\nThe cdm_table will always include the reference where they come from, so we will be able to access other tables of the same cdm_reference object:\n\ncdmReference(cdm$person)\n\n\n\n\n── # OMOP CDM reference (duckdb) of GiBleed ────────────────────────────────────────────────────────────────────────────\n\n\n• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,\ncondition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,\ndrug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,\npayer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,\nvisit_occurrence, vocabulary\n\n\n• cohort tables: -\n\n\n• achilles tables: -\n\n\n• other tables: -"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cdm_table-1",
+    "href": "Presentations/ecosystem.html#cdm_table-1",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cdm_table",
+    "text": "cdm_table\nThe fact that contains the cdm_refernce object allow us to also access the same properties that we had before:\n\ncdmName(cdm$person)\n\n[1] \"GiBleed\"\n\n\n\ncdmVersion(cdm$person)\n\n[1] \"5.3\"\n\n\n\ncdmSource(cdm$person)\n\nThis is a duckdb cdm source\n\n\n\nsourceType(cdm)\n\n[1] \"duckdb\""
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cdm_table-2",
+    "href": "Presentations/ecosystem.html#cdm_table-2",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cdm_table",
+    "text": "cdm_table\nOn top of that extra attributes can be obtained:\n\ntableName(cdm$person)\n\n[1] \"person\"\n\n\n\ntableSource(cdm$person)\n\nThis is a duckdb cdm source"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#omop_table",
+    "href": "Presentations/ecosystem.html#omop_table",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "omop_table",
+    "text": "omop_table\nThe omop_table is a subclass of cdm_table that protects the OMOP CDM integrity and validates the OMOP CDM standard tables.\n\n\nclass(cdm$person)\n\n[1] \"omop_table\"            \"cdm_table\"             \"tbl_duckdb_connection\" \"tbl_dbi\"              \n[5] \"tbl_sql\"               \"tbl_lazy\"              \"tbl\"                  \n\n\n\n\nFor example we can not remove required columns from omop_tables:\n\ncdm$person &lt;- cdm$person |&gt;\n  select(!\"person_id\")\n\nError in `newOmopTable()`:\n! person_id is not present in table person\n\n\n\n\nOr assign tables that are not named the same way:\n\ncdm$person &lt;- cdm$drug_exposure\n\nError in `[[&lt;-`:\n✖ You can't assign a table named drug_exposure to person.\nℹ You can change the name using compute:\ncdm[['person']] &lt;- yourObject |&gt;\n  dplyr::compute(name = 'person')\nℹ You can also change the name using the `name` argument in your function: `name = 'person'`.\n\n\n\n\nBut this does not mean that we can not modify them, we can add columns and/or change its content:\n\ncdm$person &lt;- cdm$person |&gt;\n  filter(person_id == 6) |&gt;\n  mutate(extra_col = \"my_content\")\ncdm$person |&gt;\n  glimpse()\n\nRows: ??\nColumns: 19\nDatabase: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff41e0c1b5.duckdb]\n$ person_id                   &lt;int&gt; 6\n$ gender_concept_id           &lt;int&gt; 8532\n$ year_of_birth               &lt;int&gt; 1963\n$ month_of_birth              &lt;int&gt; 12\n$ day_of_birth                &lt;int&gt; 31\n$ birth_datetime              &lt;dttm&gt; 1963-12-31\n$ race_concept_id             &lt;int&gt; 8516\n$ ethnicity_concept_id        &lt;int&gt; 0\n$ location_id                 &lt;int&gt; NA\n$ provider_id                 &lt;int&gt; NA\n$ care_site_id                &lt;int&gt; NA\n$ person_source_value         &lt;chr&gt; \"001f4a87-70d0-435c-a4b9-1425f6928d33\"\n$ gender_source_value         &lt;chr&gt; \"F\"\n$ gender_source_concept_id    &lt;int&gt; 0\n$ race_source_value           &lt;chr&gt; \"black\"\n$ race_source_concept_id      &lt;int&gt; 0\n$ ethnicity_source_value      &lt;chr&gt; \"west_indian\"\n$ ethnicity_source_concept_id &lt;int&gt; 0\n$ extra_col                   &lt;chr&gt; \"my_content\""
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#achilles_table",
+    "href": "Presentations/ecosystem.html#achilles_table",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "achilles_table",
+    "text": "achilles_table\nThe class achilles_table is a similar protection for the tables coming form the achilles analyses."
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cohort_table",
+    "href": "Presentations/ecosystem.html#cohort_table",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cohort_table",
+    "text": "cohort_table\nThe cohort_table class is a class built on top of cdm_table (it has all the functionalities seen for cdm_table) with some extra attributes.\n\ncdm\n\n\n\n\n── # OMOP CDM reference (duckdb) of GiBleed ────────────────────────────────────────────────────────────────────────────\n\n\n• omop tables: care_site, cdm_source, concept, concept_ancestor, concept_class, concept_relationship, concept_synonym,\ncondition_era, condition_occurrence, cost, death, device_exposure, domain, dose_era, drug_era, drug_exposure,\ndrug_strength, fact_relationship, location, measurement, metadata, note, note_nlp, observation, observation_period,\npayer_plan_period, person, procedure_occurrence, provider, relationship, source_to_concept_map, specimen, visit_detail,\nvisit_occurrence, vocabulary\n\n\n• cohort tables: my_cohort\n\n\n• achilles tables: -\n\n\n• other tables: -\n\n\n\n\ncdm$my_cohort\n\n# Source:   table&lt;results.test_my_cohort&gt; [?? x 4]\n# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]\n   cohort_definition_id subject_id cohort_start_date cohort_end_date\n                  &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         \n 1                    1        752 1967-07-16        1967-07-23     \n 2                    1       1128 1993-02-05        1993-02-19     \n 3                    1       1432 1964-05-23        1964-06-13     \n 4                    1       1558 1977-11-19        1977-12-03     \n 5                    1       1911 1953-06-19        1953-07-03     \n 6                    1       3144 2019-04-07        2019-04-07     \n 7                    1       3495 1977-06-13        1977-06-27     \n 8                    1       3560 1979-07-21        1979-08-11     \n 9                    1       3852 1995-09-10        1995-10-01     \n10                    1       4022 1976-09-22        1976-09-29     \n# ℹ more rows\n\n\n\n\n\nclass(cdm$my_cohort)\n\n[1] \"cohort_table\"          \"cdm_table\"             \"GeneratedCohortSet\"    \"tbl_duckdb_connection\"\n[5] \"tbl_dbi\"               \"tbl_sql\"               \"tbl_lazy\"              \"tbl\""
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cohort_table-1",
+    "href": "Presentations/ecosystem.html#cohort_table-1",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cohort_table",
+    "text": "cohort_table\n\nattributes(cdm$my_cohort)\n\n$names\n[1] \"src\"        \"lazy_query\"\n\n$class\n[1] \"cohort_table\"          \"cdm_table\"             \"GeneratedCohortSet\"    \"tbl_duckdb_connection\"\n[5] \"tbl_dbi\"               \"tbl_sql\"               \"tbl_lazy\"              \"tbl\"                  \n\n$tbl_source\n\n\n\n$tbl_name\n[1] \"my_cohort\"\n\n$cohort_set\n# Source:   table&lt;results.test_my_cohort_set&gt; [?? x 4]\n# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]\n  cohort_definition_id cohort_name cdm_version vocabulary_version\n                 &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             \n1                    1 cohort1     5.3         v5.0 18-JAN-19    \n2                    2 cohort2     5.3         v5.0 18-JAN-19    \n\n$cohort_attrition\n# Source:   table&lt;results.test_my_cohort_attrition&gt; [?? x 7]\n# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]\n  cohort_definition_id number_records number_subjects reason_id reason                excluded_records excluded_subjects\n                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;                            &lt;int&gt;             &lt;int&gt;\n1                    1          17268            2686         1 Initial qualifying e…                0                 0\n2                    1          17268            2686         2 Record in observation                0                 0\n3                    1          17268            2686         3 Not missing record d…                0                 0\n4                    2          10217            2606         1 Initial qualifying e…                0                 0\n5                    2          10217            2606         2 Record in observation                0                 0\n6                    2          10217            2606         3 Not missing record d…                0                 0\n7                    1          17268            2686         4 Merge overlapping re…                0                 0\n8                    2          10217            2606         4 Merge overlapping re…                0                 0\n\n$cohort_codelist\n# Source:   table&lt;results.test_my_cohort_codelist&gt; [?? x 4]\n# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]\n  cohort_definition_id codelist_name concept_id codelist_type\n                 &lt;int&gt; &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;        \n1                    1 cohort1         40481087 index event  \n2                    2 cohort2          4112343 index event  \n\n$cdm_reference"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cohort_table-2",
+    "href": "Presentations/ecosystem.html#cohort_table-2",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cohort_table",
+    "text": "cohort_table\nWe can access those attributes:\n\n\nsettings(cdm$my_cohort)\n\n# A tibble: 2 × 4\n  cohort_definition_id cohort_name cdm_version vocabulary_version\n                 &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             \n1                    1 cohort1     5.3         v5.0 18-JAN-19    \n2                    2 cohort2     5.3         v5.0 18-JAN-19    \n\n\n\n\n\ncohortCount(cdm$my_cohort)\n\n# A tibble: 2 × 3\n  cohort_definition_id number_records number_subjects\n                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;\n1                    1          17268            2686\n2                    2          10217            2606"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cohort_table-3",
+    "href": "Presentations/ecosystem.html#cohort_table-3",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cohort_table",
+    "text": "cohort_table\n\nattrition(cdm$my_cohort)\n\n# A tibble: 8 × 7\n  cohort_definition_id number_records number_subjects reason_id reason                excluded_records excluded_subjects\n                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;                            &lt;int&gt;             &lt;int&gt;\n1                    1          17268            2686         1 Initial qualifying e…                0                 0\n2                    1          17268            2686         2 Record in observation                0                 0\n3                    1          17268            2686         3 Not missing record d…                0                 0\n4                    1          17268            2686         4 Merge overlapping re…                0                 0\n5                    2          10217            2606         1 Initial qualifying e…                0                 0\n6                    2          10217            2606         2 Record in observation                0                 0\n7                    2          10217            2606         3 Not missing record d…                0                 0\n8                    2          10217            2606         4 Merge overlapping re…                0                 0"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#cohort_table-4",
+    "href": "Presentations/ecosystem.html#cohort_table-4",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "cohort_table",
+    "text": "cohort_table\nWe can easily update the attrition as:\n\ncdm$my_cohort &lt;- cdm$my_cohort |&gt;\n  filter(subject_id %% 2 == 0) |&gt;\n  compute(name = \"my_cohort\") |&gt;\n  recordCohortAttrition(\"Onlye even subjects\")\n\n\n\ncohortCount(cdm$my_cohort)\n\n# A tibble: 2 × 3\n  cohort_definition_id number_records number_subjects\n                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;\n1                    1           8574            1339\n2                    2           5072            1299\n\nattrition(cdm$my_cohort)\n\n# A tibble: 10 × 7\n   cohort_definition_id number_records number_subjects reason_id reason               excluded_records excluded_subjects\n                  &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;                           &lt;int&gt;             &lt;int&gt;\n 1                    1          17268            2686         1 Initial qualifying …                0                 0\n 2                    1          17268            2686         2 Record in observati…                0                 0\n 3                    1          17268            2686         3 Not missing record …                0                 0\n 4                    1          17268            2686         4 Merge overlapping r…                0                 0\n 5                    1           8574            1339         5 Onlye even subjects              8694              1347\n 6                    2          10217            2606         1 Initial qualifying …                0                 0\n 7                    2          10217            2606         2 Record in observati…                0                 0\n 8                    2          10217            2606         3 Not missing record …                0                 0\n 9                    2          10217            2606         4 Merge overlapping r…                0                 0\n10                    2           5072            1299         5 Onlye even subjects              5145              1307"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#codelists",
+    "href": "Presentations/ecosystem.html#codelists",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Codelists",
+    "text": "Codelists\nThe package defines 3 different ways to define code lists:\n\ncodelist\ncodelist_with_details\nconcept_set_expression"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#codelist",
+    "href": "Presentations/ecosystem.html#codelist",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "codelist",
+    "text": "codelist\n\ncodelist &lt;- newCodelist(list(my_codes = c(1, 2, 3), condition2 = c(3, 4)))\ncodelist\n\n\n\n\n── 2 codelists ─────────────────────────────────────────────────────────────────────────────────────────────────────────\n\n\n\n- condition2 (2 codes)\n- my_codes (3 codes)\n\n\n\ncodelist$my_codes\n\n[1] 1 2 3"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#codelist_with_details",
+    "href": "Presentations/ecosystem.html#codelist_with_details",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "codelist_with_details",
+    "text": "codelist_with_details\n\ncodelist &lt;- list(\n  my_codes = tibble(\n    concept_id = c(1L, 2L, 3L),\n    extra_properties = c(\"a\", \"b\", \"c\")\n  ), \n  condition2 = tibble(\n    concept_id = c(3L, 4L),\n    concept_name = c(\"code 3\", \"code 4\")\n  )\n) |&gt;\n  newCodelistWithDetails()\ncodelist\n\n\n\n\n── 2 codelists with details ────────────────────────────────────────────────────────────────────────────────────────────\n\n\n\n- condition2 (2 codes)\n- my_codes (3 codes)\n\n\n\ncodelist$my_codes\n\n# A tibble: 3 × 2\n  concept_id extra_properties\n       &lt;int&gt; &lt;chr&gt;           \n1          1 a               \n2          2 b               \n3          3 c"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#codelist-1",
+    "href": "Presentations/ecosystem.html#codelist-1",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "codelist",
+    "text": "codelist"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#codelist-2",
+    "href": "Presentations/ecosystem.html#codelist-2",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "codelist",
+    "text": "codelist\n\ncodelist &lt;- newCodelist(list(my_codes = c(1, 2, 3), condition2 = c(3, 4)))\ncodelist\n\n\n\n\n── 2 codelists ─────────────────────────────────────────────────────────────────────────────────────────────────────────\n\n\n\n- condition2 (2 codes)\n- my_codes (3 codes)\n\n\n\ncodelist$my_codes\n\n[1] 1 2 3"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#concept_set_expression",
+    "href": "Presentations/ecosystem.html#concept_set_expression",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "concept_set_expression",
+    "text": "concept_set_expression\n\ncodelist &lt;- list(\n  my_codes = tibble(\n    concept_id = c(1L, 2L, 3L),\n    descendants = c(T, F, T),\n    excluded = c(F, T, F),\n    mapped = F\n  ), \n  condition2 = tibble(\n    concept_id = c(3L, 4L),\n    descendants = c(T, F),\n    excluded = c(F, T),\n    mapped = F\n  )\n) |&gt;\n  newConceptSetExpression()\ncodelist\n\n\n\n\n── 2 concept set expressions ───────────────────────────────────────────────────────────────────────────────────────────\n\n\n\n- condition2 (2 concept criteria)\n- my_codes (3 concept criteria)\n\n\n\ncodelist$my_codes\n\n# A tibble: 3 × 4\n  concept_id excluded descendants mapped\n       &lt;int&gt; &lt;lgl&gt;    &lt;lgl&gt;       &lt;lgl&gt; \n1          1 FALSE    TRUE        FALSE \n2          2 TRUE     FALSE       FALSE \n3          3 FALSE    TRUE        FALSE"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#combine-and-subset-codelists",
+    "href": "Presentations/ecosystem.html#combine-and-subset-codelists",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Combine and Subset codelists",
+    "text": "Combine and Subset codelists\nomopgenerics contains methods so that combining and subsetting codelists will preserve the class object:\n\n\ncodelist1 &lt;- newCodelist(list(concept_1 = 1L, anxiety = c(4L, 5L)))\ncodelist2 &lt;- newCodelist(list(hypertension = 6L))\nc(codelist1, codelist2)\n\n\n- anxiety (2 codes)\n- concept_1 (1 codes)\n- hypertension (1 codes)\n\n\n\n\n\ncodelist1[\"anxiety\"]\n\n\n- anxiety (2 codes)"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#codelistgenerator",
+    "href": "Presentations/ecosystem.html#codelistgenerator",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "CodelistGenerator",
+    "text": "CodelistGenerator\nCodelistGenerator provides multiple functionality to manage the 3 codelists classes, combine them, compare them:\n\nget*Codes() to create different code lists\nsubset*() to subset code lists\nstratify*() to stratify code lists\nasCodelist(), asCodelistWithDetails(), asConceptSetExpression()"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#the-conceptset-argument",
+    "href": "Presentations/ecosystem.html#the-conceptset-argument",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "The conceptSet argument",
+    "text": "The conceptSet argument\nIn general analytical packages will have an argument named conceptSet the input of this argument can either be a codelist, codelist_with_details or concept_set_expression or an object that can be converted to any of these objects (e.g. list(concept = 1))."
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#export-codelist",
+    "href": "Presentations/ecosystem.html#export-codelist",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Export codelist",
+    "text": "Export codelist\ncodelist and concept_set_expressions can be exported in json or csv format:\n\n\nlibrary(here)\nexportCodelist(codelist, path = here(), type = \"csv\")\nexportCodelist(codelist, path = here(), type = \"json\")\nexportConceptSetExpression(codelist, path = here(), type = \"csv\")\nexportConceptSetExpression(codelist, path = here(), type = \"json\")\n\n\n\nThen later can be also imported:\n\ncodelist &lt;- importCodelist(path = here(), type = \"csv\")\ncodelist &lt;- importCodelist(path = here(), type = \"json\")\ncodelist &lt;- importConceptSetExpression(path = here(), type = \"csv\")\ncodelist &lt;- importConceptSetExpression(path = here(), type = \"json\")\n\nJSON file definition is the same than ATLAS and in line with the guidelines of OHDSI TAB."
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#summarised_result",
+    "href": "Presentations/ecosystem.html#summarised_result",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "summarised_result",
+    "text": "summarised_result\nThe summarised_result is the result model defined by omopgenerics"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#visualisations-with-summarised_result",
+    "href": "Presentations/ecosystem.html#visualisations-with-summarised_result",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Visualisations with summarised_result",
+    "text": "Visualisations with summarised_result\nThe visOmopResults provides multiple functionality to to create tables and plot from the summarised_result object:\n\nCreate Tables using summarised_results\nCreate Plots using summarised_results"
+  },
+  {
+    "objectID": "Presentations/ecosystem.html#further-reading",
+    "href": "Presentations/ecosystem.html#further-reading",
+    "title": "The Tidy R in OMOP CDM ecosystem",
+    "section": "Further reading",
+    "text": "Further reading\n\nTidy R packages foundations: https://ohdsi.github.io/Tidy-R-programming-with-OMOP/\nTidy R packages develioment: https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP/"
   },
   {
     "objectID": "Presentations/allofus.html#allofus-r-package-authors",
@@ -123,21 +599,21 @@
     "href": "Presentations/allofus.html#access-tables",
     "title": "allofus: an R package to facilitate use of the All of Us Researcher Workbench ",
     "section": "Access tables",
-    "text": "Access tables\nUnder the hood, dbplyr (part of the tidyverse) allows researchers to use many of the same functions on a remote table that they would use on a dataframe\n\nperson &lt;- tbl(con, \"person\")\n\nError: object 'con' not found\n\ncolnames(person)\n\nNULL"
+    "text": "Access tables\nUnder the hood, dbplyr (part of the tidyverse) allows researchers to use many of the same functions on a remote table that they would use on a dataframe\n\nperson &lt;- tbl(con, \"person\")\n\nError:\n! object 'con' not found\n\ncolnames(person)\n\nNULL"
   },
   {
     "objectID": "Presentations/allofus.html#quick-data-manipulations-and-computations",
     "href": "Presentations/allofus.html#quick-data-manipulations-and-computations",
     "title": "allofus: an R package to facilitate use of the All of Us Researcher Workbench ",
     "section": "Quick data manipulations and computations",
-    "text": "Quick data manipulations and computations\nUsers are running SQL queries without realizing they’re running SQL queries\n\nperson |&gt;\n  mutate(birth_decade = cut(year_of_birth, \n                            breaks = c(1930, 1940, 1950, 1960, 1970, \n                                       1980, 1990, 2000, 2010))) |&gt;\n  count(birth_decade)\n\nError in UseMethod(\"mutate\"): no applicable method for 'mutate' applied to an object of class \"function\""
+    "text": "Quick data manipulations and computations\nUsers are running SQL queries without realizing they’re running SQL queries\n\nperson |&gt;\n  mutate(birth_decade = cut(year_of_birth, \n                            breaks = c(1930, 1940, 1950, 1960, 1970, \n                                       1980, 1990, 2000, 2010))) |&gt;\n  count(birth_decade)\n\nError in `UseMethod()`:\n! no applicable method for 'mutate' applied to an object of class \"function\""
   },
   {
     "objectID": "Presentations/allofus.html#creating-cohorts-with-allofus",
     "href": "Presentations/allofus.html#creating-cohorts-with-allofus",
     "title": "allofus: an R package to facilitate use of the All of Us Researcher Workbench ",
     "section": "Creating cohorts with allofus",
-    "text": "Creating cohorts with allofus\n\nreproductive_age_female &lt;- tbl(con, \"cb_search_person\") |&gt; \n  filter(age_at_consent &gt;= 18 & age_at_consent &lt;= 55, \n         sex_at_birth == \"Female\")\n\nError: object 'con' not found\n\nhypertensive_disorder &lt;- tbl(con, \"concept_ancestor\") |&gt; \n  filter(ancestor_concept_id == 316866) |&gt; \n  inner_join(\n    tbl(con, \"condition_occurrence\"), \n    by = join_by(descendant_concept_id == condition_concept_id)) |&gt; \n  distinct(person_id)\n\nError: object 'con' not found\n\ncohort &lt;- reproductive_age_female |&gt; \n  inner_join(hypertensive_disorder, by = join_by(person_id))\n\nError: object 'reproductive_age_female' not found\n\ntally(cohort)\n\nError: object 'cohort' not found"
+    "text": "Creating cohorts with allofus\n\nreproductive_age_female &lt;- tbl(con, \"cb_search_person\") |&gt; \n  filter(age_at_consent &gt;= 18 & age_at_consent &lt;= 55, \n         sex_at_birth == \"Female\")\n\nError:\n! object 'con' not found\n\nhypertensive_disorder &lt;- tbl(con, \"concept_ancestor\") |&gt; \n  filter(ancestor_concept_id == 316866) |&gt; \n  inner_join(\n    tbl(con, \"condition_occurrence\"), \n    by = join_by(descendant_concept_id == condition_concept_id)) |&gt; \n  distinct(person_id)\n\nError:\n! object 'con' not found\n\ncohort &lt;- reproductive_age_female |&gt; \n  inner_join(hypertensive_disorder, by = join_by(person_id))\n\nError:\n! object 'reproductive_age_female' not found\n\ntally(cohort)\n\nError:\n! object 'cohort' not found"
   },
   {
     "objectID": "Presentations/allofus.html#creating-datasets-with-cohort-builder",
@@ -229,6 +705,13 @@
     "title": "allofus: an R package to facilitate use of the All of Us Researcher Workbench ",
     "section": "Thank you!",
     "text": "Thank you!\n\nSmith LH, Cavanaugh R. allofus: an R package to facilitate use of the All of Us Researcher Workbench. Journal of the American Medical Informatics Association. 2024;31(12):3013-3021. doi: 10.1093/jamia/ocae198\nGitHub (source code, bug reports): github.com/roux-ohdsi/allofus\nPackage site (tutorials, searchable codebooks): roux-ohdsi.github.io/allofus"
+  },
+  {
+    "objectID": "Presentations/index.html",
+    "href": "Presentations/index.html",
+    "title": "Presentations",
+    "section": "",
+    "text": "Presentations\n\nAllOfUs\nDrugUtilisation"
   },
   {
     "objectID": "Presentations/DrugUtilisation.html#introduction",
@@ -340,7 +823,7 @@
     "href": "Presentations/DrugUtilisation.html#drug-usage-1",
     "title": "DrugUtilisation",
     "section": "Drug usage",
-    "text": "Drug usage\n\nresult |&gt;\n  suppress(minCellCount = 5) |&gt;\n  tableDrugUtilisation()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConcept set\nIngredient\nVariable name\nEstimate name\n\nCDM name\n\n\n\nGiBleed\n\n\n\n\nacetaminophen\n\n\noverall\noverall\nnumber records\nN\n13,860\n\n\n\n\nnumber subjects\nN\n2,679\n\n\ningredient_1125315_descendants\noverall\nnumber exposures\nMedian (Q25 - Q75)\n1 (1 - 1)\n\n\n\n\ncumulative quantity\nMedian (Q25 - Q75)\n10.00 (1.00 - 30.00)\n\n\n\n\ninitial quantity\nMedian (Q25 - Q75)\n5.00 (1.00 - 30.00)\n\n\n\n\ninitial exposure duration\nMedian (Q25 - Q75)\n15 (8 - 15)\n\n\n\n\nnumber eras\nMedian (Q25 - Q75)\n1 (1 - 1)\n\n\n\n\ndays exposed\nMedian (Q25 - Q75)\n15 (8 - 15)\n\n\n\n\ndays prescribed\nMedian (Q25 - Q75)\n15 (8 - 15)\n\n\n\nAcetaminophen\ncumulative dose milligram\nMedian (Q25 - Q75)\n1,625.00 (217.00 - 9,750.00)\n\n\n\n\ninitial daily dose milligram\nMedian (Q25 - Q75)\n108.33 (13.56 - 443.18)"
+    "text": "Drug usage\n\nresult |&gt;\n  suppress(minCellCount = 5) |&gt;\n  tableDrugUtilisation()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConcept set\nIngredient\nVariable name\nEstimate name\n\nCDM name\n\n\n\nGiBleed\n\n\n\n\nacetaminophen\n\n\noverall\noverall\nnumber records\nN\n13,860\n\n\n\n\nnumber subjects\nN\n2,679\n\n\ningredient_1125315_descendants\noverall\nnumber exposures\nMedian (Q25 - Q75)\n1 (1 - 1)\n\n\n\n\ncumulative quantity\nMedian (Q25 - Q75)\n10.00 (1.00 - 30.00)\n\n\n\n\ninitial quantity\nMedian (Q25 - Q75)\n10.00 (1.00 - 30.00)\n\n\n\n\ninitial exposure duration\nMedian (Q25 - Q75)\n15 (8 - 15)\n\n\n\n\nnumber eras\nMedian (Q25 - Q75)\n1 (1 - 1)\n\n\n\n\ndays exposed\nMedian (Q25 - Q75)\n15 (8 - 15)\n\n\n\n\ndays prescribed\nMedian (Q25 - Q75)\n15 (8 - 15)\n\n\n\nAcetaminophen\ncumulative dose milligram\nMedian (Q25 - Q75)\n1,625.00 (217.00 - 9,750.00)\n\n\n\n\ninitial daily dose milligram\nMedian (Q25 - Q75)\n108.33 (13.56 - 443.18)"
   },
   {
     "objectID": "Presentations/DrugUtilisation.html#indications",

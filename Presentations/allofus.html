@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.26">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.27">
 
   <meta name="author" content="Louisa Smith, PhD">
   <title>Tidy R with OMOP workgroup – allofus: an R package to facilitate use of the All of Us Researcher Workbench  </title>
@@ -373,7 +373,8 @@ Louisa Smith, PhD
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>person <span class="ot">&lt;-</span> <span class="fu">tbl</span>(con, <span class="st">"person"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error: object 'con' not found</code></pre>
+<pre><code>Error:
+! object 'con' not found</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">colnames</span>(person)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -391,7 +392,8 @@ Louisa Smith, PhD
 <span id="cb8-4"><a></a>                                       <span class="dv">1980</span>, <span class="dv">1990</span>, <span class="dv">2000</span>, <span class="dv">2010</span>))) <span class="sc">|&gt;</span></span>
 <span id="cb8-5"><a></a>  <span class="fu">count</span>(birth_decade)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in UseMethod("mutate"): no applicable method for 'mutate' applied to an object of class "function"</code></pre>
+<pre><code>Error in `UseMethod()`:
+! no applicable method for 'mutate' applied to an object of class "function"</code></pre>
 </div>
 </div>
 </section>
@@ -402,7 +404,8 @@ Louisa Smith, PhD
 <span id="cb10-2"><a></a>  <span class="fu">filter</span>(age_at_consent <span class="sc">&gt;=</span> <span class="dv">18</span> <span class="sc">&amp;</span> age_at_consent <span class="sc">&lt;=</span> <span class="dv">55</span>, </span>
 <span id="cb10-3"><a></a>         sex_at_birth <span class="sc">==</span> <span class="st">"Female"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error: object 'con' not found</code></pre>
+<pre><code>Error:
+! object 'con' not found</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>hypertensive_disorder <span class="ot">&lt;-</span> <span class="fu">tbl</span>(con, <span class="st">"concept_ancestor"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb12-2"><a></a>  <span class="fu">filter</span>(ancestor_concept_id <span class="sc">==</span> <span class="dv">316866</span>) <span class="sc">|&gt;</span> </span>
@@ -411,16 +414,19 @@ Louisa Smith, PhD
 <span id="cb12-5"><a></a>    <span class="at">by =</span> <span class="fu">join_by</span>(descendant_concept_id <span class="sc">==</span> condition_concept_id)) <span class="sc">|&gt;</span> </span>
 <span id="cb12-6"><a></a>  <span class="fu">distinct</span>(person_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error: object 'con' not found</code></pre>
+<pre><code>Error:
+! object 'con' not found</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>cohort <span class="ot">&lt;-</span> reproductive_age_female <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a></a>  <span class="fu">inner_join</span>(hypertensive_disorder, <span class="at">by =</span> <span class="fu">join_by</span>(person_id))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error: object 'reproductive_age_female' not found</code></pre>
+<pre><code>Error:
+! object 'reproductive_age_female' not found</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">tally</span>(cohort)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error: object 'cohort' not found</code></pre>
+<pre><code>Error:
+! object 'cohort' not found</code></pre>
 </div>
 </div>
 <!-- ## How does this address our challenges? -->
