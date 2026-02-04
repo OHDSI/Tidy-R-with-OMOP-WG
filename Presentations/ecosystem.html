@@ -981,7 +981,7 @@ visit_occurrence, vocabulary</code></pre>
 <span id="cb24-2"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_my_table&gt; [?? x 2]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff26515451.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpP9KQQ1/file5ae27f2a43a5.duckdb]
    speed  dist
    &lt;dbl&gt; &lt;dbl&gt;
  1     4     2
@@ -1285,7 +1285,7 @@ cdm[['person']] &lt;- yourObject |&gt;
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 19
-Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff41e0c1b5.duckdb]
+Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpP9KQQ1/file5ae27183e6c9.duckdb]
 $ person_id                   &lt;int&gt; 6
 $ gender_concept_id           &lt;int&gt; 8532
 $ year_of_birth               &lt;int&gt; 1963
@@ -1346,19 +1346,19 @@ visit_occurrence, vocabulary</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_my_cohort&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpP9KQQ1/file5ae213f5da30.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1        752 1967-07-16        1967-07-23     
- 2                    1       1128 1993-02-05        1993-02-19     
- 3                    1       1432 1964-05-23        1964-06-13     
- 4                    1       1558 1977-11-19        1977-12-03     
- 5                    1       1911 1953-06-19        1953-07-03     
- 6                    1       3144 2019-04-07        2019-04-07     
- 7                    1       3495 1977-06-13        1977-06-27     
- 8                    1       3560 1979-07-21        1979-08-11     
- 9                    1       3852 1995-09-10        1995-10-01     
-10                    1       4022 1976-09-22        1976-09-29     
+ 1                    1        334 1985-07-18        1985-07-25     
+ 2                    1        376 1982-05-31        1982-06-21     
+ 3                    1       1431 1966-02-26        1966-03-05     
+ 4                    1       1676 1990-02-17        1990-03-03     
+ 5                    1       2073 1966-12-03        1966-12-17     
+ 6                    1       2359 2003-08-02        2003-08-23     
+ 7                    1       2566 1945-01-30        1945-02-20     
+ 8                    1       2782 1923-04-09        1923-04-30     
+ 9                    1       2892 1990-12-18        1991-01-08     
+10                    1       2960 2017-01-19        2017-01-26     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -1394,7 +1394,7 @@ $tbl_name
 
 $cohort_set
 # Source:   table&lt;results.test_my_cohort_set&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpP9KQQ1/file5ae213f5da30.duckdb]
   cohort_definition_id cohort_name cdm_version vocabulary_version
                  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             
 1                    1 cohort1     5.3         v5.0 18-JAN-19    
@@ -1402,7 +1402,7 @@ $cohort_set
 
 $cohort_attrition
 # Source:   table&lt;results.test_my_cohort_attrition&gt; [?? x 7]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpP9KQQ1/file5ae213f5da30.duckdb]
   cohort_definition_id number_records number_subjects reason_id reason                excluded_records excluded_subjects
                  &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;                            &lt;int&gt;             &lt;int&gt;
 1                    1          17268            2686         1 Initial qualifying e…                0                 0
@@ -1416,7 +1416,7 @@ $cohort_attrition
 
 $cohort_codelist
 # Source:   table&lt;results.test_my_cohort_codelist&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpfqBmVH/file5aff11150ad0.duckdb]
+# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpP9KQQ1/file5ae213f5da30.duckdb]
   cohort_definition_id codelist_name concept_id codelist_type
                  &lt;int&gt; &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;        
 1                    1 cohort1         40481087 index event  
