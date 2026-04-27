@@ -16,6 +16,10 @@ website:
             href: Presentations/DrugUtilisation.qmd
           - text: "Ecosystem"
             href: Presentations/ecosystem.qmd
+          - text: "CohortConstructor"
+            href: Presentations/CohortConstructor.qmd
+          - text: "PhenotypeR"
+            href: Presentations/PhenotypeR.qmd
   page-footer:
     left: "© 2025 Tidy R with OMOP Workgroup"
     right:

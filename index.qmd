@@ -7,6 +7,29 @@
 
 ### OKRs 2025
 
+#### Objective 1
+
+*To create and promote a unified set of resources to guide Tidy R development in OMOP and support the OHDSI community.*
+
+**Results**
+
+- Adoption of the Tidy R programming with the OMOP CDM book by the workgroup. 
+- Publish the first version of the Tidy R Development in OMOP book to establish best practices for R package development with the OMOP CDM. 
+- Provide an outline of additional related books that could expand the resource collection 
+
+#### Objective 2 
+
+*To establish an overview of available packages relevant to Tidy R programming in OMOP (tidyverse style packages).*
+
+**Results**
+
+- Launch a documentation page linking typical epidemiologic research questions to relevant OHDSI packages. 
+- Compile a list of packages in the OHDSI GitHub organisation that work or can work with the tidy OMOP CDM. 
+- Identify additional repositories outside OHDSI that could align with the shared framework. 
+- Document the purpose and scope of existing OHDSI packages. 
+
 ## Regular meetings
+
+The regular meetings take place the [first Wednesday of the month](https://teams.microsoft.com/meet/2756821704797?p=gOP1cEtjzfRS0j6RrQ).
 
 ## Join the Journey
