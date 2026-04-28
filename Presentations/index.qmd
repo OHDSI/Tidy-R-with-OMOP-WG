@@ -3,3 +3,5 @@
 - [AllOfUs](allofus.qmd)
 - [DrugUtilisation](DrugUtilisation.qmd)
 - [Ecosystem](ecosystem.qmd)
+- [CohortConstructor](CohortConstructor.qmd)
+- [PhenotypeR](PhenotypeR.qmd)
