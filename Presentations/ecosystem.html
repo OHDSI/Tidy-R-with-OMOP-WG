@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <title>Tidy R with OMOP workgroup – The Tidy R in OMOP CDM ecosystem</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -94,7 +97,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-3fb42f7c5238bab18b7aae6036ca4803.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-5d3a4a4c9c8e0d093f219f4d61772ffe.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -265,7 +268,7 @@
 <span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a>penguins_db</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;penguins&gt; [?? x 8]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2/:memory:]
+# Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0/:memory:]
    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g sex     year
    &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt; &lt;fct&gt;  &lt;int&gt;
  1 Adelie  Torgersen           39.1          18.7               181        3750 male    2007
@@ -301,7 +304,7 @@
 <span id="cb5-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"species"</span>, <span class="st">"mean_bill_length_mm"</span>, <span class="st">"min_max_bill_length_mm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 3]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2/:memory:]
+# Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0/:memory:]
   species   mean_bill_length_mm min_max_bill_length_mm
   &lt;fct&gt;                   &lt;dbl&gt; &lt;chr&gt;                 
 1 Adelie                   38.8 32.1 to 46.0          
@@ -435,7 +438,7 @@ FROM (
 <h2>omopgenerics (Core)</h2>
 <div class="fragment">
 <p><strong>Methods and Classes for the OMOP Common Data Model</strong></p>
-<p>Current version: <strong>1.3.6</strong> First release: <em>2024-01-17</em> Total releases: <em>23</em></p>
+<p>Current version: <strong>1.3.7</strong> First release: <em>2024-01-17</em> Total releases: <em>24</em></p>
 <p>Links: <a href="https://darwin-eu.github.io/omopgenerics/">Website</a>; <a href="www.github.com/darwin-eu/omopgenerics">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -452,7 +455,7 @@ FROM (
 </div>
 <div class="fragment">
 <p><strong>Connect to an OMOP Common Data Model</strong></p>
-<p>Current version: <strong>2.3.0</strong> First release: <em>2022-09-29</em> Total releases: <em>29</em></p>
+<p>Current version: <strong>2.5.1</strong> First release: <em>2022-09-29</em> Total releases: <em>32</em></p>
 <p>Links: <a href="https://darwin-eu.github.io/CDMConnector/">Website</a>; <a href="www.github.com/darwin-eu/CDMConnector">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -469,7 +472,7 @@ FROM (
 </div>
 <div class="fragment">
 <p><strong>Creation of Mock Observational Medical Outcomes Partnership Common Data Model</strong></p>
-<p>Current version: <strong>0.6.1</strong> First release: <em>2024-03-08</em> Total releases: <em>9</em></p>
+<p>Current version: <strong>0.6.2</strong> First release: <em>2024-03-08</em> Total releases: <em>10</em></p>
 <p>Links: <a href="https://ohdsi.github.io/omock/">Website</a>; <a href="www.github.com/ohdsi/omock">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -524,7 +527,7 @@ FROM (
 </div>
 <div class="fragment">
 <p><strong>Identify Characteristics of Patients in the OMOP Common Data Model</strong></p>
-<p>Current version: <strong>1.4.5</strong> First release: <em>2023-05-02</em> Total releases: <em>27</em></p>
+<p>Current version: <strong>1.5.0</strong> First release: <em>2023-05-02</em> Total releases: <em>28</em></p>
 <p>Links: <a href="https://darwin-eu.github.io/PatientProfiles/">Website</a>; <a href="www.github.com/darwin-eu/PatientProfiles">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -543,7 +546,7 @@ FROM (
 </div>
 <div class="fragment">
 <p><strong>Build and Manipulate Study Cohorts Using a Common Data Model</strong></p>
-<p>Current version: <strong>0.6.1</strong> First release: <em>2024-06-01</em> Total releases: <em>14</em></p>
+<p>Current version: <strong>0.6.3</strong> First release: <em>2024-06-01</em> Total releases: <em>16</em></p>
 <p>Links: <a href="https://ohdsi.github.io/CohortConstructor/">Website</a>; <a href="www.github.com/ohdsi/CohortConstructor">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -602,7 +605,7 @@ FROM (
 </div>
 <div class="fragment">
 <p><strong>Summarise and Visualise Characteristics of Patients in the OMOP CDM</strong></p>
-<p>Current version: <strong>1.1.1</strong> First release: <em>2024-04-16</em> Total releases: <em>13</em></p>
+<p>Current version: <strong>1.1.2</strong> First release: <em>2024-04-16</em> Total releases: <em>14</em></p>
 <p>Links: <a href="https://darwin-eu.github.io/CohortCharacteristics/">Website</a>; <a href="www.github.com/darwin-eu/CohortCharacteristics">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -658,7 +661,7 @@ FROM (
 </div>
 <div class="fragment">
 <p><strong>Characterise Tables of an OMOP Common Data Model Instance</strong></p>
-<p>Current version: <strong>1.0.0</strong> First release: <em>2024-09-26</em> Total releases: <em>13</em></p>
+<p>Current version: <strong>1.0.1</strong> First release: <em>2024-09-26</em> Total releases: <em>14</em></p>
 <p>Links: <a href="https://ohdsi.github.io/OmopSketch/">Website</a>; <a href="www.github.com/ohdsi/OmopSketch">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -678,7 +681,7 @@ FROM (
 </div>
 <div class="fragment">
 <p><strong>Diagnostics for Lists of Codes Based on Measurements</strong></p>
-<p>Current version: <strong>0.2.0</strong> First release: <em>2025-07-11</em> Total releases: <em>3</em></p>
+<p>Current version: <strong>0.3.0</strong> First release: <em>2025-07-11</em> Total releases: <em>4</em></p>
 <p>Links: <a href="https://ohdsi.github.io/MeasurementDiagnostics/">Website</a>; <a href="www.github.com/ohdsi/MeasurementDiagnostics">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -695,7 +698,7 @@ FROM (
 </div>
 <div class="fragment">
 <p><strong>Assess Study Cohorts Using a Common Data Model</strong></p>
-<p>Current version: <strong>0.3.1</strong> First release: <em>2024-12-06</em> Total releases: <em>10</em></p>
+<p>Current version: <strong>0.4.0</strong> First release: <em>2024-12-06</em> Total releases: <em>14</em></p>
 <p>Links: <a href="https://ohdsi.github.io/PhenotypeR/">Website</a>; <a href="www.github.com/ohdsi/PhenotypeR">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -711,7 +714,7 @@ FROM (
 <h2>OmopViewer (Visualisation)</h2>
 <div class="fragment">
 <p><strong>Visualise OMOP Results using ‘shiny’ Applications</strong></p>
-<p>Current version: <strong>0.6.0</strong> First release: <em>2024-10-21</em> Total releases: <em>6</em></p>
+<p>Current version: <strong>0.7.0</strong> First release: <em>2024-10-21</em> Total releases: <em>7</em></p>
 <p>Links: <a href="https://ohdsi.github.io/OmopViewer/">Website</a>; <a href="www.github.com/ohdsi/OmopViewer">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -725,7 +728,7 @@ FROM (
 <h2>DrugExposureDiagnostics (Diagnostics)</h2>
 <div class="fragment">
 <p><strong>Diagnostics for OMOP Common Data Model Drug Records</strong></p>
-<p>Current version: <strong>1.1.5</strong> First release: <em>2023-03-08</em> Total releases: <em>23</em></p>
+<p>Current version: <strong>1.1.7</strong> First release: <em>2023-03-08</em> Total releases: <em>25</em></p>
 <p>Links: <a href="https://darwin-eu.github.io/DrugExposureDiagnostics/">Website</a>; <a href="www.github.com/darwin-eu/DrugExposureDiagnostics">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -739,7 +742,7 @@ FROM (
 <h2>OmopConstructor (ETL)</h2>
 <div class="fragment">
 <p><strong>Build Tables in the OMOP Common Data Model</strong></p>
-<p>Current version: <strong>0.1.0</strong> First release: <em>2025-09-30</em> Total releases: <em>1</em></p>
+<p>Current version: <strong>0.3.0</strong> First release: <em>2025-09-30</em> Total releases: <em>3</em></p>
 <p>Links: <a href="https://ohdsi.github.io/OmopConstructor/">Website</a>; <a href="www.github.com/ohdsi/OmopConstructor">GitHub</a></p>
 </div>
 <div class="fragment">
@@ -857,7 +860,7 @@ FROM (
 <div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-bar-chart " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"></path></svg></div>
 <div class="value-box-area html-fill-item html-fill-container">
 <p class="value-box-title">Number Releases</p>
-<p class="value-box-value">292</p>
+<p class="value-box-value">312</p>
 </div>
 </div>
 </div>
@@ -871,7 +874,7 @@ FROM (
 <div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-bar-chart " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"></path></svg></div>
 <div class="value-box-area html-fill-item html-fill-container">
 <p class="value-box-title">Total CRAN downloads</p>
-<p class="value-box-value">395114</p>
+<p class="value-box-value">460610</p>
 </div>
 </div>
 </div>
@@ -987,7 +990,7 @@ visit_occurrence, vocabulary</code></pre>
 <span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_my_table&gt; [?? x 2]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpzs7Q74/file1de920b51909.duckdb]
+# Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpvoXBrb/file8f0173e37202.duckdb]
    speed  dist
    &lt;dbl&gt; &lt;dbl&gt;
  1     4     2
@@ -1175,7 +1178,7 @@ visit_occurrence, vocabulary</code></pre>
 attr(,"dbcon")</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>&lt;duckdb_connection 149e0 driver=&lt;duckdb_driver dbdir='/tmp/Rtmpzs7Q74/file1de920b51909.duckdb' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
+<pre><code>&lt;duckdb_connection 97b90 driver=&lt;duckdb_driver dbdir='/tmp/RtmpvoXBrb/file8f0173e37202.duckdb' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>attr(,"write_schema")
@@ -1349,7 +1352,7 @@ cdm[['person']] &lt;- yourObject |&gt;
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 19
-Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpzs7Q74/file1de920b51909.duckdb]
+Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpvoXBrb/file8f0173e37202.duckdb]
 $ person_id                   &lt;int&gt; 6
 $ gender_concept_id           &lt;int&gt; 8532
 $ year_of_birth               &lt;int&gt; 1963
@@ -1409,19 +1412,19 @@ visit_occurrence, vocabulary</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_my_cohort&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpzs7Q74/file1de96c1da16f.duckdb]
+# Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpvoXBrb/file8f015b8a7376.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       5172 2004-05-04        2004-05-25     
- 2                    2        608 1977-10-03        1977-10-12     
- 3                    2       1464 1968-05-03        1968-05-14     
- 4                    2       2327 1979-05-15        1979-05-26     
- 5                    2       2830 2008-02-06        2008-02-18     
- 6                    2       3013 1985-04-19        1985-04-28     
- 7                    2       4977 1971-07-31        1971-08-13     
- 8                    2       5157 1982-08-31        1982-09-10     
- 9                    2       5317 2009-10-23        2009-11-05     
-10                    2        558 1983-09-02        1983-09-14     
+ 1                    2        974 1984-08-02        1984-08-13     
+ 2                    2        994 2008-10-11        2008-10-19     
+ 3                    2       1058 1969-12-04        1969-12-16     
+ 4                    2       1657 2004-11-07        2004-11-15     
+ 5                    2       1952 1970-06-05        1970-06-16     
+ 6                    2       2878 2016-11-10        2016-11-20     
+ 7                    2       2915 1986-11-13        1986-11-24     
+ 8                    2       2915 2007-03-07        2007-03-20     
+ 9                    2       4606 2003-09-01        2003-09-08     
+10                    2       4606 2010-06-07        2010-06-14     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -1457,7 +1460,7 @@ $tbl_name
 
 $cohort_set
 # Source:   table&lt;results.test_my_cohort_set&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpzs7Q74/file1de96c1da16f.duckdb]
+# Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpvoXBrb/file8f015b8a7376.duckdb]
   cohort_definition_id cohort_name cdm_version vocabulary_version
                  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             
 1                    1 cohort1     5.3         v5.0 18-JAN-19    
@@ -1465,7 +1468,7 @@ $cohort_set
 
 $cohort_attrition
 # Source:   table&lt;results.test_my_cohort_attrition&gt; [?? x 7]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpzs7Q74/file1de96c1da16f.duckdb]
+# Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpvoXBrb/file8f015b8a7376.duckdb]
   cohort_definition_id number_records number_subjects reason_id reason                excluded_records excluded_subjects
                  &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;                            &lt;int&gt;             &lt;int&gt;
 1                    1          17268            2686         1 Initial qualifying e…                0                 0
@@ -1479,7 +1482,7 @@ $cohort_attrition
 
 $cohort_codelist
 # Source:   table&lt;results.test_my_cohort_codelist&gt; [?? x 4]
-# Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmpzs7Q74/file1de96c1da16f.duckdb]
+# Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpvoXBrb/file8f015b8a7376.duckdb]
   cohort_definition_id codelist_name concept_id codelist_type
                  &lt;int&gt; &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;        
 1                    1 cohort1         40481087 index event  
@@ -1788,23 +1791,23 @@ $cdm_reference</code></pre>
 <h2><code>summarised_result</code></h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="pncvmzdpsq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#pncvmzdpsq table {
+<div id="yeztfbteen" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yeztfbteen table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#pncvmzdpsq thead, #pncvmzdpsq tbody, #pncvmzdpsq tfoot, #pncvmzdpsq tr, #pncvmzdpsq td, #pncvmzdpsq th {
+#yeztfbteen thead, #yeztfbteen tbody, #yeztfbteen tfoot, #yeztfbteen tr, #yeztfbteen td, #yeztfbteen th {
   border-style: none;
 }
 
-#pncvmzdpsq p {
+#yeztfbteen p {
   margin: 0;
   padding: 0;
 }
 
-#pncvmzdpsq .gt_table {
+#yeztfbteen .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1830,12 +1833,12 @@ $cdm_reference</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#pncvmzdpsq .gt_caption {
+#yeztfbteen .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pncvmzdpsq .gt_title {
+#yeztfbteen .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1847,7 +1850,7 @@ $cdm_reference</code></pre>
   border-bottom-width: 0;
 }
 
-#pncvmzdpsq .gt_subtitle {
+#yeztfbteen .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1859,7 +1862,7 @@ $cdm_reference</code></pre>
   border-top-width: 0;
 }
 
-#pncvmzdpsq .gt_heading {
+#yeztfbteen .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1871,13 +1874,13 @@ $cdm_reference</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#pncvmzdpsq .gt_bottom_border {
+#yeztfbteen .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pncvmzdpsq .gt_col_headings {
+#yeztfbteen .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1892,7 +1895,7 @@ $cdm_reference</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#pncvmzdpsq .gt_col_heading {
+#yeztfbteen .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1912,7 +1915,7 @@ $cdm_reference</code></pre>
   overflow-x: hidden;
 }
 
-#pncvmzdpsq .gt_column_spanner_outer {
+#yeztfbteen .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1924,15 +1927,15 @@ $cdm_reference</code></pre>
   padding-right: 4px;
 }
 
-#pncvmzdpsq .gt_column_spanner_outer:first-child {
+#yeztfbteen .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pncvmzdpsq .gt_column_spanner_outer:last-child {
+#yeztfbteen .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pncvmzdpsq .gt_column_spanner {
+#yeztfbteen .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1944,11 +1947,11 @@ $cdm_reference</code></pre>
   width: 100%;
 }
 
-#pncvmzdpsq .gt_spanner_row {
+#yeztfbteen .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#pncvmzdpsq .gt_group_heading {
+#yeztfbteen .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1974,7 +1977,7 @@ $cdm_reference</code></pre>
   text-align: left;
 }
 
-#pncvmzdpsq .gt_empty_group_heading {
+#yeztfbteen .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1989,15 +1992,15 @@ $cdm_reference</code></pre>
   vertical-align: middle;
 }
 
-#pncvmzdpsq .gt_from_md > :first-child {
+#yeztfbteen .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pncvmzdpsq .gt_from_md > :last-child {
+#yeztfbteen .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pncvmzdpsq .gt_row {
+#yeztfbteen .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2016,7 +2019,7 @@ $cdm_reference</code></pre>
   overflow-x: hidden;
 }
 
-#pncvmzdpsq .gt_stub {
+#yeztfbteen .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2029,7 +2032,7 @@ $cdm_reference</code></pre>
   padding-right: 5px;
 }
 
-#pncvmzdpsq .gt_stub_row_group {
+#yeztfbteen .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2043,15 +2046,15 @@ $cdm_reference</code></pre>
   vertical-align: top;
 }
 
-#pncvmzdpsq .gt_row_group_first td {
+#yeztfbteen .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pncvmzdpsq .gt_row_group_first th {
+#yeztfbteen .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#pncvmzdpsq .gt_summary_row {
+#yeztfbteen .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2061,16 +2064,16 @@ $cdm_reference</code></pre>
   padding-right: 5px;
 }
 
-#pncvmzdpsq .gt_first_summary_row {
+#yeztfbteen .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#pncvmzdpsq .gt_first_summary_row.thick {
+#yeztfbteen .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pncvmzdpsq .gt_last_summary_row {
+#yeztfbteen .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2080,7 +2083,7 @@ $cdm_reference</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#pncvmzdpsq .gt_grand_summary_row {
+#yeztfbteen .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2090,7 +2093,7 @@ $cdm_reference</code></pre>
   padding-right: 5px;
 }
 
-#pncvmzdpsq .gt_first_grand_summary_row {
+#yeztfbteen .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2100,7 +2103,7 @@ $cdm_reference</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#pncvmzdpsq .gt_last_grand_summary_row_top {
+#yeztfbteen .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2110,11 +2113,11 @@ $cdm_reference</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#pncvmzdpsq .gt_striped {
+#yeztfbteen .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pncvmzdpsq .gt_table_body {
+#yeztfbteen .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2123,7 +2126,7 @@ $cdm_reference</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#pncvmzdpsq .gt_footnotes {
+#yeztfbteen .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2137,7 +2140,7 @@ $cdm_reference</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#pncvmzdpsq .gt_footnote {
+#yeztfbteen .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2146,7 +2149,7 @@ $cdm_reference</code></pre>
   padding-right: 5px;
 }
 
-#pncvmzdpsq .gt_sourcenotes {
+#yeztfbteen .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2160,7 +2163,7 @@ $cdm_reference</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#pncvmzdpsq .gt_sourcenote {
+#yeztfbteen .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2168,72 +2171,72 @@ $cdm_reference</code></pre>
   padding-right: 5px;
 }
 
-#pncvmzdpsq .gt_left {
+#yeztfbteen .gt_left {
   text-align: left;
 }
 
-#pncvmzdpsq .gt_center {
+#yeztfbteen .gt_center {
   text-align: center;
 }
 
-#pncvmzdpsq .gt_right {
+#yeztfbteen .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pncvmzdpsq .gt_font_normal {
+#yeztfbteen .gt_font_normal {
   font-weight: normal;
 }
 
-#pncvmzdpsq .gt_font_bold {
+#yeztfbteen .gt_font_bold {
   font-weight: bold;
 }
 
-#pncvmzdpsq .gt_font_italic {
+#yeztfbteen .gt_font_italic {
   font-style: italic;
 }
 
-#pncvmzdpsq .gt_super {
+#yeztfbteen .gt_super {
   font-size: 65%;
 }
 
-#pncvmzdpsq .gt_footnote_marks {
+#yeztfbteen .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#pncvmzdpsq .gt_asterisk {
+#yeztfbteen .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pncvmzdpsq .gt_indent_1 {
+#yeztfbteen .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pncvmzdpsq .gt_indent_2 {
+#yeztfbteen .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pncvmzdpsq .gt_indent_3 {
+#yeztfbteen .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pncvmzdpsq .gt_indent_4 {
+#yeztfbteen .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pncvmzdpsq .gt_indent_5 {
+#yeztfbteen .gt_indent_5 {
   text-indent: 25px;
 }
 
-#pncvmzdpsq .katex-display {
+#yeztfbteen .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#pncvmzdpsq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#yeztfbteen div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -5303,7 +5306,122 @@ $row.names
 [52975] 52975 52976 52977 52978 52979 52980 52981 52982 52983 52984 52985 52986 52987 52988 52989 52990 52991 52992
 [52993] 52993 52994 52995 52996 52997 52998 52999 53000 53001 53002 53003 53004 53005 53006 53007 53008 53009 53010
 [53011] 53011 53012 53013 53014 53015 53016 53017 53018 53019 53020 53021 53022 53023 53024 53025 53026 53027 53028
-[53029] 53029 53030 53031 53032 53033 53034 53035 53036 53037 53038 53039 53040 53041
+[53029] 53029 53030 53031 53032 53033 53034 53035 53036 53037 53038 53039 53040 53041 53042 53043 53044 53045 53046
+[53047] 53047 53048 53049 53050 53051 53052 53053 53054 53055 53056 53057 53058 53059 53060 53061 53062 53063 53064
+[53065] 53065 53066 53067 53068 53069 53070 53071 53072 53073 53074 53075 53076 53077 53078 53079 53080 53081 53082
+[53083] 53083 53084 53085 53086 53087 53088 53089 53090 53091 53092 53093 53094 53095 53096 53097 53098 53099 53100
+[53101] 53101 53102 53103 53104 53105 53106 53107 53108 53109 53110 53111 53112 53113 53114 53115 53116 53117 53118
+[53119] 53119 53120 53121 53122 53123 53124 53125 53126 53127 53128 53129 53130 53131 53132 53133 53134 53135 53136
+[53137] 53137 53138 53139 53140 53141 53142 53143 53144 53145 53146 53147 53148 53149 53150 53151 53152 53153 53154
+[53155] 53155 53156 53157 53158 53159 53160 53161 53162 53163 53164 53165 53166 53167 53168 53169 53170 53171 53172
+[53173] 53173 53174 53175 53176 53177 53178 53179 53180 53181 53182 53183 53184 53185 53186 53187 53188 53189 53190
+[53191] 53191 53192 53193 53194 53195 53196 53197 53198 53199 53200 53201 53202 53203 53204 53205 53206 53207 53208
+[53209] 53209 53210 53211 53212 53213 53214 53215 53216 53217 53218 53219 53220 53221 53222 53223 53224 53225 53226
+[53227] 53227 53228 53229 53230 53231 53232 53233 53234 53235 53236 53237 53238 53239 53240 53241 53242 53243 53244
+[53245] 53245 53246 53247 53248 53249 53250 53251 53252 53253 53254 53255 53256 53257 53258 53259 53260 53261 53262
+[53263] 53263 53264 53265 53266 53267 53268 53269 53270 53271 53272 53273 53274 53275 53276 53277 53278 53279 53280
+[53281] 53281 53282 53283 53284 53285 53286 53287 53288 53289 53290 53291 53292 53293 53294 53295 53296 53297 53298
+[53299] 53299 53300 53301 53302 53303 53304 53305 53306 53307 53308 53309 53310 53311 53312 53313 53314 53315 53316
+[53317] 53317 53318 53319 53320 53321 53322 53323 53324 53325 53326 53327 53328 53329 53330 53331 53332 53333 53334
+[53335] 53335 53336 53337 53338 53339 53340 53341 53342 53343 53344 53345 53346 53347 53348 53349 53350 53351 53352
+[53353] 53353 53354 53355 53356 53357 53358 53359 53360 53361 53362 53363 53364 53365 53366 53367 53368 53369 53370
+[53371] 53371 53372 53373 53374 53375 53376 53377 53378 53379 53380 53381 53382 53383 53384 53385 53386 53387 53388
+[53389] 53389 53390 53391 53392 53393 53394 53395 53396 53397 53398 53399 53400 53401 53402 53403 53404 53405 53406
+[53407] 53407 53408 53409 53410 53411 53412 53413 53414 53415 53416 53417 53418 53419 53420 53421 53422 53423 53424
+[53425] 53425 53426 53427 53428 53429 53430 53431 53432 53433 53434 53435 53436 53437 53438 53439 53440 53441 53442
+[53443] 53443 53444 53445 53446 53447 53448 53449 53450 53451 53452 53453 53454 53455 53456 53457 53458 53459 53460
+[53461] 53461 53462 53463 53464 53465 53466 53467 53468 53469 53470 53471 53472 53473 53474 53475 53476 53477 53478
+[53479] 53479 53480 53481 53482 53483 53484 53485 53486 53487 53488 53489 53490 53491 53492 53493 53494 53495 53496
+[53497] 53497 53498 53499 53500 53501 53502 53503 53504 53505 53506 53507 53508 53509 53510 53511 53512 53513 53514
+[53515] 53515 53516 53517 53518 53519 53520 53521 53522 53523 53524 53525 53526 53527 53528 53529 53530 53531 53532
+[53533] 53533 53534 53535 53536 53537 53538 53539 53540 53541 53542 53543 53544 53545 53546 53547 53548 53549 53550
+[53551] 53551 53552 53553 53554 53555 53556 53557 53558 53559 53560 53561 53562 53563 53564 53565 53566 53567 53568
+[53569] 53569 53570 53571 53572 53573 53574 53575 53576 53577 53578 53579 53580 53581 53582 53583 53584 53585 53586
+[53587] 53587 53588 53589 53590 53591 53592 53593 53594 53595 53596 53597 53598 53599 53600 53601 53602 53603 53604
+[53605] 53605 53606 53607 53608 53609 53610 53611 53612 53613 53614 53615 53616 53617 53618 53619 53620 53621 53622
+[53623] 53623 53624 53625 53626 53627 53628 53629 53630 53631 53632 53633 53634 53635 53636 53637 53638 53639 53640
+[53641] 53641 53642 53643 53644 53645 53646 53647 53648 53649 53650 53651 53652 53653 53654 53655 53656 53657 53658
+[53659] 53659 53660 53661 53662 53663 53664 53665 53666 53667 53668 53669 53670 53671 53672 53673 53674 53675 53676
+[53677] 53677 53678 53679 53680 53681 53682 53683 53684 53685 53686 53687 53688 53689 53690 53691 53692 53693 53694
+[53695] 53695 53696 53697 53698 53699 53700 53701 53702 53703 53704 53705 53706 53707 53708 53709 53710 53711 53712
+[53713] 53713 53714 53715 53716 53717 53718 53719 53720 53721 53722 53723 53724 53725 53726 53727 53728 53729 53730
+[53731] 53731 53732 53733 53734 53735 53736 53737 53738 53739 53740 53741 53742 53743 53744 53745 53746 53747 53748
+[53749] 53749 53750 53751 53752 53753 53754 53755 53756 53757 53758 53759 53760 53761 53762 53763 53764 53765 53766
+[53767] 53767 53768 53769 53770 53771 53772 53773 53774 53775 53776 53777 53778 53779 53780 53781 53782 53783 53784
+[53785] 53785 53786 53787 53788 53789 53790 53791 53792 53793 53794 53795 53796 53797 53798 53799 53800 53801 53802
+[53803] 53803 53804 53805 53806 53807 53808 53809 53810 53811 53812 53813 53814 53815 53816 53817 53818 53819 53820
+[53821] 53821 53822 53823 53824 53825 53826 53827 53828 53829 53830 53831 53832 53833 53834 53835 53836 53837 53838
+[53839] 53839 53840 53841 53842 53843 53844 53845 53846 53847 53848 53849 53850 53851 53852 53853 53854 53855 53856
+[53857] 53857 53858 53859 53860 53861 53862 53863 53864 53865 53866 53867 53868 53869 53870 53871 53872 53873 53874
+[53875] 53875 53876 53877 53878 53879 53880 53881 53882 53883 53884 53885 53886 53887 53888 53889 53890 53891 53892
+[53893] 53893 53894 53895 53896 53897 53898 53899 53900 53901 53902 53903 53904 53905 53906 53907 53908 53909 53910
+[53911] 53911 53912 53913 53914 53915 53916 53917 53918 53919 53920 53921 53922 53923 53924 53925 53926 53927 53928
+[53929] 53929 53930 53931 53932 53933 53934 53935 53936 53937 53938 53939 53940 53941 53942 53943 53944 53945 53946
+[53947] 53947 53948 53949 53950 53951 53952 53953 53954 53955 53956 53957 53958 53959 53960 53961 53962 53963 53964
+[53965] 53965 53966 53967 53968 53969 53970 53971 53972 53973 53974 53975 53976 53977 53978 53979 53980 53981 53982
+[53983] 53983 53984 53985 53986 53987 53988 53989 53990 53991 53992 53993 53994 53995 53996 53997 53998 53999 54000
+[54001] 54001 54002 54003 54004 54005 54006 54007 54008 54009 54010 54011 54012 54013 54014 54015 54016 54017 54018
+[54019] 54019 54020 54021 54022 54023 54024 54025 54026 54027 54028 54029 54030 54031 54032 54033 54034 54035 54036
+[54037] 54037 54038 54039 54040 54041 54042 54043 54044 54045 54046 54047 54048 54049 54050 54051 54052 54053 54054
+[54055] 54055 54056 54057 54058 54059 54060 54061 54062 54063 54064 54065 54066 54067 54068 54069 54070 54071 54072
+[54073] 54073 54074 54075 54076 54077 54078 54079 54080 54081 54082 54083 54084 54085 54086 54087 54088 54089 54090
+[54091] 54091 54092 54093 54094 54095 54096 54097 54098 54099 54100 54101 54102 54103 54104 54105 54106 54107 54108
+[54109] 54109 54110 54111 54112 54113 54114 54115 54116 54117 54118 54119 54120 54121 54122 54123 54124 54125 54126
+[54127] 54127 54128 54129 54130 54131 54132 54133 54134 54135 54136 54137 54138 54139 54140 54141 54142 54143 54144
+[54145] 54145 54146 54147 54148 54149 54150 54151 54152 54153 54154 54155 54156 54157 54158 54159 54160 54161 54162
+[54163] 54163 54164 54165 54166 54167 54168 54169 54170 54171 54172 54173 54174 54175 54176 54177 54178 54179 54180
+[54181] 54181 54182 54183 54184 54185 54186 54187 54188 54189 54190 54191 54192 54193 54194 54195 54196 54197 54198
+[54199] 54199 54200 54201 54202 54203 54204 54205 54206 54207 54208 54209 54210 54211 54212 54213 54214 54215 54216
+[54217] 54217 54218 54219 54220 54221 54222 54223 54224 54225 54226 54227 54228 54229 54230 54231 54232 54233 54234
+[54235] 54235 54236 54237 54238 54239 54240 54241 54242 54243 54244 54245 54246 54247 54248 54249 54250 54251 54252
+[54253] 54253 54254 54255 54256 54257 54258 54259 54260 54261 54262 54263 54264 54265 54266 54267 54268 54269 54270
+[54271] 54271 54272 54273 54274 54275 54276 54277 54278 54279 54280 54281 54282 54283 54284 54285 54286 54287 54288
+[54289] 54289 54290 54291 54292 54293 54294 54295 54296 54297 54298 54299 54300 54301 54302 54303 54304 54305 54306
+[54307] 54307 54308 54309 54310 54311 54312 54313 54314 54315 54316 54317 54318 54319 54320 54321 54322 54323 54324
+[54325] 54325 54326 54327 54328 54329 54330 54331 54332 54333 54334 54335 54336 54337 54338 54339 54340 54341 54342
+[54343] 54343 54344 54345 54346 54347 54348 54349 54350 54351 54352 54353 54354 54355 54356 54357 54358 54359 54360
+[54361] 54361 54362 54363 54364 54365 54366 54367 54368 54369 54370 54371 54372 54373 54374 54375 54376 54377 54378
+[54379] 54379 54380 54381 54382 54383 54384 54385 54386 54387 54388 54389 54390 54391 54392 54393 54394 54395 54396
+[54397] 54397 54398 54399 54400 54401 54402 54403 54404 54405 54406 54407 54408 54409 54410 54411 54412 54413 54414
+[54415] 54415 54416 54417 54418 54419 54420 54421 54422 54423 54424 54425 54426 54427 54428 54429 54430 54431 54432
+[54433] 54433 54434 54435 54436 54437 54438 54439 54440 54441 54442 54443 54444 54445 54446 54447 54448 54449 54450
+[54451] 54451 54452 54453 54454 54455 54456 54457 54458 54459 54460 54461 54462 54463 54464 54465 54466 54467 54468
+[54469] 54469 54470 54471 54472 54473 54474 54475 54476 54477 54478 54479 54480 54481 54482 54483 54484 54485 54486
+[54487] 54487 54488 54489 54490 54491 54492 54493 54494 54495 54496 54497 54498 54499 54500 54501 54502 54503 54504
+[54505] 54505 54506 54507 54508 54509 54510 54511 54512 54513 54514 54515 54516 54517 54518 54519 54520 54521 54522
+[54523] 54523 54524 54525 54526 54527 54528 54529 54530 54531 54532 54533 54534 54535 54536 54537 54538 54539 54540
+[54541] 54541 54542 54543 54544 54545 54546 54547 54548 54549 54550 54551 54552 54553 54554 54555 54556 54557 54558
+[54559] 54559 54560 54561 54562 54563 54564 54565 54566 54567 54568 54569 54570 54571 54572 54573 54574 54575 54576
+[54577] 54577 54578 54579 54580 54581 54582 54583 54584 54585 54586 54587 54588 54589 54590 54591 54592 54593 54594
+[54595] 54595 54596 54597 54598 54599 54600 54601 54602 54603 54604 54605 54606 54607 54608 54609 54610 54611 54612
+[54613] 54613 54614 54615 54616 54617 54618 54619 54620 54621 54622 54623 54624 54625 54626 54627 54628 54629 54630
+[54631] 54631 54632 54633 54634 54635 54636 54637 54638 54639 54640 54641 54642 54643 54644 54645 54646 54647 54648
+[54649] 54649 54650 54651 54652 54653 54654 54655 54656 54657 54658 54659 54660 54661 54662 54663 54664 54665 54666
+[54667] 54667 54668 54669 54670 54671 54672 54673 54674 54675 54676 54677 54678 54679 54680 54681 54682 54683 54684
+[54685] 54685 54686 54687 54688 54689 54690 54691 54692 54693 54694 54695 54696 54697 54698 54699 54700 54701 54702
+[54703] 54703 54704 54705 54706 54707 54708 54709 54710 54711 54712 54713 54714 54715 54716 54717 54718 54719 54720
+[54721] 54721 54722 54723 54724 54725 54726 54727 54728 54729 54730 54731 54732 54733 54734 54735 54736 54737 54738
+[54739] 54739 54740 54741 54742 54743 54744 54745 54746 54747 54748 54749 54750 54751 54752 54753 54754 54755 54756
+[54757] 54757 54758 54759 54760 54761 54762 54763 54764 54765 54766 54767 54768 54769 54770 54771 54772 54773 54774
+[54775] 54775 54776 54777 54778 54779 54780 54781 54782 54783 54784 54785 54786 54787 54788 54789 54790 54791 54792
+[54793] 54793 54794 54795 54796 54797 54798 54799 54800 54801 54802 54803 54804 54805 54806 54807 54808 54809 54810
+[54811] 54811 54812 54813 54814 54815 54816 54817 54818 54819 54820 54821 54822 54823 54824 54825 54826 54827 54828
+[54829] 54829 54830 54831 54832 54833 54834 54835 54836 54837 54838 54839 54840 54841 54842 54843 54844 54845 54846
+[54847] 54847 54848 54849 54850 54851 54852 54853 54854 54855 54856 54857 54858 54859 54860 54861 54862 54863 54864
+[54865] 54865 54866 54867 54868 54869 54870 54871 54872 54873 54874 54875 54876 54877 54878 54879 54880 54881 54882
+[54883] 54883 54884 54885 54886 54887 54888 54889 54890 54891 54892 54893 54894 54895 54896 54897 54898 54899 54900
+[54901] 54901 54902 54903 54904 54905 54906 54907 54908 54909 54910 54911 54912 54913 54914 54915 54916 54917 54918
+[54919] 54919 54920 54921 54922 54923 54924 54925 54926 54927 54928 54929 54930 54931 54932 54933 54934 54935 54936
+[54937] 54937 54938 54939 54940 54941 54942 54943 54944 54945 54946 54947 54948 54949 54950 54951 54952 54953 54954
+[54955] 54955 54956 54957 54958 54959 54960 54961 54962 54963 54964 54965 54966 54967 54968 54969 54970 54971 54972
+[54973] 54973 54974 54975 54976 54977 54978 54979 54980 54981 54982 54983 54984 54985 54986 54987 54988 54989 54990
+[54991] 54991 54992 54993 54994 54995 54996 54997 54998 54999 55000 55001 55002 55003 55004 55005 55006 55007 55008
+[55009] 55009 55010 55011 55012 55013 55014 55015 55016 55017 55018 55019 55020 55021 55022 55023 55024 55025 55026
+[55027] 55027 55028 55029 55030 55031 55032 55033 55034 55035 55036 55037 55038 55039 55040 55041 55042 55043 55044
+[55045] 55045 55046 55047 55048 55049 55050 55051 55052 55053 55054 55055 55056 55057 55058 55059 55060 55061 55062
+[55063] 55063 55064 55065 55066 55067 55068 55069 55070 55071 55072 55073 55074 55075 55076 55077 55078 55079 55080
+[55081] 55081 55082 55083 55084 55085 55086 55087 55088 55089 55090 55091 55092 55093 55094 55095 55096 55097 55098
+[55099] 55099 55100 55101 55102 55103
 
 $class
 [1] "summarised_result" "omop_result"       "tbl_df"            "tbl"               "data.frame"       
@@ -5368,12 +5486,12 @@ $settings
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ CodelistGenerator: 3.5.0
 ✔ CohortCharacteristics: 1.1.0
-✔ CohortSurvival: 1.0.3
+✔ CohortSurvival: 1.1.0
 ✔ DrugUtilisation: 1.0.5
 ✔ IncidencePrevalence: 1.2.1
-✔ MeasurementDiagnostics: 0.1.0
+✔ MeasurementDiagnostics: 0.2.0
 ✔ OmopSketch: 1.0.0
-✔ omopgenerics: 1.3.4</code></pre>
+✔ omopgenerics: 1.3.5</code></pre>
 </div>
 </div>
 </section>
@@ -5712,7 +5830,7 @@ $settings
 <pre><code># A tibble: 1 × 8
   result_id result_type     package_name    package_version group   strata additional min_cell_count
       &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;         
-1         1 summarise_table PatientProfiles 1.4.5           species island ""         0             </code></pre>
+1         1 summarise_table PatientProfiles 1.5.0           species island ""         0             </code></pre>
 </div>
 </div>
 </div>
